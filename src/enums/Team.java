@@ -1,5 +1,7 @@
 package enums;
 
-public class Team {
-
+public enum Team
+{
+	Black,
+	White
 }
