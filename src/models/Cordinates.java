@@ -1,6 +1,7 @@
 package models;
 
 import common.Constants;
+import common.Validator;
 
 public class Cordinates
 {
@@ -20,25 +21,27 @@ public class Cordinates
 	
 	public void setRow(int row)
 	{
-		if((row >= Constants.MIN_ROW_VALUE) && (row <= Constants.MAX_ROW_VALUE))
+		if(Validator.isGreaterThan(Constants.MAX_ROW_VALUE, row)
+			|| Validator.isLessThan(Constants.MIN_ROW_VALUE, row))
 		{
-			this.row = row;
+			throw new IllegalArgumentException("");
 		}
 		else
 		{
-			System.out.println("Unimplemented behaviour");
+			this.row = row;
 		}
 	}
 	
 	public void setColumn(int column)
 	{
-		if((column >= Constants.MIN_COLUMN_VALUE) && (column <= Constants.MAX_COLUMN_VALUE))
+		if(Validator.isGreaterThan(Constants.MAX_COLUMN_VALUE, column)
+			|| Validator.isLessThan(Constants.MIN_COLUMN_VALUE, column))
 		{
-			this.column = column;
+			throw new IllegalArgumentException("");	
 		}
 		else
 		{
-			System.out.println("Unimplemented behaviour");
+			this.column = column;
 		}
 	}
 	
