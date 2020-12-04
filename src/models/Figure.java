@@ -56,6 +56,16 @@ public abstract class Figure
 	
 	public abstract int CalculateReachableCells(Cordinates row, Cordinates column);
 	
+	public void addReachableCells(Cordinates coordinates)
+	{
+		for(int i = 1; i < reachableCellsCount - 1; i++)
+		{
+			reachableCells[i-1] = reachableCells[i];
+			reachableCellsCount++;
+			reachableCells[i] = coordinates;
+		}
+	}
+	
 	public boolean isOneOfReachableCells(Cordinates coordinates)
 	{
 		if(reachableCellsCount > 0)
