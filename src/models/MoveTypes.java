@@ -17,11 +17,11 @@ public class MoveTypes
 				Figure temp = board.getFigure(coor);
 				if (temp != null) 
 				{
-					if (temp.getTeam() == f.getTeam()) 
+					if (temp.getTeam().equals(f.getTeam())) 
 					{
 						for(int j = i; j < 8; j++) 
 						{
-							reachable[j] = new Coordinates(row, j);
+							reachable[j] = null;
 						}
 						break;
 					}
@@ -30,7 +30,7 @@ public class MoveTypes
 						reachable[i] = coor;
 						for(int j = i + 1; j < 8; j++)
 						{
-							reachable[j] = new Coordinates(row, j);
+							reachable[j] = null;
 						}
 						break;
 					}
@@ -50,11 +50,11 @@ public class MoveTypes
 				Figure temp = board.getFigure(coor);
 				if (temp != null) 
 				{
-					if (temp.getTeam() == f.getTeam()) 
+					if (temp.getTeam().equals(f.getTeam())) 
 					{
 						for(int j = i; j >= 0; j--) 
 						{
-							reachable[j] = new Coordinates(row, j);
+							reachable[j] = null;
 						}
 						break;
 					}
@@ -63,7 +63,7 @@ public class MoveTypes
 						reachable[i] = coor;
 						for(int j = i - 1; j >= 0; j--)
 						{
-							reachable[j] = new Coordinates(row, j);
+							reachable[j] = null;
 						}
 						break;
 					}
@@ -82,11 +82,11 @@ public class MoveTypes
 				Figure temp = board.getFigure(coor);
 				if (temp != null) 
 				{
-					if (temp.getTeam() == f.getTeam()) 
+					if (temp.getTeam().equals(f.getTeam())) 
 					{
 						for(int j = i; j < 8; j++) 
 						{
-							reachable[j] = new Coordinates(row, j);
+							reachable[j] = null;
 						}
 						break;
 					}
@@ -95,7 +95,7 @@ public class MoveTypes
 						reachable[i] = coor;
 						for(int j = i + 1; j < 8; j++)
 						{
-							reachable[j] = new Coordinates(row, j);
+							reachable[j] = null;
 						}
 						break;
 					}
@@ -112,11 +112,11 @@ public class MoveTypes
 				Figure temp = board.getFigure(coor);
 				if (temp != null) 
 				{
-					if (temp.getTeam() == f.getTeam()) 
+					if (temp.getTeam().equals(f.getTeam())) 
 					{
 						for(int j = i; j >= 0; j--) 
 						{
-							reachable[j] = new Coordinates(row, j);
+							reachable[j] = null;
 						}
 						break;
 					}
@@ -125,7 +125,7 @@ public class MoveTypes
 						reachable[i] = coor;
 						for(int j = i - 1; j >= 0; j--)
 						{
-							reachable[j] = new Coordinates(row, j);
+							reachable[j] = null;
 						}
 						break;
 					}
@@ -143,6 +143,127 @@ public class MoveTypes
 	public static Coordinates[] vertical(Figure f)
 	{
 		Coordinates[] reachable = new Coordinates[8];
+		int row = f.getCoordinates().getRow();
+		int col = f.getCoordinates().getColumn();
+		if(row == 0)
+		{
+			for(int i = row; i < 8; i++)
+			{
+				Coordinates coor = new Coordinates(i, col);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(temp.getTeam().equals(f.getTeam()))
+					{
+						for(int j = i; j < 8; j++)
+						{
+							reachable[j] = null;
+						}
+						break;
+					}
+					else
+					{
+						reachable[i] = coor;
+						for(int j = i + 1; j < 8; j++)
+						{
+							reachable[j] = null;
+						}
+						break;
+					}
+				}
+				else
+				{
+					reachable[i] = coor;
+				}
+			}
+		}
+		else if(row == 7)
+		{
+			for(int i = row; i >= 0; i--)
+			{
+				Coordinates coor = new Coordinates(i, col);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(temp.getTeam().equals(f.getTeam()))
+					{
+						for(int j = i; j >= 0; j--)
+							reachable[j] = null;
+						break;
+					}
+					else 
+					{
+						reachable[i] = coor;
+						for(int j = i - 1; j >= 0; j--)
+							reachable[j] = null;
+						break;
+					}
+				}
+				else
+				{
+					reachable[i] = coor;
+				}
+			}
+		}
+		else
+		{
+			for(int i = row; i < 8; i++)
+			{
+				Coordinates coor = new Coordinates(i, col);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(temp.getTeam().equals(f.getTeam()))
+					{
+						for(int j = i; j < 8; j++)
+						{
+							reachable[j] = null;
+						}
+						break;
+					}
+					else
+					{
+						reachable[i] = coor;
+						for(int j = i + 1; j < 8; j++)
+						{
+							reachable[j] = null;
+						}
+						break;
+					}
+				}
+				else
+				{
+					reachable[i] = coor;
+				}
+			}
+			
+			for(int i = row; i >= 0; i--)
+			{
+				Coordinates coor = new Coordinates(i, col);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(temp.getTeam().equals(f.getTeam()))
+					{
+						for(int j = i; j >= 0; j--)
+							reachable[j] = null;
+						break;
+					}
+					else 
+					{
+						reachable[i] = coor;
+						for(int j = i - 1; j >= 0; j--)
+							reachable[j] = null;
+						break;
+					}
+				}
+				else
+				{
+					reachable[i] = coor;
+				}
+			}
+		}
+		
 		return reachable;
 	}
 }
