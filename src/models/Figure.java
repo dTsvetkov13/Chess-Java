@@ -5,14 +5,14 @@ import enums.Team;
 
 public abstract class Figure 
 {
-	private Cordinates coordinates;
+	private Coordinates coordinates;
 	private Team team;
 	private boolean isMoved;
 	private FigureType type;
-	private Cordinates[] reachableCells;
+	private Coordinates[] reachableCells;
 	private int reachableCellsCount;
 	
-	public Figure(Cordinates coordinates, Team team, FigureType type)
+	public Figure(Coordinates coordinates, Team team, FigureType type)
 	{
 		if(coordinates != null)
 		{
@@ -20,11 +20,11 @@ public abstract class Figure
 			this.team = team;
 			this.isMoved = false;
 			this.type = type;
-			this.reachableCells = new Cordinates[32]; // TO DO: make constant for it
+			this.reachableCells = new Coordinates[32]; // TO DO: make constant for it
 		}
 	}
 	
-	public Cordinates getCoordinates()
+	public Coordinates getCoordinates()
 	{
 		return coordinates;
 	}
@@ -44,7 +44,7 @@ public abstract class Figure
 		return type;
 	}
 	
-	public Cordinates[] getReachableCells()
+	public Coordinates[] getReachableCells()
 	{
 		return reachableCells;
 	}
@@ -54,19 +54,19 @@ public abstract class Figure
 		return reachableCellsCount;
 	}
 	
-	public abstract int CalculateReachableCells(Cordinates row, Cordinates column);
+	public abstract int CalculateReachableCells(Coordinates row, Coordinates column);
 	
-	public void addReachableCells(Cordinates coordinates)
+	public void addReachableCell(Coordinates coordinates)
 	{
-		for(int i = 1; i < reachableCellsCount - 1; i++)
+		if(reachableCellsCount >= reachableCells.length && coordinates != null)
 		{
-			reachableCells[i-1] = reachableCells[i];
+			reachableCells[reachableCellsCount] = coordinates;
 			reachableCellsCount++;
-			reachableCells[i] = coordinates;
 		}
+		
 	}
 	
-	public boolean isOneOfReachableCells(Cordinates coordinates)
+	public boolean isOneOfReachableCells(Coordinates coordinates)
 	{
 		if(reachableCellsCount > 0)
 		{

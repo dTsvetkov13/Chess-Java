@@ -3,17 +3,17 @@ package models;
 import common.Constants;
 import common.Validator;
 
-public class Cordinates
+public class Coordinates
 {
 	private int row;
 	private int column;
 	
-	public Cordinates()
+	public Coordinates()
 	{
 		this(Constants.MIN_ROW_VALUE, Constants.MIN_COLUMN_VALUE);
 	}
 	
-	public Cordinates(int row, int column)
+	public Coordinates(int row, int column)
 	{
 		setRow(row);
 		setColumn(column);
