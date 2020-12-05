@@ -11,7 +11,7 @@ import javax.swing.JComponent;
 import enums.FigureType;
 import enums.Team;
 
-public class UIFIFigureDrawer
+public class UIFigureDrawer
 {	
 	public static void drawfigure(FigureType figure , Graphics graphics , Team team)
 	{
