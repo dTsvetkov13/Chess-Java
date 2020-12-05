@@ -5,12 +5,12 @@ import enums.Team;
 
 public abstract class Figure 
 {
-	private Coordinates coordinates;
-	private Team team;
-	private boolean isMoved;
-	private FigureType type;
-	private Coordinates[] reachableCells;
-	private int reachableCellsCount;
+	protected Coordinates coordinates;
+	protected Team team;
+	protected boolean isMoved;
+	protected FigureType type;
+	protected Coordinates[] reachableCells;
+	protected int reachableCellsCount;
 	
 	public Figure(Coordinates coordinates, Team team, FigureType type)
 	{
@@ -54,7 +54,7 @@ public abstract class Figure
 		return reachableCellsCount;
 	}
 	
-	public abstract int CalculateReachableCells(Coordinates row, Coordinates column);
+	public abstract int CalculateReachableCells(Coordinates coordinates);
 	
 	public void addReachableCell(Coordinates coordinates)
 	{
