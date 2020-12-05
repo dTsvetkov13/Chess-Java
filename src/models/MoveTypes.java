@@ -4,9 +4,9 @@ public class MoveTypes
 {
 	static Board board = Board.getInstance();
 
-	public static boolean[] horizontal(Figure f) 
+	public static Coordinates[] horizontal(Figure f) 
 	{
-		boolean[] reachable = new boolean[8];
+		Coordinates[] reachable = new Coordinates[8];
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
 		if (col == 0) 
@@ -21,23 +21,23 @@ public class MoveTypes
 					{
 						for(int j = i; j < 8; j++) 
 						{
-							reachable[j] = false;
+							reachable[j] = new Coordinates(row, j);
 						}
 						break;
 					}
 					else 
 					{
-						reachable[i] = true;
+						reachable[i] = coor;
 						for(int j = i + 1; j < 8; j++)
 						{
-							reachable[j] = false;
+							reachable[j] = new Coordinates(row, j);
 						}
 						break;
 					}
 				}
 				else 
 				{
-					reachable[i] = true;
+					reachable[i] = coor;
 				}
 			}
 		}
@@ -54,23 +54,23 @@ public class MoveTypes
 					{
 						for(int j = i; j >= 0; j--) 
 						{
-							reachable[j] = false;
+							reachable[j] = new Coordinates(row, j);
 						}
 						break;
 					}
 					else 
 					{
-						reachable[i] = true;
+						reachable[i] = coor;
 						for(int j = i - 1; j >= 0; j--)
 						{
-							reachable[j] = false;
+							reachable[j] = new Coordinates(row, j);
 						}
 						break;
 					}
 				}
 				else 
 				{
-					reachable[i] = true;
+					reachable[i] = coor;
 				}
 			}
 		}
@@ -86,23 +86,23 @@ public class MoveTypes
 					{
 						for(int j = i; j < 8; j++) 
 						{
-							reachable[j] = false;
+							reachable[j] = new Coordinates(row, j);
 						}
 						break;
 					}
 					else 
 					{
-						reachable[i] = true;
+						reachable[i] = coor;
 						for(int j = i + 1; j < 8; j++)
 						{
-							reachable[j] = false;
+							reachable[j] = new Coordinates(row, j);
 						}
 						break;
 					}
 				}
 				else 
 				{
-					reachable[i] = true;
+					reachable[i] = coor;
 				}
 			}
 			
@@ -116,23 +116,23 @@ public class MoveTypes
 					{
 						for(int j = i; j >= 0; j--) 
 						{
-							reachable[j] = false;
+							reachable[j] = new Coordinates(row, j);
 						}
 						break;
 					}
 					else 
 					{
-						reachable[i] = true;
+						reachable[i] = coor;
 						for(int j = i - 1; j >= 0; j--)
 						{
-							reachable[j] = false;
+							reachable[j] = new Coordinates(row, j);
 						}
 						break;
 					}
 				}
 				else 
 				{
-					reachable[i] = true;
+					reachable[i] = coor;
 				}
 			}
 		}
