@@ -139,4 +139,10 @@ public class MoveTypes
 		
 		return reachable;
 	}
+	
+	public static Coordinates[] vertical(Figure f)
+	{
+		Coordinates[] reachable = new Coordinates[8];
+		return reachable;
+	}
 }
