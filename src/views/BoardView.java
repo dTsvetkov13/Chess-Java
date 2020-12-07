@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import common.Constants;
 import models.Board;
 import models.Coordinates;
 import models.Figure;
@@ -24,13 +25,28 @@ public class BoardView extends JPanel
 		Figure[][] figures = board.getAllFigures();
 		CellView tempCell;
 		
-		for(int i = 0; i < figures.length; i++)
+		if(true) //playerOnTurn.Team().equals(White)
 		{
-			for(int j = 0; j < figures[i].length; j++)
+			for(int row = 0; row < figures.length; row++)
 			{
-				tempCell = new CellView(figures[i][j]);
-				tempCell.setBounds(null); //TODO: set bounds
-				this.add(tempCell);
+				for(int column = 0; column < figures[row].length; column++)
+				{
+					tempCell = new CellView(figures[row][column]);
+					tempCell.setBounds(null); //TODO: set bounds
+					this.add(tempCell);
+				}
+			}	
+		}
+		else
+		{
+			for(int row = Constants.MAX_ROW_VALUE; row >= Constants.MIN_ROW_VALUE; row--)
+			{
+				for(int column = Constants.MAX_COLUMN_VALUE; column >= Constants.MIN_COLUMN_VALUE; column--)
+				{
+					tempCell = new CellView(figures[row][column]);
+					tempCell.setBounds(null); //TODO: set bounds
+					this.add(tempCell);
+				}
 			}
 		}
 	}
