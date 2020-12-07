@@ -4,21 +4,37 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
+import models.Figure;
+
 public class CellView extends JComponent
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private Figure figure;
 	
-	public CellView()
+	public CellView(Figure figure)
 	{
-		
+		this.setFigure(figure);
+	}
+	
+	private void setFigure(Figure figure)
+	{
+		if(figure != null)
+		{
+			this.figure = figure;
+		}
+		else
+		{
+			throw new IllegalArgumentException("");
+		}
+	}
+	
+	public Figure getFigure()
+	{
+		return this.figure;
 	}
 	
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		
+		//UIFigureDrawer.drawfigure(this.getFigure().getType(), g, this.getFigure().getTeam(), this.getBounds());
 	}
 }
