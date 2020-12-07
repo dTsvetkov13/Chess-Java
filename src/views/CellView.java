@@ -21,10 +21,6 @@ public class CellView extends JComponent
 		{
 			this.figure = figure;
 		}
-		else
-		{
-			throw new IllegalArgumentException("");
-		}
 	}
 	
 	public Figure getFigure()
@@ -35,6 +31,9 @@ public class CellView extends JComponent
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		//UIFigureDrawer.drawfigure(this.getFigure().getType(), g, this.getFigure().getTeam(), this.getBounds());
+		if(figure != null)
+		{
+			//UIFigureDrawer.drawfigure(this.getFigure().getType(), g, this.getFigure().getTeam(), this.getBounds());
+		}
 	}
 }
