@@ -1,6 +1,9 @@
 package views;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
@@ -10,6 +13,7 @@ import models.Coordinates;
 import models.Figure;
 
 public class BoardView extends JPanel
+					   implements MouseListener
 {	
 	private Coordinates lastClickedCell;
 	private Board board;
@@ -24,6 +28,9 @@ public class BoardView extends JPanel
 	{
 		Figure[][] figures = board.getAllFigures();
 		CellView tempCell;
+		Rectangle tempRect = new Rectangle(0, 0);
+		tempRect.width = this.getWidth() / (Constants.MAX_COLUMN_VALUE + 1);
+		tempRect.height = this.getHeight() / (Constants.MAX_ROW_VALUE + 1);
 		
 		if(true) //playerOnTurn.Team().equals(White)
 		{
@@ -32,10 +39,12 @@ public class BoardView extends JPanel
 				for(int column = 0; column < figures[row].length; column++)
 				{
 					tempCell = new CellView(figures[row][column]);
-					tempCell.setBounds(null); //TODO: set bounds
+					tempCell.setBounds(tempRect);
 					this.add(tempCell);
+					tempRect.x += tempRect.width;
 				}
-			}	
+			}
+			tempRect.y += tempRect.height;
 		}
 		else
 		{
@@ -44,9 +53,11 @@ public class BoardView extends JPanel
 				for(int column = Constants.MAX_COLUMN_VALUE; column >= Constants.MIN_COLUMN_VALUE; column--)
 				{
 					tempCell = new CellView(figures[row][column]);
-					tempCell.setBounds(null); //TODO: set bounds
+					tempCell.setBounds(tempRect);
 					this.add(tempCell);
+					tempRect.x += tempRect.width;
 				}
+				tempRect.y += tempRect.height;
 			}
 		}
 	}
@@ -58,5 +69,30 @@ public class BoardView extends JPanel
 		{
 			this.printComponent(this.getGraphics());
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0)
+	{
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0)
+	{		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0)
+	{
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0)
+	{	
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0)
+	{	
 	}
 }
