@@ -2,6 +2,7 @@ package models;
 
 import common.Constants;
 import common.Validator;
+import enums.Team;
 
 public class Board
 {
@@ -12,6 +13,14 @@ public class Board
 	{
 		figures = 
 			new Figure[Constants.MAX_COLUMN_VALUE + 1][Constants.MAX_COLUMN_VALUE + 1];
+		
+		setAllFigures();
+	}
+	
+	private void setAllFigures() //Black up and White down
+	{
+		//figures[0][0] = new Rook();
+		//...
 	}
 	
 	public static Board getInstance()
@@ -55,5 +64,11 @@ public class Board
 	public void moveFigure(Coordinates from, Coordinates to)
 	{
 		
+	}
+	
+	public int howManyFiguresReach(Coordinates coordinates, Team from)
+	{
+		
+		return 0;
 	}
 }
