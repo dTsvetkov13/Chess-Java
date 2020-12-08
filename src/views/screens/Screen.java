@@ -5,8 +5,8 @@ import javax.swing.JFrame;
 
 
 public abstract class Screen {
-	public static final int SCREEN_WIDTH = 800;
-	public static final int SCREEN_HEIGHT = 600;
+	public static final int SCREEN_WIDTH = 400;
+	public static final int SCREEN_HEIGHT = 500;
 	public static final Color BACKGROUND = new Color(238,232,170);
 	
 	private static JFrame window;
@@ -19,12 +19,12 @@ public abstract class Screen {
 		if (isFullScreen)
 		{
 			window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			window.setResizable(false);
 		}
 		else 
 		{
 			window.setBounds(100, 100, SCREEN_WIDTH, SCREEN_HEIGHT);
 		}
+		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setLayout(null);
 		window.setVisible(true);
