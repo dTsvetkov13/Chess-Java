@@ -11,6 +11,7 @@ public class MoveTypes
 		Coordinates[] reachable = new Coordinates[8];
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
+		//optimise this - 2 fors, for left/right, if it's the end it'll just not enter the for
 		if (col == 0) 
 		{
 			for (int i = col; i < 8; i++) 
@@ -147,6 +148,7 @@ public class MoveTypes
 		Coordinates[] reachable = new Coordinates[8];
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
+		//optimise this - 2 fors, for left/right, if it's the end it'll just not enter the for
 		if(row == 0)
 		{
 			for(int i = row; i < 8; i++)
@@ -386,4 +388,7 @@ public class MoveTypes
 		}
 		return reachable2;
 	}
+	
+	//Yova - knightMove, kingMove
+	//Boris - pawnMove, anPasan
 }
