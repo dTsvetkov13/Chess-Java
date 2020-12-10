@@ -6,9 +6,10 @@ import enums.Team;
 public class Bishop extends Figure 
 {
 
-	public Bishop(Coordinates coordinates, Team team, FigureType type)
+	public Bishop(Coordinates coordinates, Team team)
 	{
-		super(coordinates, team, type);
+		super(coordinates, team);
+		this.type = FigureType.Bishop;
 	}
 
 	@Override

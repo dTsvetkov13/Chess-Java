@@ -5,9 +5,10 @@ import enums.Team;
 
 public class Pawn extends Figure{
 
-	public Pawn(Coordinates coordinates, Team team, FigureType type) 
+	public Pawn(Coordinates coordinates, Team team) 
 	{
-		super(coordinates, team, type);
+		super(coordinates, team);
+		this.type = FigureType.Pawn;
 	}
 
 	@Override

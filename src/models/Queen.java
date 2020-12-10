@@ -6,9 +6,10 @@ import enums.Team;
 public class Queen extends Figure
 {
 
-	public Queen(Coordinates coordinates, Team team, FigureType type) 
+	public Queen(Coordinates coordinates, Team team) 
 	{
-		super(coordinates, team, type);
+		super(coordinates, team);
+		this.type = FigureType.Queen;
 	}
 
 	@Override

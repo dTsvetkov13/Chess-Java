@@ -12,14 +12,13 @@ public abstract class Figure
 	protected Coordinates[] reachableCells;
 	protected int reachableCellsCount;
 	
-	public Figure(Coordinates coordinates, Team team, FigureType type)
+	public Figure(Coordinates coordinates, Team team)
 	{
 		if(coordinates != null)
 		{
 			this.coordinates = coordinates;
 			this.team = team;
 			this.isMoved = false;
-			this.type = type;
 			this.reachableCells = new Coordinates[32]; // TO DO: make constant for it
 		}
 	}

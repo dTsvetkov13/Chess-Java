@@ -5,9 +5,10 @@ import enums.Team;
 
 public class Knight extends Figure
 {
-	public Knight(Coordinates coordinates, Team team, FigureType type)
+	public Knight(Coordinates coordinates, Team team)
 	{
-		super(coordinates, team, type);
+		super(coordinates, team);
+		this.type = FigureType.Knight;
 	}
 
 	@Override

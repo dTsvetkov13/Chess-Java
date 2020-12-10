@@ -6,9 +6,10 @@ import enums.Team;
 public class Rook extends Figure 
 {
 
-	public Rook(Coordinates coordinates, Team team, FigureType type) 
+	public Rook(Coordinates coordinates, Team team) 
 	{
-		super(coordinates, team, type);
+		super(coordinates, team);
+		this.type = FigureType.Rook;
 	}
 
 	@Override
