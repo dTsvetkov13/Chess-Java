@@ -388,6 +388,47 @@ public class MoveTypes
 		}
 		return reachable2;
 	}
+	public static Coordinates[] pawnMove(Figure f) 
+	{
+		Coordinates[] reachable = new Coordinates[3];
+		int row = f.getCoordinates().getRow();
+		int col = f.getCoordinates().getColumn();
+		int index=0;
+		Coordinates coor = new Coordinates(row-1, col);
+		Figure temp = board.getFigure(coor);
+		if(temp == null) 
+		{
+			reachable[index]=coor;
+			index++;
+		}
+		coor = new Coordinates(row-1, col+1);
+		temp = board.getFigure(coor);
+		if(temp != null) 
+		{
+			if(!temp.getTeam().equals(f.getTeam())) 
+			{
+				reachable[index]=coor;
+				index++;
+			}	
+		}
+		coor = new Coordinates(row-1, col-1);
+		temp = board.getFigure(coor);
+		if(temp != null) 
+		{
+			if(!temp.getTeam().equals(f.getTeam())) 
+			{
+				reachable[index]=coor;
+				index++;
+			}	
+		}
+		
+		Coordinates[] reachable2 = new Coordinates[index];
+		for(int i = 0; i < index; i++) 
+		{
+			reachable2[i]=reachable[i];
+		}
+		return reachable2;
+	}
 	
 	//Yova - knightMove, kingMove
 	//Boris - pawnMove, anPasan
