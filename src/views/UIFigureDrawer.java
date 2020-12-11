@@ -11,145 +11,84 @@ import javax.swing.JComponent;
 import enums.FigureType;
 import enums.Team;
 
-public class UIFIFigureDrawer
+public class UIFigureDrawer
 {	
-	public static void drawfigure(FigureType figure , Graphics graphics , Team team)
+	public static void drawfigure(FigureType figure, Graphics graphics, Team team, Rectangle bounds)
 	{
-		Rectangle bounds = new Rectangle(10 , 10 , 20 ,20);
+		if(team == Team.Black)
+		{
+			graphics.setColor(Color.black);
+		}
+		else
+		{
+			graphics.setColor(Color.white);
+		}
 		
 		switch(figure)
 		{
 			case Bishop:
 			{
-				if(team == Team.Black)
-				{
-					graphics.setColor(Color.BLACK);
-					graphics.fillPolygon(new int [] {20 , 30 , 40} , new int[] {40 , 20 , 40}, 3);
-					drawBishop(graphics);
-					break;
-				}
-				else
-				{
-					graphics.setColor(Color.white);
-					graphics.fillPolygon(new int [] {20 , 30 , 40} , new int[] {40 , 20 , 40}, 3);
-					drawBishop(graphics);
-					break;
-				}
-			
+				drawBishop(graphics, bounds);
+				break;
 			}
 			case Knight:
 			{
-				if(team == Team.Black)
-				{
-					graphics.setColor(Color.black);
-					graphics.fillRect(5, 5, 30, 10);
-					graphics.fillRect(5, 5, 10, 40);
-					drawKnight(graphics);
-					break;
-				}
-				else
-				{
-					graphics.setColor(Color.white);
-					graphics.fillRect(5, 5, 30, 10);
-					graphics.fillRect(5, 5, 10, 40);
-					drawKnight(graphics);
-					break;
-				}
+				drawKnight(graphics, bounds);
+				break;
 			}	
 			case Queen:
 			{
-				if(team == Team.Black)
-				{
-					graphics.setColor(Color.black);
-					graphics.fillOval(10, 10, 38, 38);
-					drawQueen(graphics);
-					break;
-				}
-				else
-				{
-					graphics.setColor(Color.white);
-					graphics.fillOval(10, 10, 38, 38);
-					drawQueen(graphics);
-					break;
-				}
+				drawQueen(graphics, bounds);
+				break;
 			}
 			case King:
 			{
-				if(team == Team.Black)
-				{
-					graphics.setColor(Color.BLACK);
-					graphics.fillRect(5, 17, 30, 10);
-					graphics.fillRect(15, 10, 10, 37);
-					drawKing(graphics);
-					break;
-				}
-				else
-				{
-					graphics.setColor(Color.white);
-					graphics.fillRect(5, 17, 30, 10);
-					graphics.fillRect(15, 10, 10, 37);
-					drawKing(graphics);
-					break;
-				}
+				drawKing(graphics, bounds);
+				break;
 			}
 			case Pawn:
 			{
-				if(team == Team.Black)
-				{
-					graphics.setColor(Color.black);
-					graphics.fillRect(10 , 10 , 20 ,20);
-					drawPawn(graphics , bounds);
-					break;
-				}
-				else
-				{
-					graphics.setColor(Color.white);
-					graphics.fillRect(10 , 10 , 20 ,20);
-					drawPawn(graphics , bounds);
-					break;
-				}
+				drawPawn(graphics, bounds);
+				break;	
 			}
 			case Rook:
 			{
-				if(team == Team.Black)
-				{
-					graphics.setColor(Color.BLACK);
-					graphics.fillRect(20, 20, 40, 40);
-					drawRook(graphics);
-					break;
-				}
-				else
-				{
-					graphics.setColor(Color.WHITE);
-					graphics.fillRect(20, 20, 40, 40);
-					drawRook(graphics);
-					break;
-				}
+				drawRook(graphics, bounds);
+				break;
 			}
 			
 		}
 	}
 	
-	private static void drawBishop (Graphics graphics)
+	private static void drawBishop (Graphics graphics, Rectangle bounds)
 	{
-		graphics.drawPolygon(new int [] {20 , 30 , 40} , new int[] {40 , 20 , 40}, 3); //magic numbers to be changed
+		var x = bounds.y + bounds.height;
+		var y = bounds.x + bounds.width;
+		
+		
+		graphics.drawPolygon(new int [] {20, 30, 40}, new int[] {40, 20, 40}, 3); //magic numbers to be changed
+		graphics.fillPolygon(new int [] {20, 30, 40}, new int[] {40, 20, 40}, 3);	
 	}
 	
-	private static void drawKnight(Graphics graphics)
+	private static void drawKnight(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		Rectangle2D.Double rect = new Rectangle2D.Double(5, 5, 30, 10);  //15 , 5 ,30 ,10 
-		Rectangle2D.Double rect2 = new Rectangle2D.Double(5, 5, 10, 40);
+		Rectangle2D.Double rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());  //5 , 5 ,30 ,10 
+		Rectangle2D.Double rect2 = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); //5, 5, 10, 40
 		graphics2D.draw(rect);
 		graphics2D.draw(rect2);
+		graphics2D.fill(rect);
+		graphics2D.fill(rect2);
 	}
 	
-	private static void drawQueen(Graphics graphics)
+	private static void drawQueen(Graphics graphics, Rectangle bounds)
 	{
-		graphics.drawOval(10, 10, 38, 38); 			//magic numbers to be changed
+		Graphics2D g = (Graphics2D) graphics;
+		graphics.drawOval(bounds.x, bounds.y, bounds.width, bounds.height);
+		graphics.fillOval(bounds.x, bounds.y, bounds.width, bounds.height);//10, 10, 38, 38
 	}
 	
-	private static void drawKing(Graphics graphics)
+	private static void drawKing(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		//graphics2D.drawLine(10, 10, 10, 50);
@@ -159,26 +98,29 @@ public class UIFIFigureDrawer
 		//graphics2D.drawLine(40, 30, 10, 30);
 		//graphics2D.drawLine(arg0, arg1, arg2, arg3);
 		//graphics2D.drawLine(-5, 10, 30, 20);	
-		Rectangle2D.Double rect = new Rectangle2D.Double(5, 17, 30, 10);
-		Rectangle2D.Double rect2 = new Rectangle2D.Double(15, 10, 10, 37);
+		Rectangle2D.Double rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); //5, 17, 30, 10
+		Rectangle2D.Double rect2 = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); //15, 10, 10, 37
 		
 		graphics2D.draw(rect);
 		graphics2D.draw(rect2);
+		graphics2D.fill(rect);
+		graphics2D.fill(rect2);
 	}
 	
-	private static void drawPawn(Graphics graphics , Rectangle bounds)
+	private static void drawPawn(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		Rectangle2D.Double rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), 
-														 bounds.getWidth(), bounds.getHeight()); //magic numbers to be changed
+														 bounds.getWidth(), bounds.getHeight()); 
 		graphics2D.draw(rect);
+		graphics2D.fill(rect);
 	}
 	
-	private static void drawRook(Graphics graphics)
+	private static void drawRook(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		
-		Rectangle2D.Double rect = new Rectangle2D.Double(20, 20, 40, 40);  //magic numbers to be changed
+		Rectangle2D.Double rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); 
 		graphics2D.draw(rect);
+		graphics2D.fill(rect);
 	}
 }
