@@ -90,7 +90,8 @@ public class UIFigureDrawer
 	
 	private static void drawKing(Graphics graphics, Rectangle bounds)
 	{
-		Graphics2D graphics2D = (Graphics2D) graphics;	
+		Graphics2D graphics2D = (Graphics2D) graphics;
+		
 		Rectangle2D.Double rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); //5, 17, 30, 10
 		Rectangle2D.Double rect2 = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); //15, 10, 10, 37
 		
