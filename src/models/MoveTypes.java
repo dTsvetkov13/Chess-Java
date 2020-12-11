@@ -9,138 +9,88 @@ public class MoveTypes
 	public static Coordinates[] horizontal(Figure f) 
 	{
 		Coordinates[] reachable = new Coordinates[8];
+		int index = 0;
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
-		//optimise this - 2 fors, for left/right, if it's the end it'll just not enter the for
-		if (col == 0) 
+		
+		//this for calculates the reachable cells to the right of the figure
+		for(int i = col; i <= 7; i++)
 		{
-			for (int i = col; i < 8; i++) 
+			Coordinates coor = new Coordinates(row, i);
+			Figure temp = board.getFigure(coor);
+			if(temp != null)
 			{
-				Coordinates coor = new Coordinates(row, i);
-				Figure temp = board.getFigure(coor);
-				if (temp != null) 
+				if(temp.getTeam().equals(f.getTeam()))
 				{
-					if (temp.getTeam().equals(f.getTeam())) 
+					for(int j = i; j <= 7; j++)
 					{
-						for(int j = i; j < 8; j++) 
-						{
-							reachable[j] = null;
-						}
-						break;
+						reachable[j] = null;
 					}
-					else 
-					{
-						reachable[i] = coor;
-						for(int j = i + 1; j < 8; j++)
-						{
-							reachable[j] = null;
-						}
-						break;
-					}
+					break;
 				}
-				else 
+				else
 				{
 					reachable[i] = coor;
+					index++;
+					for(int j = i + 1; j < 8; j++)
+					{
+						reachable[j] = null;
+					}
+					break;
 				}
+			}
+			else
+			{
+				reachable[i] = coor;
+				index++;
 			}
 		}
 		
-		else if(col == 7)
+		//this for calculates the reachable cells to the left of the figure
+		for(int i = col; i >= 0; i--)
 		{
-			for(int i = col; i >= 0; i--)
+			Coordinates coor = new Coordinates(row, i);
+			Figure temp = board.getFigure(coor);
+			if(temp != null)
 			{
-				Coordinates coor = new Coordinates(row, i);
-				Figure temp = board.getFigure(coor);
-				if (temp != null) 
+				if(temp.getTeam().equals(f.getTeam()))
 				{
-					if (temp.getTeam().equals(f.getTeam())) 
+					for(int j = i; j >= 0; j--)
 					{
-						for(int j = i; j >= 0; j--) 
-						{
-							reachable[j] = null;
-						}
-						break;
+						reachable[j] = null;
 					}
-					else 
-					{
-						reachable[i] = coor;
-						for(int j = i - 1; j >= 0; j--)
-						{
-							reachable[j] = null;
-						}
-						break;
-					}
+					break;
 				}
-				else 
+				else
 				{
 					reachable[i] = coor;
+					index++;
+					for(int j = i - 1; j >= 0; j--)
+					{
+						reachable[j] = null;
+					}
+					break;
 				}
+			}
+			else
+			{
+				reachable[i] = coor;
+				index++;
 			}
 		}
-		else 
+		//this for makes a Coordinates array with no nulls
+		Coordinates[] result = new Coordinates[index];
+		index = 0;
+		for(int i = 0; i < reachable.length; i++)
 		{
-			for (int i = col; i < 8; i++) 
+			if(reachable[i] != null)
 			{
-				Coordinates coor = new Coordinates(row, i);
-				Figure temp = board.getFigure(coor);
-				if (temp != null) 
-				{
-					if (temp.getTeam().equals(f.getTeam())) 
-					{
-						for(int j = i; j < 8; j++) 
-						{
-							reachable[j] = null;
-						}
-						break;
-					}
-					else 
-					{
-						reachable[i] = coor;
-						for(int j = i + 1; j < 8; j++)
-						{
-							reachable[j] = null;
-						}
-						break;
-					}
-				}
-				else 
-				{
-					reachable[i] = coor;
-				}
-			}
-			
-			for(int i = col; i >= 0; i--)
-			{
-				Coordinates coor = new Coordinates(row, i);
-				Figure temp = board.getFigure(coor);
-				if (temp != null) 
-				{
-					if (temp.getTeam().equals(f.getTeam())) 
-					{
-						for(int j = i; j >= 0; j--) 
-						{
-							reachable[j] = null;
-						}
-						break;
-					}
-					else 
-					{
-						reachable[i] = coor;
-						for(int j = i - 1; j >= 0; j--)
-						{
-							reachable[j] = null;
-						}
-						break;
-					}
-				}
-				else 
-				{
-					reachable[i] = coor;
-				}
+				result[index] = reachable[i];
+				index++;
 			}
 		}
 		
-		return reachable;
+		return result;
 	}
 	
 	public static Coordinates[] vertical(Figure f)
@@ -148,127 +98,84 @@ public class MoveTypes
 		Coordinates[] reachable = new Coordinates[8];
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
-		//optimise this - 2 fors, for left/right, if it's the end it'll just not enter the for
-		if(row == 0)
+		int index = 0;
+		
+		//this for calculates the reachable cells above the figure
+		for(int i = row; i <= 7; i++)
 		{
-			for(int i = row; i < 8; i++)
+			Coordinates coor = new Coordinates(i, col);
+			Figure temp = board.getFigure(coor);
+			if(temp != null)
 			{
-				Coordinates coor = new Coordinates(i, col);
-				Figure temp = board.getFigure(coor);
-				if(temp != null)
+				if(temp.getTeam().equals(f.getTeam()))
 				{
-					if(temp.getTeam().equals(f.getTeam()))
+					for(int j = i; j <= 7; j++)
 					{
-						for(int j = i; j < 8; j++)
-						{
-							reachable[j] = null;
-						}
-						break;
+						reachable[j] = null;
 					}
-					else
-					{
-						reachable[i] = coor;
-						for(int j = i + 1; j < 8; j++)
-						{
-							reachable[j] = null;
-						}
-						break;
-					}
+					break;
 				}
 				else
 				{
 					reachable[i] = coor;
+					index++;
+					for(int j = i + 1; j <= 7; j++)
+					{
+						reachable[j] = null;
+					}
 				}
 			}
-		}
-		else if(row == 7)
-		{
-			for(int i = row; i >= 0; i--)
+			else
 			{
-				Coordinates coor = new Coordinates(i, col);
-				Figure temp = board.getFigure(coor);
-				if(temp != null)
-				{
-					if(temp.getTeam().equals(f.getTeam()))
-					{
-						for(int j = i; j >= 0; j--)
-							reachable[j] = null;
-						break;
-					}
-					else 
-					{
-						reachable[i] = coor;
-						for(int j = i - 1; j >= 0; j--)
-							reachable[j] = null;
-						break;
-					}
-				}
-				else
-				{
-					reachable[i] = coor;
-				}
-			}
-		}
-		else
-		{
-			for(int i = row; i < 8; i++)
-			{
-				Coordinates coor = new Coordinates(i, col);
-				Figure temp = board.getFigure(coor);
-				if(temp != null)
-				{
-					if(temp.getTeam().equals(f.getTeam()))
-					{
-						for(int j = i; j < 8; j++)
-						{
-							reachable[j] = null;
-						}
-						break;
-					}
-					else
-					{
-						reachable[i] = coor;
-						for(int j = i + 1; j < 8; j++)
-						{
-							reachable[j] = null;
-						}
-						break;
-					}
-				}
-				else
-				{
-					reachable[i] = coor;
-				}
-			}
-			
-			for(int i = row; i >= 0; i--)
-			{
-				Coordinates coor = new Coordinates(i, col);
-				Figure temp = board.getFigure(coor);
-				if(temp != null)
-				{
-					if(temp.getTeam().equals(f.getTeam()))
-					{
-						for(int j = i; j >= 0; j--)
-							reachable[j] = null;
-						break;
-					}
-					else 
-					{
-						reachable[i] = coor;
-						for(int j = i - 1; j >= 0; j--)
-							reachable[j] = null;
-						break;
-					}
-				}
-				else
-				{
-					reachable[i] = coor;
-				}
+				reachable[i] = coor;
+				index++;
 			}
 		}
 		
-		return reachable;
+		//this for calculates the reachable cells below the figure
+		for(int i = row; i >= 0; i--)
+		{
+			Coordinates coor = new Coordinates(i, col);
+			Figure temp = board.getFigure(coor);
+			if(temp != null)
+			{
+				if(temp.getTeam().equals(f.getTeam()))
+				{
+					for(int j = i; j >= 0; j--)
+					{
+						reachable[j] = null;
+					}
+				}
+				else
+				{
+					reachable[i] = coor;
+					index++;
+					for(int j = i - 1; j >= 0; j--)
+					{
+						reachable[j] = null;
+					}
+				}
+			}
+			else
+			{
+				reachable[i] = coor;
+				index++;
+			}
+		}
+		
+		//this for creates a Coordinates array with no nulls
+		Coordinates[] result = new Coordinates[index];
+		index = 0;
+		for(int i = 0; i < reachable.length; i++)
+		{
+			if(reachable[i] != null)
+			{
+				result[index] = reachable[i];
+				index++;
+			}
+		}
+		
+		return result;
 	}
 	
 	public static Coordinates[] diagonal(Figure f) {
@@ -429,6 +336,8 @@ public class MoveTypes
 		}
 		return reachable2;
 	}
+	
+
 	
 	//Yova - knightMove, kingMove
 	//Boris - pawnMove, anPasan
