@@ -78,6 +78,25 @@ public class BoardView extends JPanel
 		int y = mouseEvent.getY();
 		
 		Coordinates figureCoor = this.calculateExactCoordinates(x, y);
+		
+		Figure clickedFigure = Board.getInstance().getFigure(figureCoor);
+		
+		if(clickedFigure != null) 
+		{
+			//if(clickedFigure.getTeam().equals(currentPlayer.getTeam()))
+			{
+				lastClickedCell = clickedFigure.getCoordinates();
+				//call listener onFigureClicked
+			}
+			//else if(Board.getInstance().getFigure(lastClickedCell).getTeam() == currentPlayer.getTeam())
+			{
+				 //call listener onDestinationClicked
+			}
+		}
+		else
+		{
+			//Click again
+		}
 	}
 
 	@Override
