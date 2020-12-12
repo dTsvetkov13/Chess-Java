@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import common.Constants;
 import models.Board;
 import models.Coordinates;
-import models.Figure;
+import models.figures.Figure;
 
 public class BoardView extends JPanel
 					   implements MouseListener
@@ -32,7 +32,7 @@ public class BoardView extends JPanel
 		tempRect.width = this.getWidth() / (Constants.MAX_COLUMN_VALUE + 1);
 		tempRect.height = this.getHeight() / (Constants.MAX_ROW_VALUE + 1);
 		
-		if(true) //playerOnTurn.Team().equals(White)
+		if(true) //playerOnTurn.getTeam().equals(White)
 		{
 			for(int row = 0; row < figures.length; row++)
 			{
@@ -72,27 +72,48 @@ public class BoardView extends JPanel
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0)
+	public void mouseClicked(MouseEvent mouseEvent)
 	{
+		int x = mouseEvent.getX();
+		int y = mouseEvent.getY();
+		
+		Coordinates figureCoor = this.calculateExactCoordinates(x, y);
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0)
+	public void mouseEntered(MouseEvent mouseEvent)
 	{		
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0)
+	public void mouseExited(MouseEvent mouseEvent)
 	{
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0)
+	public void mousePressed(MouseEvent mouseEvent)
 	{	
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0)
+	public void mouseReleased(MouseEvent mouseEvent)
 	{	
+	}
+	
+	private Coordinates calculateExactCoordinates(int x, int y)
+	{
+		int cellWidth = this.getWidth() / (Constants.MAX_COLUMN_VALUE + 1);
+		int cellHeight = this.getHeight() / (Constants.MAX_ROW_VALUE + 1);
+		
+		int row = y / cellHeight; //TODO: see if it will break when y is max
+		int column = x / cellWidth; //TODO: see if it will break when x is max
+		
+		if(true) //playerOnTurn.getTeam().equals(Black)
+		{
+			row = Constants.MAX_ROW_VALUE - row;
+			column = Constants.MAX_COLUMN_VALUE - column;
+		}
+		
+		return new Coordinates(row, column);
 	}
 }
