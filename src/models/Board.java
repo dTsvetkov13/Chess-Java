@@ -3,6 +3,8 @@ package models;
 import common.Constants;
 import common.Validator;
 import enums.Team;
+import models.figures.Figure;
+import models.figures.*;
 
 public class Board
 {
@@ -19,8 +21,31 @@ public class Board
 	
 	private void setAllFigures() //Black up and White down
 	{
-		//figures[0][0] = new Rook();
-		//...
+		Team team = Team.Black;
+		figures[0][0] = new Rook(new Coordinates(0, 0), team);
+		figures[0][1] = new Knight(new Coordinates(0, 1), team);
+		figures[0][2] = new Bishop(new Coordinates(0, 2), team);
+		figures[0][3] = new Queen(new Coordinates(0, 3), team);
+		figures[0][4] = new King(new Coordinates(0, 4), team);
+		figures[0][5] = new Bishop(new Coordinates(0, 5), team);
+		figures[0][6] = new Knight(new Coordinates(0, 6), team);
+		figures[0][7] = new Rook(new Coordinates(0, 7), team);
+		
+		team = Team.White;
+		figures[7][0] = new Rook(new Coordinates(7, 0), team);
+		figures[7][1] = new Knight(new Coordinates(7, 1), team);
+		figures[7][2] = new Bishop(new Coordinates(7, 2), team);
+		figures[7][3] = new Queen(new Coordinates(7, 3), team);
+		figures[7][4] = new King(new Coordinates(7, 4), team);
+		figures[7][5] = new Bishop(new Coordinates(7, 5), team);
+		figures[7][6] = new Knight(new Coordinates(7, 6), team);
+		figures[7][7] = new Rook(new Coordinates(7, 7), team);
+		
+		for(int i = 0; i <= Constants.MAX_COLUMN_VALUE; i++)
+		{
+			figures[1][i] = new Pawn(new Coordinates(1, i), Team.Black);
+			figures[6][i] = new Pawn(new Coordinates(6, i), Team.White);
+		}
 	}
 	
 	public static Board getInstance()
