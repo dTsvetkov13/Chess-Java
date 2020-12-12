@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import javax.swing.JFrame;
 
 import views.screens.MenuScreen;
+import views.screens.Screen;
 
 public class Game
 {
@@ -46,5 +47,18 @@ public class Game
 	{
 		window.setVisible(true);
 		//window.add(new MenuScreen("Menu", isOnFullScreen));
+	}
+	
+	public void addScreen(Screen screen)
+	{
+		if(screen != null)
+		{
+			//this.window.add(screen);	
+		}
+	}
+	
+	public JFrame getWindow()
+	{
+		return this.window;
 	}
 }
