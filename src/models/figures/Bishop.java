@@ -1,7 +1,8 @@
-package models;
+package models.figures;
 
 import enums.FigureType;
 import enums.Team;
+import models.Coordinates;
 
 public class Bishop extends Figure 
 {

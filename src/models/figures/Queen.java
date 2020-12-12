@@ -1,15 +1,16 @@
-package models;
+package models.figures;
 
 import enums.FigureType;
 import enums.Team;
+import models.Coordinates;
 
-public class Rook extends Figure 
+public class Queen extends Figure
 {
 
-	public Rook(Coordinates coordinates, Team team) 
+	public Queen(Coordinates coordinates, Team team) 
 	{
 		super(coordinates, team);
-		this.type = FigureType.Rook;
+		this.type = FigureType.Queen;
 	}
 
 	@Override
