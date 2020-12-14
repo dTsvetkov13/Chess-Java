@@ -1,6 +1,7 @@
 package models;
 
 import common.Constants;
+import models.figures.Figure;
 
 public class MoveTypes 
 {
@@ -336,6 +337,7 @@ public class MoveTypes
 		}
 		return reachable2;
 	}
+	
 	
 
 	
