@@ -14,7 +14,7 @@ public class Rook extends Figure
 	}
 
 	@Override
-	public int CalculateReachableCells(Coordinates coordinates) 
+	public int CalculateReachableCells() 
 	{
 		return 0;
 	}

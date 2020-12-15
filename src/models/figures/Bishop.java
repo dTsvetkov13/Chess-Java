@@ -13,8 +13,9 @@ public class Bishop extends Figure
 		this.type = FigureType.Bishop;
 	}
 
+
 	@Override
-	public int CalculateReachableCells(Coordinates coordinates) 
+	public int CalculateReachableCells() 
 	{
 		return 0;
 	}

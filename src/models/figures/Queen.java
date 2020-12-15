@@ -14,9 +14,9 @@ public class Queen extends Figure
 	}
 
 	@Override
-	public int CalculateReachableCells(Coordinates coordinates) 
+	public int CalculateReachableCells() 
 	{
-		return 0;
+			return 0;
 	}
 
 }

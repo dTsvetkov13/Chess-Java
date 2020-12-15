@@ -14,8 +14,8 @@ public class King extends Figure
 	}
 
 	@Override
-	public int CalculateReachableCells(Coordinates coordinates) 
-	{	
+	public int CalculateReachableCells() 
+	{
 		return 0;
 	}
 

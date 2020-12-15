@@ -54,7 +54,7 @@ public abstract class Figure
 		return reachableCellsCount;
 	}
 	
-	public abstract int CalculateReachableCells(Coordinates coordinates);
+	public abstract int CalculateReachableCells();
 	
 	public void addReachableCell(Coordinates coordinates)
 	{
