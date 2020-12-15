@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
-import models.Figure;
+import models.figures.Figure;
 
 public class CellView extends JComponent
 {
