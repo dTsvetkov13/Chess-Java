@@ -9,6 +9,7 @@ public class Player {
 	private String username;
 	private Team Team;
 	private Figure[] takenFigures;
+	private int takenFiguresIndex;
 	
 	public String getUsername()
 	{
@@ -21,6 +22,10 @@ public class Player {
 	public Figure[] getTakenFigures()
 	{
 		return takenFigures;
+	}
+	public int getTakenFiguresIndex()
+	{
+		return takenFiguresIndex;
 	}
 	public void setUsername(String username) 
 	{
@@ -37,22 +42,29 @@ public class Player {
 	//TO DO: should be optimize
 	public Player()
 	{
-		this.username = "Player1";
-		this.Team = Team.Black;
-		this.takenFigures = new Figure[Constants.MAX_FIGURES_TAKEN_COUNT] ;
-		
+		setUsername("Player1");
+		setTeam(Team.Black);
+		setTakenFigures(new Figure[Constants.MAX_FIGURES_TAKEN_COUNT]);
 	}	
-	public Player(String username, Team Team )
+	public Player(String username, Team Team)
 	{
-		Team t = Team.Black;
-		this.username = username;
-		this.Team = Team;
+		setUsername(username);
+		setTeam(Team);
+		setTakenFigures(new Figure[Constants.MAX_FIGURES_TAKEN_COUNT]);
 	}
 	public Player(String username, Team Team, Figure[] takenFigures)
 	{
-		this.username = username;
-		this.Team = Team;
-		this.takenFigures = takenFigures;
+		setUsername(username);
+		setTeam(Team);
+		setTakenFigures(takenFigures);
+	}
+	public void addTakenFigures(Figure takenFigure)
+	{
+		if (takenFigures!= null && takenFiguresIndex < takenFigures.length ) 
+		{
+			takenFigures[takenFiguresIndex] = takenFigure;
+			takenFiguresIndex++;
+		}
 	}
 	
 	
