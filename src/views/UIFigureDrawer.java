@@ -65,9 +65,12 @@ public class UIFigureDrawer
 		var x = bounds.y + bounds.height;
 		var y = bounds.x + bounds.width;
 		
-		
-		graphics.drawPolygon(new int [] {20, 30, 40}, new int[] {40, 20, 40}, 3); //magic numbers to be changed
-		graphics.fillPolygon(new int [] {20, 30, 40}, new int[] {40, 20, 40}, 3);	
+		graphics.drawPolygon(new int[] {bounds.x, bounds.x + bounds.width, bounds.x + bounds.width / 2}, 
+							new int[] {bounds.y, bounds.y + bounds.height, bounds.y + bounds.height}, 3);
+		//graphics.drawPolygon(new int [] {20, 30, 40}, new int[] {40, 20, 40}, 3); //magic numbers to be changed
+		//graphics.fillPolygon(new int [] {20, 30, 40}, new int[] {40, 20, 40}, 3);	
+		graphics.fillPolygon(new int[] {bounds.x, bounds.x + bounds.width, bounds.x + bounds.width / 2}, 
+							new int[] {bounds.y, bounds.y + bounds.height, bounds.y + bounds.height}, 3);
 	}
 	
 	private static void drawKnight(Graphics graphics, Rectangle bounds)
@@ -91,9 +94,8 @@ public class UIFigureDrawer
 	private static void drawKing(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		
 		Rectangle2D.Double rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); //5, 17, 30, 10
-		Rectangle2D.Double rect2 = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); //15, 10, 10, 37
+		Rectangle2D.Double rect2 = new Rectangle2D.Double(bounds.getX() + 10, bounds.getY() - 7, bounds.getWidth() - 20, bounds.getHeight() + 27); //15, 10, 10, 37
 		
 		graphics2D.draw(rect);
 		graphics2D.draw(rect2);
