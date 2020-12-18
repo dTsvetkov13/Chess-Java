@@ -2,15 +2,15 @@ package views.screens;
 
 import java.awt.Color;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
-public abstract class Screen {
+public abstract class Screen extends JPanel{
 	public static final int SCREEN_WIDTH = 400;
 	public static final int SCREEN_HEIGHT = 500;
 	public static final Color BACKGROUND = new Color(238,232,170);
 	
 	private static JFrame window;
-	//private static boolean isFullScreen;
 	
 	public Screen (String name, boolean isFullScreen)
 	{

@@ -41,7 +41,7 @@ public class EndingScreen extends Screen{
 		JLabel congratilations = new JLabel("Congratulations\n");
 		congratilations.setFont(new Font("Arial", Font.PLAIN, 30));
 		congratilations.setBounds(x, y, SCREEN_WIDTH - x, h);
-		super.getWindow().add(congratilations);
+		this.add(congratilations);
 		
 		String player = "Johnny63_13";//change with name of Player class
 		JLabel winer = new JLabel();
@@ -50,7 +50,7 @@ public class EndingScreen extends Screen{
 		x = centerHorizontallyX(winer.getText());
 		y += h + 20;
 		winer.setBounds(x, y, SCREEN_WIDTH - x, h);
-		super.getWindow().add(winer);
+		this.add(winer);
 	}
 	
 	//add action on button
@@ -62,7 +62,7 @@ public class EndingScreen extends Screen{
 		newGame.setFont(new Font("Arial", Font.PLAIN, 30));
 		newGame.setBounds(BTN_X, y, BTN_WIDTH, BTN_HEIGHT);
 		//add action
-		super.getWindow().add(newGame);
+		this.add(newGame);
 	}
 	
 	private void drawBtnExit()
@@ -76,6 +76,6 @@ public class EndingScreen extends Screen{
 			  System.exit(0);
 			 }
 		});
-		super.getWindow().add(exit);
+		this.add(exit);
 	}
 }

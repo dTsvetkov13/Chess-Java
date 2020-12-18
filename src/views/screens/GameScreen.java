@@ -37,7 +37,7 @@ public class GameScreen extends Screen{
 		information.setBounds(5, 5, SMALL_SQUARE_SIZE / 2, SMALL_SQUARE_SIZE / 2);
 		information.setBackground(INFORMATION);
 		information.setVisible(true);
-		super.getWindow().add(information);
+		this.add(information);
 	}
 	
 	private void drawPanelOfLostFigures(int x, int y)
@@ -46,7 +46,7 @@ public class GameScreen extends Screen{
 		pnlLostFigures.setBounds(x, y, LOST_FIGURES_WIDTH, LOST_FIGURES_HEIGHT);
 		pnlLostFigures.setBackground(FIGURE_LOST);
 		pnlLostFigures.setVisible(true);
-		super.getWindow().add(pnlLostFigures);
+		this.add(pnlLostFigures);
 	}
 	
 	private void drawPanelsOfLostFigures()
@@ -66,7 +66,7 @@ public class GameScreen extends Screen{
 		panel.setBounds(x, y, BOARD_SIZE, SMALL_SQUARE_SIZE);
 		panel.setBackground(Color.black);
 		panel.setVisible(true);
-		super.getWindow().add(panel);
+		this.add(panel);
 	}
 	
 	private void makePanelVertically(int x, int y)
@@ -75,7 +75,7 @@ public class GameScreen extends Screen{
 		panel.setBounds(x, y, SMALL_SQUARE_SIZE, BOARD_SIZE);
 		panel.setBackground(Color.black);
 		panel.setVisible(true);
-		super.getWindow().add(panel);
+		this.add(panel);
 	}
 	
 	//draw panels for letters(A-H) and numbers(1-8) 
