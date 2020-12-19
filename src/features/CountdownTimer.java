@@ -5,10 +5,11 @@ import java.util.TimerTask;
 
 public class CountdownTimer 
 {
-	private static int interval;
+	private static int intervalSeconds;
+	private static int intervalMinutes;
 	private static Timer timer;
-	private static int seconds;
-	private static int minutes;
+	private int seconds;
+	private int minutes;
 	private int delay;
     private int period;
 
@@ -16,9 +17,10 @@ public class CountdownTimer
 	public CountdownTimer(int seconds, int minutes)
 	{
 		setSeconds(seconds);
-		interval = seconds;
-		timer = new Timer();
+		intervalSeconds = seconds;
 		setMinutes(minutes);
+		intervalMinutes = minutes;
+		timer = new Timer();
 		delay = 1000;
 	    period = 1000;
 	}
@@ -50,28 +52,31 @@ public class CountdownTimer
 
 	        public void run() 
 	        {
-	            System.out.println(setInterval());
+	        	while(getSeconds() > 0)
+	        		System.out.println(setInterval(getMinutes(), getSeconds()));
 
 	        }
 	    }, delay, period);
 	}
 	
-	private static final int setInterval() 
+	private static final int setInterval(int minutes, int seconds) 
 	{
-		while(minutes >= 0 && seconds >= 0 && minutes <= 59 && seconds <= 59)
+		while(seconds >= 0 && seconds <= 59 && minutes >= 0 && minutes <= 59)
 		{
-		    if(interval == 1)
-			    timer.cancel();
-		    else if(seconds > 0)
-			    return --interval;
-		    else 
+		    if(seconds > 0) 
 		    {
-		    	return minutes -= 1 + --interval;
+		    	return --intervalSeconds;
+		    }    
+		    else
+		    {
+		    	intervalMinutes -= 1;
+		    	intervalSeconds = 59;    	
 		    }
 		}
 		return -1;
 	}
 	
+
 	public String toString()
 	{
 		String result = String.format("Timer: %d : %d", getMinutes(), getSeconds());

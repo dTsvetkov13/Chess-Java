@@ -9,8 +9,8 @@ public class TestTimer {
 		Scanner sc = new Scanner(System.in);
 		int secs = sc.nextInt();
 		int min = sc.nextInt();
-		CountdownTimer timer = new CountdownTimer(3, 54);
-		timer.countdown(3, 54);
+		CountdownTimer timer = new CountdownTimer(min, secs);
+		timer.countdown(min, secs);
 		System.out.println(timer.toString());
 	}
 
