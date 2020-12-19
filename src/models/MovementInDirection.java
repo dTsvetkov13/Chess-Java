@@ -3,7 +3,8 @@ package models;
 import enums.Directions;
 import models.figures.Figure;
 
-public class MovementInDirection {
+public class MovementInDirection 
+{
 	private Directions direction;
 	private Coordinates[] move;
 	
