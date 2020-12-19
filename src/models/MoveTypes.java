@@ -350,7 +350,7 @@ public class MoveTypes
 		int index = 0;
 		MovementInDirection[] reachableTemp = new MovementInDirection[8];
 		
-		//this checks for possible moves in row below the King's, if it exists
+		//checks for possible moves in row below the King's, if it exists
 		for(int i = row - 1, j = col - 1, count = 0; i >= 0 && count <= 2; j++, count++)
 		{
 			if(j >= 0 && j <= 7)
@@ -407,6 +407,7 @@ public class MoveTypes
 			}
 		}
 		
+		//checks for possible moves in the row above the King's, if it exists 
 		for(int i = row + 1, j = col - 1, count = 0;i <= 7 && count <= 2; j++, count++)
 		{
 			if(j >= 0 && j <= 7)
@@ -461,6 +462,7 @@ public class MoveTypes
 			}
 		}
 		
+		//checks for a possible move to the left of the King, if such cell exists
 		if((col - 1) >= 0)
 		{
 			Coordinates coor = new Coordinates(row, col - 1);
@@ -486,6 +488,7 @@ public class MoveTypes
 			}
 		}
 		
+		//checks for a possible move to the right of the King, if such a cell exists
 		if((col + 1) <= 7)
 		{
 			Coordinates coor = new Coordinates(row, col + 1);
@@ -514,6 +517,215 @@ public class MoveTypes
 		MovementInDirection[] reachable = new MovementInDirection[index];
 		
 		index = 0;
+		for(int i = 0; i < reachableTemp.length; i++)
+		{
+			if(reachableTemp[i] != null)
+			{
+				reachable[index] = reachableTemp[i];
+				index++;
+			}
+		}
+		
+		return reachable;
+	}
+	
+	public static MovementInDirection[] knightMove(Figure f)
+	{
+		//could do with some optimising, I guess
+		int row = f.getCoordinates().getRow();
+		int col = f.getCoordinates().getColumn();
+		MovementInDirection[] reachableTemp = new MovementInDirection[8];
+		int index = 0;
+		
+		//checks for possible moves in row two times below the Knight's, if it exists
+		for(int i = row - 2, j = col - 1, count = 0; i >= 0 && count <= 1; j += 2, count++)
+		{
+			if(j >= 0 && j <= 7)
+			{
+				Coordinates coor = new Coordinates(i, j);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(!temp.getTeam().equals(f.getTeam()))
+					{
+						Coordinates[] reachable1 = new Coordinates[1];
+						reachable1[0] = coor;
+						MovementInDirection m;
+						if(j == col - 1)
+						{
+							m = new MovementInDirection(Directions.LowerLeft, reachable1);
+						}
+						else
+						{
+							m = new MovementInDirection(Directions.LowerRight, reachable1);
+						}
+						reachableTemp[index] = m;
+						index++;
+					}
+				}
+				else
+				{
+					Coordinates[] reachable1 = new Coordinates[1];
+					reachable1[0] = coor;
+					MovementInDirection m;
+					if(j == col - 1)
+					{
+						m = new MovementInDirection(Directions.LowerLeft, reachable1);
+					}
+					else
+					{
+						m = new MovementInDirection(Directions.LowerRight, reachable1);
+					}
+					reachableTemp[index] = m;
+					index++;
+				}
+			}
+		}
+		
+		//checks for possible moves in row below Knight's, if it exists
+		for(int i = row - 1, j = col - 2, count = 0; i >= 0 && count <= 1; j += 4, count++)
+		{
+			if(j >= 0 && j <= 7)
+			{
+				Coordinates coor = new Coordinates(i, j);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(!temp.getTeam().equals(f.getTeam()))
+					{
+						Coordinates[] reachable1 = new Coordinates[1];
+						reachable1[0] = coor;
+						MovementInDirection m;
+						if(j == col - 2)
+						{
+							m = new MovementInDirection(Directions.LowerLeft, reachable1);
+						}
+						else
+						{
+							m = new MovementInDirection(Directions.LowerRight, reachable1);
+						}
+						reachableTemp[index] = m;
+						index++;
+					}
+				}
+				else
+				{
+					Coordinates[] reachable1 = new Coordinates[1];
+					reachable1[0] = coor;
+					MovementInDirection m;
+					if(j == col - 2)
+					{
+						m = new MovementInDirection(Directions.LowerLeft, reachable1);
+					}
+					else
+					{
+						m = new MovementInDirection(Directions.LowerRight, reachable1);
+					}
+					reachableTemp[index] = m;
+					index++;
+				}
+			}
+		}
+		
+		//checks for possible moves in row two times above Knight's, if it exists
+		for(int i = row + 2, j = col - 1, count = 0; i <= 7 && count <= 1; j += 2, count++)
+		{
+			if(j >= 0 && j <= 7)
+			{
+				Coordinates coor = new Coordinates(i, j);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(!temp.getTeam().equals(f.getTeam()))
+					{
+						Coordinates[] reachable2 = new Coordinates[1];
+						reachable2[0] = coor;
+						MovementInDirection m;
+						if(j == col - 1)
+						{
+							m = new MovementInDirection(Directions.UpperLeft, reachable2);
+						}
+						else
+						{
+							m = new MovementInDirection(Directions.UpperRight, reachable2);
+						}
+						reachableTemp[index] = m;
+						index++;
+					}
+				}
+				else
+				{
+					Coordinates[] reachable2 = new Coordinates[1];
+					reachable2[0] = coor;
+					MovementInDirection m;
+					if(j == col - 1)
+					{
+						m = new MovementInDirection(Directions.UpperLeft, reachable2);
+					}
+					else
+					{
+						m = new MovementInDirection(Directions.UpperRight, reachable2);
+					}
+					reachableTemp[index] = m;
+					index++;
+				}
+				
+			}
+		}
+		
+		//checks for possible moves in row above Knight's, if it exists
+		
+		for(int i = row + 1, j = col - 2, count = 0; i <= 7 && count <= 1; j += 4, count++)
+		{
+			if(j >= 0 && j <= 7)
+			{
+				Coordinates coor = new Coordinates(i, j);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(!temp.getTeam().equals(f.getTeam()))
+					{
+						Coordinates[] reachable2 = new Coordinates[1];
+						reachable2[0] = coor;
+						MovementInDirection m;
+						
+						if(j == col - 2)
+						{
+							m = new MovementInDirection(Directions.UpperLeft, reachable2);
+						}
+						else
+						{
+							m = new MovementInDirection(Directions.UpperRight, reachable2);
+						}
+						
+						reachableTemp[index] = m;
+						index++;
+					}
+				}
+				else
+				{
+					Coordinates[] reachable2 = new Coordinates[1];
+					reachable2[0] = coor;
+					MovementInDirection m;
+					
+					if(j == col - 2)
+					{
+						m = new MovementInDirection(Directions.UpperLeft, reachable2);
+					}
+					else
+					{
+						m = new MovementInDirection(Directions.UpperRight, reachable2);
+					}
+					
+					reachableTemp[index] = m;
+					index++;
+				}
+			}
+		}
+		
+		MovementInDirection[] reachable = new MovementInDirection[index];
+		index = 0;
+		
 		for(int i = 0; i < reachableTemp.length; i++)
 		{
 			if(reachableTemp[i] != null)
