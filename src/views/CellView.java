@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -61,6 +62,15 @@ public class CellView extends JComponent
 	public Coordinates getCoordinates()
 	{
 		return this.coordinates;
+	}
+	
+	@Override
+	public void paintComponent(Graphics g)
+	{
+		if(!Validator.isNull(this.getFigure()))
+		{
+			UIFigureDrawer.drawfigure(this.getFigure().getType(), g, this.getFigure().getTeam(), this.getBounds());
+		}
 	}
 	
 	@Override
