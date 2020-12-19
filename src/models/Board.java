@@ -10,7 +10,7 @@ public class Board
 {
 	private static Board boardInstance = null;
 	private Figure[][] figures;
-	private Coordinates lastSelectedCell;
+	private Coordinates lastSelectedFigure;
 	
 	private Board()
 	{
@@ -98,16 +98,16 @@ public class Board
 		return 0;
 	}
 	
-	public void setLastSelectedCell(Coordinates coordinates)
+	public void setLastSelectedFigure(Coordinates coordinates)
 	{
 		if(!Validator.isNull(coordinates))
 		{
-			this.lastSelectedCell = coordinates;
+			this.lastSelectedFigure = coordinates;
 		}
 	}
 	
-	public Coordinates getLastSelectedCell()
+	public Coordinates getLastSelectedFigure()
 	{
-		return this.lastSelectedCell;
+		return this.lastSelectedFigure;
 	}
 }
