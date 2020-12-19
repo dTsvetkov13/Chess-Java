@@ -1,25 +1,50 @@
 package views;
 
-import java.awt.Graphics;
-
 import javax.swing.JComponent;
 
+import common.Validator;
+import models.Coordinates;
 import models.figures.Figure;
 
 public class CellView extends JComponent
 {
 	private Figure figure;
+	private Coordinates coordinates;
 	
 	public CellView(Figure figure)
 	{
-		this.setFigure(figure);
+		this(figure, null);
+	}
+	
+	public CellView(Figure figure, Coordinates coordinates)
+	{
+		if(Validator.isNull(coordinates))
+		{
+			if(Validator.isNull(figure))
+			{
+				throw new IllegalArgumentException("The figure and the coordinates cannot be both null");
+			}
+			else
+			{
+				this.setFigure(figure);
+				this.setCoordinates(figure.getCoordinates());
+			}
+		}
 	}
 	
 	private void setFigure(Figure figure)
 	{
-		if(figure != null)
+		if(Validator.isNull(figure))
 		{
 			this.figure = figure;
+		}
+	}
+	
+	private void setCoordinates(Coordinates coordinates)
+	{
+		if(Validator.isNull(coordinates))
+		{
+			this.coordinates = coordinates;
 		}
 	}
 	
@@ -28,12 +53,8 @@ public class CellView extends JComponent
 		return this.figure;
 	}
 	
-	@Override
-	public void paintComponent(Graphics g)
+	public Coordinates getCoordinates()
 	{
-		if(figure != null)
-		{
-			//UIFigureDrawer.drawfigure(this.getFigure().getType(), g, this.getFigure().getTeam(), this.getBounds());
-		}
+		return this.coordinates;
 	}
 }
