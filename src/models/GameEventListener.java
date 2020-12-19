@@ -2,6 +2,7 @@ package models;
 
 import models.figures.Figure;
 import views.BoardView;
+import views.CellView;
 
 public interface GameEventListener
 {
@@ -9,7 +10,7 @@ public interface GameEventListener
 	void onFigureTaken();
 	void onGameOver(Game game);
 	void onGameStart(Game game);
-	
+	void onCellClicked(CellView cellView);
 	void onFigureClicked(Figure figure);
 	void onDestinationClicked(Coordinates from, Coordinates to);
 }
