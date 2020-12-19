@@ -2,14 +2,13 @@ package views;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
 import common.Constants;
+import enums.Team;
 import models.Board;
-import models.Coordinates;
+import models.Game;
 import models.figures.Figure;
 
 public class BoardView extends JPanel
@@ -30,7 +29,7 @@ public class BoardView extends JPanel
 		tempRect.width = this.getWidth() / (Constants.MAX_COLUMN_VALUE + 1);
 		tempRect.height = this.getHeight() / (Constants.MAX_ROW_VALUE + 1);
 		
-		if(true) //playerOnTurn.getTeam().equals(White)
+		if(Game.getInstance().getPlayerOnTurn().getTeam().equals(Team.White))
 		{
 			for(int row = 0; row < figures.length; row++)
 			{
