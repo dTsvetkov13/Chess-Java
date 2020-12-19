@@ -9,7 +9,8 @@ import models.figures.*;
 public class Board
 {
 	private static Board boardInstance = null;
-	Figure[][] figures;
+	private Figure[][] figures;
+	private Coordinates lastSelectedCell;
 	
 	private Board()
 	{
@@ -95,5 +96,18 @@ public class Board
 	{
 		
 		return 0;
+	}
+	
+	public void setLastSelectedCell(Coordinates coordinates)
+	{
+		if(!Validator.isNull(coordinates))
+		{
+			this.lastSelectedCell = coordinates;
+		}
+	}
+	
+	public Coordinates getLastSelectedCell()
+	{
+		return this.lastSelectedCell;
 	}
 }
