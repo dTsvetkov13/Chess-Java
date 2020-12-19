@@ -1,12 +1,17 @@
 package views;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JComponent;
 
 import common.Validator;
 import models.Coordinates;
+import models.Game;
 import models.figures.Figure;
 
 public class CellView extends JComponent
+					  implements MouseListener 
 {
 	private Figure figure;
 	private Coordinates coordinates;
@@ -56,5 +61,38 @@ public class CellView extends JComponent
 	public Coordinates getCoordinates()
 	{
 		return this.coordinates;
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent arg0)
+	{
+		if(Validator.isNull(Game.getInstance().getListener()))
+		{
+			Game.getInstance().getListener().onCellClicked(this);
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0)
+	{
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0)
+	{
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0)
+	{
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0)
+	{
+		
 	}
 }
