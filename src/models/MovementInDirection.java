@@ -14,6 +14,13 @@ public class MovementInDirection
 		this.move = moveValue;
 	}
 	
+	/*public MovementInDirection()
+	{
+		this.move = new Coordinates[32];
+	}
+	*/
+	//not sure if needed
+	
 	public void setDirection(Directions directionValue)
 	{
 		this.direction = directionValue;
