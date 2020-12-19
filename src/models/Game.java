@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import javax.swing.JFrame;
 
 import common.Constants;
+import common.Validator;
 import views.screens.MenuScreen;
 import views.screens.Screen;
 
@@ -16,6 +17,7 @@ public class Game
 	private CardLayout layout;
 	private Player[] players;
 	private int playerOnTurnIndex;
+	private GameEventListener listener;
 	
 	private Game()
 	{
@@ -79,5 +81,18 @@ public class Game
 	public Player getPlayerOnTurn()
 	{
 		return this.players[this.playerOnTurnIndex];
+	}
+	
+	public void setListener(GameEventListener listener)
+	{
+		if(!Validator.isNull(listener))
+		{
+			this.listener = listener;
+		}
+	}
+	
+	public GameEventListener getListener()
+	{
+		return this.listener;
 	}
 }
