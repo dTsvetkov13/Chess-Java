@@ -111,7 +111,7 @@ public class MoveTypes
 		int col = f.getCoordinates().getColumn();
 		int index = 0;
 		
-		//this for calculates the reachable cells above (North) the figure
+		//this for calculates the reachable cells above (North) the figure, if such exist
 		for(int i = row + 1; i <= 7; i++)
 		{
 			Coordinates coor = new Coordinates(i, col);
@@ -150,7 +150,7 @@ public class MoveTypes
 			index++;
 		}
 		
-		//this for calculates the reachable cells below (South) the figure
+		//this for calculates the reachable cells below (South) the figure, if such exist
 		for(int i = row - 1; i >= 0; i--)
 		{
 			Coordinates coor = new Coordinates(i, col);
