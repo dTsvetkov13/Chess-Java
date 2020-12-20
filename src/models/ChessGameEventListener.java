@@ -2,6 +2,7 @@ package models;
 
 import javax.swing.JFrame;
 
+import common.Validator;
 import models.figures.Figure;
 import views.BoardView;
 import views.CellView;
@@ -55,5 +56,17 @@ public class ChessGameEventListener implements GameEventListener
 	@Override
 	public void onCellClicked(CellView cellView)
 	{
+		if(Validator.isNull(cellView))
+		{
+			throw new IllegalArgumentException("CellView cannot be null!");
+		}
+		
+		Board.getInstance().coordinatesSelected(cellView.getCoordinates());
+		
+		if(Board.getInstance().getFigure(cellView.getCoordinates()).getTeam()
+				.equals(Game.getInstance().getPlayerOnTurn().getTeam()))
+		{
+			//set the CellView to be selected
+		}
 	}
 }

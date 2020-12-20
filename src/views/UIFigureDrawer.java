@@ -24,60 +24,60 @@ public class UIFigureDrawer
 			graphics.setColor(Color.white);
 		}
 		
-		switch(figure)
+		if(bounds != null)
 		{
-			case Bishop:
+			switch(figure)
 			{
-				drawBishop(graphics, bounds);
-				break;
+				case Bishop:
+				{
+					drawBishop(graphics, bounds);
+					break;
+				}
+				case Knight:
+				{
+					drawKnight(graphics, bounds);
+					break;
+				}	
+				case Queen:
+				{
+					drawQueen(graphics, bounds);
+					break;
+				}
+				case King:
+				{
+					drawKing(graphics, bounds);
+					break;
+				}
+				case Pawn:
+				{
+					drawPawn(graphics, bounds);
+					break;	
+				}
+				case Rook:
+				{
+					drawRook(graphics, bounds);
+					break;
+				}
+				
 			}
-			case Knight:
-			{
-				drawKnight(graphics, bounds);
-				break;
-			}	
-			case Queen:
-			{
-				drawQueen(graphics, bounds);
-				break;
-			}
-			case King:
-			{
-				drawKing(graphics, bounds);
-				break;
-			}
-			case Pawn:
-			{
-				drawPawn(graphics, bounds);
-				break;	
-			}
-			case Rook:
-			{
-				drawRook(graphics, bounds);
-				break;
-			}
-			
 		}
 	}
 	
 	private static void drawBishop (Graphics graphics, Rectangle bounds)
 	{
-		var x = bounds.y + bounds.height;
-		var y = bounds.x + bounds.width;
+		graphics.drawPolygon(new int[] {0, bounds.width, bounds.width / 2}, 
+							 new int[] {bounds.height, bounds.height, 0}, 3);
 		
-		graphics.drawPolygon(new int[] {bounds.x, bounds.x + bounds.width, bounds.x + bounds.width / 2}, 
-							new int[] {bounds.y, bounds.y + bounds.height, bounds.y + bounds.height}, 3);
-		//graphics.drawPolygon(new int [] {20, 30, 40}, new int[] {40, 20, 40}, 3); //magic numbers to be changed
-		//graphics.fillPolygon(new int [] {20, 30, 40}, new int[] {40, 20, 40}, 3);	
-		graphics.fillPolygon(new int[] {bounds.x, bounds.x + bounds.width, bounds.x + bounds.width / 2}, 
-							new int[] {bounds.y, bounds.y + bounds.height, bounds.y + bounds.height}, 3);
+		graphics.fillPolygon(new int[] {0, bounds.width, bounds.width / 2}, 
+							 new int[] {bounds.height, bounds.height, 0}, 3);
 	}
 	
 	private static void drawKnight(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		Rectangle2D.Double rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());  //5 , 5 ,30 ,10 
-		Rectangle2D.Double rect2 = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); //5, 5, 10, 40
+		Rectangle2D.Double rect = new Rectangle2D.Double(0, 0,bounds.width, bounds.height * 0.3); 
+		Rectangle2D.Double rect2 = new Rectangle2D.Double(0, 0, bounds.width * 0.3, bounds.height * 2); 
+		
 		graphics2D.draw(rect);
 		graphics2D.draw(rect2);
 		graphics2D.fill(rect);
@@ -87,15 +87,19 @@ public class UIFigureDrawer
 	private static void drawQueen(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D g = (Graphics2D) graphics;
-		graphics.drawOval(bounds.x, bounds.y, bounds.width, bounds.height);
-		graphics.fillOval(bounds.x, bounds.y, bounds.width, bounds.height);//10, 10, 38, 38
+		int greaterValue = Math.max(bounds.width, bounds.height);
+		int smallerValue = Math.min(bounds.width, bounds.height);
+		
+		graphics.drawOval((greaterValue - smallerValue) / 2, 0, smallerValue, smallerValue); 
+		graphics.fillOval((greaterValue - smallerValue) / 2, 0, smallerValue, smallerValue);	
 	}
 	
 	private static void drawKing(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		Rectangle2D.Double rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); //5, 17, 30, 10
-		Rectangle2D.Double rect2 = new Rectangle2D.Double(bounds.getX() + 10, bounds.getY() - 7, bounds.getWidth() - 20, bounds.getHeight() + 27); //15, 10, 10, 37
+		Rectangle2D.Double rect = new Rectangle2D.Double(0, 0.2 * bounds.height, bounds.width, bounds.height * 0.15); 
+		Rectangle2D.Double rect2 = new Rectangle2D.Double((bounds.width - 0.20 * bounds.width) / 2, 0, 
+														   bounds.width * 0.20, bounds.height); 
 		
 		graphics2D.draw(rect);
 		graphics2D.draw(rect2);
@@ -106,8 +110,8 @@ public class UIFigureDrawer
 	private static void drawPawn(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		Rectangle2D.Double rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), 
-														 bounds.getWidth(), bounds.getHeight()); 
+		Rectangle2D.Double rect = new Rectangle2D.Double(0, 0, bounds.width * 0.5, bounds.height * 0.5); 
+		
 		graphics2D.draw(rect);
 		graphics2D.fill(rect);
 	}
@@ -115,7 +119,8 @@ public class UIFigureDrawer
 	private static void drawRook(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		Rectangle2D.Double rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()); 
+		Rectangle2D.Double rect = new Rectangle2D.Double(0, 0, bounds.width, bounds.height);
+		
 		graphics2D.draw(rect);
 		graphics2D.fill(rect);
 	}

@@ -3,11 +3,20 @@ import views.BoardView;
 import java.awt.Color;
 import javax.swing.JPanel;
 
-public class GameScreen extends Screen{
-	
+import models.Player;
+
+public class GameScreen extends Screen
+{
 	public final static int WIDTH = 1616;
 	public final static int HEIGHT = 910;
+	
+	public final static int PNL_INFORMATION_X = 5;
+	public final static int PNL_INFORMATION_Y = 5;
+	
+	public final static int SPACE = 10;
+	
 	public final static int BOARD_SIZE = HEIGHT * 8 / 10;
+	
 	public final static int SMALL_SQUARE_SIZE = (HEIGHT - 35 - BOARD_SIZE) / 2;
 	
 	public final static int LOST_FIGURES_WIDTH = ((WIDTH - HEIGHT) / 2) - 15 - (SMALL_SQUARE_SIZE / 2);
@@ -25,56 +34,75 @@ public class GameScreen extends Screen{
 	//private Player playerTwo;
 	private BoardView chessBoard;
 	
-	//upgrade constructor
-	public GameScreen(String name, boolean isFullScreen)
+	public GameScreen(String name)
 	{
-		super(name, isFullScreen);
+		super(name);
+		drawGameScreen();
+	}
+	
+	//add only panels - information, lost figures, letters(A-H) and numbers(1-8)
+	//should add board and labels with nicknames of players
+	public void drawGameScreen()
+	{
+		this.drawInformation();
+		this.drawPanelsOfLostFigures();
+		this.drawBorder();
 	}
 	
 	private void drawInformation()
 	{
 		JPanel information = new JPanel();
-		information.setBounds(5, 5, SMALL_SQUARE_SIZE / 2, SMALL_SQUARE_SIZE / 2);
+		
+		information.setBounds(PNL_INFORMATION_X, PNL_INFORMATION_Y, SMALL_SQUARE_SIZE / 2, SMALL_SQUARE_SIZE / 2);
 		information.setBackground(INFORMATION);
 		information.setVisible(true);
+		
 		this.add(information);
 	}
 	
 	private void drawPanelOfLostFigures(int x, int y)
 	{
 		JPanel pnlLostFigures = new JPanel();
+		
 		pnlLostFigures.setBounds(x, y, LOST_FIGURES_WIDTH, LOST_FIGURES_HEIGHT);
 		pnlLostFigures.setBackground(FIGURE_LOST);
 		pnlLostFigures.setVisible(true);
+		
 		this.add(pnlLostFigures);
 	}
 	
 	private void drawPanelsOfLostFigures()
 	{
-		int x = SMALL_SQUARE_SIZE / 2 + 10;
-		int y = 5;
+		int x = SMALL_SQUARE_SIZE / 2 + SPACE;
+		int y = PNL_INFORMATION_Y;
+		
 		drawPanelOfLostFigures(x, y);
 		
-		x = HEIGHT + LOST_FIGURES_WIDTH + 20;
-		y = HEIGHT - LOST_FIGURES_HEIGHT - 36;
+		x = HEIGHT + LOST_FIGURES_WIDTH;
+		y = HEIGHT - LOST_FIGURES_HEIGHT;
+		
 		drawPanelOfLostFigures(x, y);
 	}
 	
 	private void makePanelHorizontally(int x, int y)
 	{
 		JPanel panel = new JPanel();
+		
 		panel.setBounds(x, y, BOARD_SIZE, SMALL_SQUARE_SIZE);
 		panel.setBackground(Color.black);
 		panel.setVisible(true);
+		
 		this.add(panel);
 	}
 	
 	private void makePanelVertically(int x, int y)
 	{
 		JPanel panel = new JPanel();
+		
 		panel.setBounds(x, y, SMALL_SQUARE_SIZE, BOARD_SIZE);
 		panel.setBackground(Color.black);
 		panel.setVisible(true);
+		
 		this.add(panel);
 	}
 	
@@ -83,23 +111,20 @@ public class GameScreen extends Screen{
 	{
 		int x = ((WIDTH - HEIGHT) / 2) + SMALL_SQUARE_SIZE;
 		int y = 0;
+		
 		makePanelHorizontally(x, y);
+		
 		y = SMALL_SQUARE_SIZE + BOARD_SIZE;
+		
 		makePanelHorizontally(x, y);
+		
 		x -= SMALL_SQUARE_SIZE;
 		y = SMALL_SQUARE_SIZE;
+		
 		makePanelVertically(x, y);
+		
 		x += SMALL_SQUARE_SIZE + BOARD_SIZE;
+		
 		makePanelVertically(x, y);
 	}
-	
-	//add only panels - information, lost figures, letters(A-H) and numbers(1-8)
-	//should add board and labels with nicknames of players
-	public void draw()
-	{
-		this.drawInformation();
-		this.drawPanelsOfLostFigures();
-		this.drawBorder();
-	}
-	
 }

@@ -5,6 +5,8 @@ import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 
+import common.Constants;
+import common.Validator;
 import views.screens.MenuScreen;
 import views.screens.Screen;
 
@@ -13,6 +15,9 @@ public class Game
 	private static Game gameInstance = null;
 	private JFrame window;
 	private CardLayout layout;
+	private Player[] players;
+	private int playerOnTurnIndex;
+	private GameEventListener listener;
 	
 	private Game()
 	{
@@ -20,9 +25,10 @@ public class Game
 		layout = new CardLayout();
 		window.setLayout(layout);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		players = new Player[Constants.PLAYERS_COUNT];
 	}
 	
-	public Game getInstance()
+	public static Game getInstance()
 	{
 		if(gameInstance == null)
 		{
@@ -53,12 +59,40 @@ public class Game
 	{
 		if(screen != null)
 		{
-			//this.window.add(screen);	
+			this.window.add(screen);	
 		}
 	}
 	
 	public JFrame getWindow()
 	{
 		return this.window;
+	}
+	
+	public void changeTurn()
+	{
+		this.playerOnTurnIndex++;
+		
+		if(this.playerOnTurnIndex >= this.players.length)
+		{
+			this.playerOnTurnIndex = 0;
+		}
+	}
+	
+	public Player getPlayerOnTurn()
+	{
+		return this.players[this.playerOnTurnIndex];
+	}
+	
+	public void setListener(GameEventListener listener)
+	{
+		if(!Validator.isNull(listener))
+		{
+			this.listener = listener;
+		}
+	}
+	
+	public GameEventListener getListener()
+	{
+		return this.listener;
 	}
 }
