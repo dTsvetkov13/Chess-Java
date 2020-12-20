@@ -1,84 +1,90 @@
 package views.screens;
 
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class MenuScreen extends Screen
 {
-	public final static int FIRST_ROW_X = 30;
-	public final static int FIRST_ROW_Y = 50;
+	public final static int LABELS_FONT_SIZE = 20;
+	public final static int BUTTON_FONT_SIZE = 20;
 	
-	public final static int LABELS_FONT_SIZE = 30;
-	public final static int LABELS_HEIGHT = 30;
-	public final static int LABELS_WIDTH = 150;
+	public final static int BUTTON_COLUMNS_WIDHT = 2;
+	public final static int BUTTON_PADDING = 2;
 	
-	public final static int SPACE = 30;
-	
-	public final static int TEXT_FIELD_WIDTH = 200;
 	public final static int TEXT_FIELD_COLUMNS = 10;
 	
-	public final static int BUTTON_FONT_SIZE = 30;
-	public final static int BTN_WIDTH = 300;
-	public final static int BTN_HEIGHT = 65;
-	public final static int BTN_X = (SCREEN_WIDTH - BTN_WIDTH) / 2 - 8;
-	public final static int BTN_Y = FIRST_ROW_Y + LABELS_HEIGHT + (2 * SPACE);
+	public final static int SPACE = 10;
+	
+	public final static int DEFAULT_PADDING = 0;
+	
+	private GridBagConstraints gbc;
 	
 	public MenuScreen(String name)
 	{
 		super(name);
+		
+		this.setLayout(new GridBagLayout());
+		this.gbc = new GridBagConstraints();
+		
 		drawMenuScreen();
 	}
 	
 	public void drawMenuScreen()
 	{
-		drawInformativeLabels();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(SPACE, SPACE, SPACE, SPACE); //external padding 
+	
+		//make first row (label textField)
+		drawInformativeLabel(DEFAULT_PADDING, DEFAULT_PADDING, "Player 1 :");
+		drawFieldForNameOfPlayer(DEFAULT_PADDING + 1, DEFAULT_PADDING);
+		
+		//make second row (label textField)
+		drawInformativeLabel(DEFAULT_PADDING, DEFAULT_PADDING + 1, "Player 2 :");
+		drawFieldForNameOfPlayer(DEFAULT_PADDING + 1, DEFAULT_PADDING + 1);
+		
 		drawBtnStart();
-		drawFieldsForNamesOfPlayers();
 	}
 	
-	private void drawInformativeLabels()
+	private void drawInformativeLabel(int gridx, int gridy, String text)
 	{
-		JLabel player1 = new JLabel("Player 1 :");
+		gbc.gridx = gridx;
+		gbc.gridy = gridy;
 		
-		player1.setFont(new Font("Arial", Font.PLAIN, LABELS_FONT_SIZE));
-		player1.setBounds(FIRST_ROW_X, FIRST_ROW_Y, LABELS_WIDTH, LABELS_HEIGHT);
+		JLabel lblPlayer = new JLabel(text);
+		lblPlayer.setFont(new Font("Arial", Font.PLAIN, LABELS_FONT_SIZE));
 		
-		this.add(player1);
-		
-		JLabel player2 = new JLabel("Player 2 :");
-		
-		player2.setFont(new Font("Arial", Font.PLAIN, LABELS_FONT_SIZE));
-		player2.setBounds(FIRST_ROW_X, FIRST_ROW_Y + LABELS_HEIGHT + SPACE, LABELS_WIDTH, LABELS_HEIGHT);
-		
-		this.add(player2);
+		this.add(lblPlayer, gbc);
 	}
 	
-	//has a problem 
-	private void drawFieldsForNamesOfPlayers()
+	private void drawFieldForNameOfPlayer(int gridx, int gridy) 
 	{
+		gbc.gridx = gridx;
+		gbc.gridy = gridy;
+		
 		JTextField txtPlayer1 = new JTextField();
 		
-		txtPlayer1.setBounds(FIRST_ROW_X + LABELS_WIDTH + SPACE , FIRST_ROW_Y, TEXT_FIELD_WIDTH, LABELS_HEIGHT);
+		txtPlayer1.setColumns(TEXT_FIELD_COLUMNS);
 		txtPlayer1.setVisible(true);
 		
-		this.add(txtPlayer1);
-		
-		txtPlayer1.setColumns(TEXT_FIELD_COLUMNS);
+		this.add(txtPlayer1, gbc);
 	}
 	
 	private void drawBtnStart()
 	{
-		JButton newGame = new JButton("Start");
+		gbc.gridwidth = BUTTON_COLUMNS_WIDHT;
+		gbc.gridx = DEFAULT_PADDING;
+		gbc.gridy = BUTTON_PADDING;
 		
-		newGame.setFont(new Font("Arial", Font.PLAIN, BUTTON_FONT_SIZE));
-		newGame.setBounds(BTN_X, BTN_Y, BTN_WIDTH, BTN_HEIGHT);
-		
+		JButton btnStart = new JButton("START");
+		btnStart.setFont(new Font("Arial", Font.PLAIN, BUTTON_FONT_SIZE));
 		//add action
 		
-		this.add(newGame);
+		this.add(btnStart, gbc);
 	}
 }
