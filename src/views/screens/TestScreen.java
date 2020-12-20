@@ -6,13 +6,16 @@ public class TestScreen
 	public static void main(String[] args) 
 	{
 		JFrame window = new JFrame();
-		MenuScreen menu = new MenuScreen("menu");
+		//MenuScreen menu = new MenuScreen("menu");
+		EndingScreen gameOver = new EndingScreen("Game over");
 	
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
-		window.setTitle(menu.getName());
+		window.setTitle(gameOver.getName());
+		window.add(gameOver);
 		
-		window.add(menu);
+		//window.setTitle(menu.getName());
+		//window.add(menu);
 		
 		window.pack();
 		window.repaint();
