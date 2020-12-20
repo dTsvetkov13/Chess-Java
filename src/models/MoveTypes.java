@@ -9,14 +9,16 @@ public class MoveTypes
 {
 	static Board board = Board.getInstance();
 
-	public static Coordinates[] horizontal(Figure f) 
+	public static MovementInDirection[] horizontal(Figure f) 
 	{
-		Coordinates[] reachable = new Coordinates[8];
+		MovementInDirection[] reachable = new MovementInDirection[2];
+		Coordinates[] reachableWest = new Coordinates[8];
+		Coordinates[] reachableEast = new Coordinates[8];
 		int index = 0;
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
 		
-		//this for calculates the reachable cells to the right of the figure
+		//this for calculates the reachable cells to the right (East) of the figure
 		for(int i = col; i <= 7; i++)
 		{
 			Coordinates coor = new Coordinates(row, i);
@@ -27,29 +29,36 @@ public class MoveTypes
 				{
 					for(int j = i; j <= 7; j++)
 					{
-						reachable[j] = null;
+						reachableEast[j] = null;
 					}
 					break;
 				}
 				else
 				{
-					reachable[i] = coor;
+					reachableEast[i] = coor;
 					index++;
 					for(int j = i + 1; j < 8; j++)
 					{
-						reachable[j] = null;
+						reachableEast[j] = null;
 					}
 					break;
 				}
 			}
 			else
 			{
-				reachable[i] = coor;
+				reachableEast[i] = coor;
 				index++;
 			}
 		}
 		
-		//this for calculates the reachable cells to the left of the figure
+		if(col <= 7) 
+		{
+			MovementInDirection m = new MovementInDirection(Directions.East, reachableEast);
+			reachable[index] = m;
+			index++;
+		}
+		
+		//this for calculates the reachable cells to the left (West) of the figure
 		for(int i = col; i >= 0; i--)
 		{
 			Coordinates coor = new Coordinates(row, i);
@@ -60,51 +69,50 @@ public class MoveTypes
 				{
 					for(int j = i; j >= 0; j--)
 					{
-						reachable[j] = null;
+						reachableWest[j] = null;
 					}
 					break;
 				}
 				else
 				{
-					reachable[i] = coor;
+					reachableWest[i] = coor;
 					index++;
 					for(int j = i - 1; j >= 0; j--)
 					{
-						reachable[j] = null;
+						reachableWest[j] = null;
 					}
 					break;
 				}
 			}
 			else
 			{
-				reachable[i] = coor;
-				index++;
-			}
-		}
-		//this for makes a Coordinates array with no nulls
-		Coordinates[] result = new Coordinates[index];
-		index = 0;
-		for(int i = 0; i < reachable.length; i++)
-		{
-			if(reachable[i] != null)
-			{
-				result[index] = reachable[i];
+				reachableWest[i] = coor;
 				index++;
 			}
 		}
 		
-		return result;
+		if(col >= 0)
+		{
+			MovementInDirection m1 = new MovementInDirection(Directions.West, reachableWest);
+			reachable[index] = m1;
+			index++;
+		}
+		
+		
+		return reachable;
 	}
 	
-	public static Coordinates[] vertical(Figure f)
+	public static MovementInDirection[] vertical(Figure f)
 	{
-		Coordinates[] reachable = new Coordinates[8];
+		MovementInDirection[] reachable = new MovementInDirection[2];
+		Coordinates[] reachableNorth = new Coordinates[8];
+		Coordinates[] reachableSouth = new Coordinates[8];
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
 		int index = 0;
 		
-		//this for calculates the reachable cells above the figure
-		for(int i = row; i <= 7; i++)
+		//this for calculates the reachable cells above (North) the figure
+		for(int i = row + 1; i <= 7; i++)
 		{
 			Coordinates coor = new Coordinates(i, col);
 			Figure temp = board.getFigure(coor);
@@ -114,29 +122,36 @@ public class MoveTypes
 				{
 					for(int j = i; j <= 7; j++)
 					{
-						reachable[j] = null;
+						reachableNorth[j] = null;
 					}
 					break;
 				}
 				else
 				{
-					reachable[i] = coor;
+					reachableNorth[i] = coor;
 					index++;
 					for(int j = i + 1; j <= 7; j++)
 					{
-						reachable[j] = null;
+						reachableNorth[j] = null;
 					}
 				}
 			}
 			else
 			{
-				reachable[i] = coor;
+				reachableNorth[i] = coor;
 				index++;
 			}
 		}
 		
-		//this for calculates the reachable cells below the figure
-		for(int i = row; i >= 0; i--)
+		if(row < 7)
+		{
+			MovementInDirection m = new MovementInDirection(Directions.North, reachableNorth);
+			reachable[index] = m;
+			index++;
+		}
+		
+		//this for calculates the reachable cells below (South) the figure
+		for(int i = row - 1; i >= 0; i--)
 		{
 			Coordinates coor = new Coordinates(i, col);
 			Figure temp = board.getFigure(coor);
@@ -146,39 +161,34 @@ public class MoveTypes
 				{
 					for(int j = i; j >= 0; j--)
 					{
-						reachable[j] = null;
+						reachableSouth[j] = null;
 					}
 				}
 				else
 				{
-					reachable[i] = coor;
+					reachableSouth[i] = coor;
 					index++;
 					for(int j = i - 1; j >= 0; j--)
 					{
-						reachable[j] = null;
+						reachableSouth[j] = null;
 					}
 				}
 			}
 			else
 			{
-				reachable[i] = coor;
+				reachableSouth[i] = coor;
 				index++;
 			}
 		}
 		
-		//this for creates a Coordinates array with no nulls
-		Coordinates[] result = new Coordinates[index];
-		index = 0;
-		for(int i = 0; i < reachable.length; i++)
+		if(row > 0)
 		{
-			if(reachable[i] != null)
-			{
-				result[index] = reachable[i];
-				index++;
-			}
+			MovementInDirection m1 = new MovementInDirection(Directions.South, reachableSouth);
+			reachable[index] = m1;
+			index++;
 		}
 		
-		return result;
+		return reachable;
 	}
 	
 	public static Coordinates[] diagonal(Figure f) {
