@@ -9,7 +9,8 @@ import models.figures.*;
 public class Board
 {
 	private static Board boardInstance = null;
-	Figure[][] figures;
+	private Figure[][] figures;
+	private Coordinates lastSelectedFigure;
 	
 	private Board()
 	{
@@ -95,5 +96,53 @@ public class Board
 	{
 		
 		return 0;
+	}
+	
+	public void setLastSelectedFigure(Coordinates coordinates)
+	{
+		if(!Validator.isNull(coordinates))
+		{
+			this.lastSelectedFigure = coordinates;
+		}
+	}
+	
+	public Coordinates getLastSelectedFigure()
+	{
+		return this.lastSelectedFigure;
+	}
+	
+	public void coordinatesSelected(Coordinates coordinates)
+	{
+		if(Validator.isNull(coordinates))
+		{
+			throw new IllegalArgumentException("Coordinates cannot be null!");
+		}
+		
+		Figure selectedFigure = this.getFigure(coordinates);
+		
+		Team playerOnTurnTeam = Game.getInstance().getPlayerOnTurn().getTeam();
+		
+		Figure lastSelectedFigure = this.getFigure(this.getLastSelectedFigure());
+		
+		if(!Validator.isNull(selectedFigure)
+		   && selectedFigure.getTeam().equals(playerOnTurnTeam))
+		{
+			this.setLastSelectedFigure(coordinates);
+			Game.getInstance().getListener().onFigureClicked(selectedFigure);
+		}
+		else
+		{
+			if(!Validator.isNull(lastSelectedFigure))
+			{
+				if(lastSelectedFigure.getTeam().equals(playerOnTurnTeam))
+				{
+					Game.getInstance().getListener()
+									  .onDestinationClicked(this.getLastSelectedFigure(),
+											  				coordinates);
+				}
+			}
+			
+			//TODO: Think of a way to announce the player to select again
+		}
 	}
 }

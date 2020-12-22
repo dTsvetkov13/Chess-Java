@@ -11,4 +11,14 @@ public class Validator
 	{
 		return actualValue.compareTo(compareToValue) < 0;
 	}
+	
+	public static boolean isNull(Object obj)
+	{
+		return obj == null;
+	}
+	
+	public static boolean isNullOrEmpty(String str)
+	{
+		return isNull(str) || str.isEmpty();
+	}
 }

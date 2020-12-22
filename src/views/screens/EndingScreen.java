@@ -1,81 +1,86 @@
 package views.screens;
 
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class EndingScreen extends Screen{
-
-	public final static int BTN_WIDTH = 300;
-	public final static int BTN_HEIGHT = 65;
-	public final static int BTN_X = (SCREEN_WIDTH - BTN_WIDTH) / 2 - 8;
+public class EndingScreen extends Screen
+{
+	public final static int SPACE = 15;
 	
-	public EndingScreen(String name, boolean isFullScreen) {
-		super(name, isFullScreen);
+	public final static int LBL_WINER_ROW = 0;
+	public final static int BTN_NEW_GAME_ROW = 1;
+	public final static int BTN_EXIT_ROW = 2;
+	
+	public final static int FONT_SIZE = 30;
+	
+	private GridBagConstraints gbc;
+	
+	public EndingScreen(String name) 
+	{
+		super(name);
+		
+		this.setLayout(new GridBagLayout());
+		this.gbc = new GridBagConstraints();
+		
+		drawEndingScreen();
 	}
 
 	public void drawEndingScreen()
 	{
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(SPACE, SPACE, SPACE, SPACE); //external padding
+		
 		drawLables();
 		drawBtnNewGame();
 		drawBtnExit();
 	}
 	
-	public int centerHorizontallyX(String text)//add better name
-	{
-		int size = text.length();
-		if(size % 2 == 1) size++;
-		int x = ((SCREEN_WIDTH / 2) - ((size / 2) * 16));
-		return x;
-	}
-	
 	private void drawLables()
 	{
-		int x = 85;
-		int y = 30;
-		int h = 30; 
+		gbc.gridy = LBL_WINER_ROW;
 		
-		JLabel congratilations = new JLabel("Congratulations\n");
-		congratilations.setFont(new Font("Arial", Font.PLAIN, 30));
-		congratilations.setBounds(x, y, SCREEN_WIDTH - x, h);
-		this.add(congratilations);
-		
-		String player = "Johnny63_13";//change with name of Player class
 		JLabel winer = new JLabel();
-		winer.setText(player + " win");
-		winer.setFont(new Font("Arial", Font.PLAIN, 30));
-		x = centerHorizontallyX(winer.getText());
-		y += h + 20;
-		winer.setBounds(x, y, SCREEN_WIDTH - x, h);
-		this.add(winer);
+		String player = "Johnny63_13";//change with name of Player class
+		
+		winer.setText(player + " wins");
+		winer.setFont(new Font("Arial", Font.PLAIN, FONT_SIZE)); 
+		
+		this.add(winer, gbc);
 	}
 	
 	//add action on button
 	private void drawBtnNewGame()
-	{
-		int y = 200;
+	{	
+		gbc.gridy = BTN_NEW_GAME_ROW; 
 		
 		JButton newGame = new JButton("New game");
-		newGame.setFont(new Font("Arial", Font.PLAIN, 30));
-		newGame.setBounds(BTN_X, y, BTN_WIDTH, BTN_HEIGHT);
+		newGame.setFont(new Font("Arial", Font.PLAIN, FONT_SIZE)); 
+		
 		//add action
-		this.add(newGame);
+		
+		this.add(newGame, gbc);
 	}
 	
 	private void drawBtnExit()
 	{
-		int y = 200 + BTN_HEIGHT + 45;
+		gbc.gridy = BTN_EXIT_ROW; 
+		
 		JButton exit = new JButton("Exit");
-		exit.setFont(new Font("Arial", Font.PLAIN, 30));
-		exit.setBounds(BTN_X, y, BTN_WIDTH, BTN_HEIGHT);
+		exit.setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
+		
 		exit.addActionListener (new ActionListener () {
 			 public void actionPerformed (ActionEvent e) {
 			  System.exit(0);
 			 }
 		});
-		this.add(exit);
+		
+		this.add(exit, gbc);
 	}
 }
