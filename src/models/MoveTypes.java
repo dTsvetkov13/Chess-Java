@@ -357,14 +357,14 @@ public class MoveTypes
 		return reachable2;
 	}
 	
-	public static MovementInDirection[] kingMove(Figure f)
+	public static MovementInDirection[] kingMove(Figure f, Figure r1, Figure r2)
 	{
 		//needs optimising
 		//doesn't check for impossible moves
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
 		int index = 0;
-		MovementInDirection[] reachableTemp = new MovementInDirection[8];
+		MovementInDirection[] reachableTemp = new MovementInDirection[10];
 		
 		//checks for possible moves in row below the King's, if it exists
 		for(int i = row - 1, j = col - 1, count = 0; i >= 0 && count <= 2; j++, count++)
@@ -530,6 +530,40 @@ public class MoveTypes
 			}
 		}
 		
+		//checks for possible Castling
+		if(r1.getCoordinates() == new Coordinates(0, 0) || r1.getCoordinates() == new Coordinates(7, 0))
+		{
+			MovementInDirection ksc = MoveTypes.kingSideCastling((King)f, (Rook)r2);
+			MovementInDirection qsc = MoveTypes.queenSideCastling((King)f, (Rook)r1);
+			if(ksc != null)
+			{
+				reachableTemp[index] = ksc;
+				index++;
+			}
+			if(qsc != null)
+			{
+				reachableTemp[index] = qsc;
+				index++;
+			}
+		}
+		else if(r1.getCoordinates() == new Coordinates(0, 7) || r1.getCoordinates() == new Coordinates(7, 7))
+		{
+			MovementInDirection ksc = MoveTypes.kingSideCastling((King)f, (Rook)r1);
+			MovementInDirection qsc = MoveTypes.queenSideCastling((King)f, (Rook)r2);
+			if(ksc != null)
+			{
+				reachableTemp[index] = ksc;
+				index++;
+			}
+			if(qsc != null)
+			{
+				reachableTemp[index] = qsc;
+				index++;
+			}
+		}
+		
+		
+		//returns an array without nulls
 		MovementInDirection[] reachable = new MovementInDirection[index];
 		
 		index = 0;
