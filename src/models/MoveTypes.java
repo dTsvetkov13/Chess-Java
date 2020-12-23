@@ -2,7 +2,10 @@ package models;
 
 import common.Constants;
 import enums.Directions;
+import enums.Team;
 import models.figures.Figure;
+import models.figures.King;
+import models.figures.Rook;
 
 
 public class MoveTypes 
@@ -749,6 +752,49 @@ public class MoveTypes
 		}
 		
 		return reachable;
+	}
+	
+	public static MovementInDirection kingSideCastling(King k, Rook r)
+	{
+		//doesn't check whether King is checked or cells are guarded
+		if(k.getTeam().equals(Team.White))
+		{
+			Coordinates g1 = new Coordinates(0, 6);
+			Coordinates f1 = new Coordinates(0, 5);
+			if(k.isMoved() == true || r.isMoved() == true)
+			{
+				return null;
+			}
+			else if(board.getFigure(g1) == null && board.getFigure(f1) == null)
+			{
+				Coordinates[] reachable = {g1, f1};
+				MovementInDirection m = new MovementInDirection(Directions.KingSideCastling, reachable);
+				return m;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		else
+		{
+			Coordinates g8 = new Coordinates(7, 6);
+			Coordinates f8 = new Coordinates(7, 5);
+			if(k.isMoved() == true || r.isMoved() == true)
+			{
+				return null;
+			}
+			else if(board.getFigure(g8) == null && board.getFigure(f8) == null)
+			{
+				Coordinates[] reachable = {g8, f8};
+				MovementInDirection m = new MovementInDirection(Directions.KingSideCastling, reachable);
+				return m;
+			}
+			else
+			{
+				return null;
+			}
+		}
 	}
 	
 	
