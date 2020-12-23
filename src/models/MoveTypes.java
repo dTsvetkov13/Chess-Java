@@ -797,6 +797,51 @@ public class MoveTypes
 		}
 	}
 	
+	public static MovementInDirection queenSideCastling(King k, Rook r)
+	{
+		//doesn't check whther King is checked or cells are guarded
+		if(k.getTeam().equals(Team.White))
+		{
+			Coordinates d1 = new Coordinates(0, 3);
+			Coordinates c1 = new Coordinates(0, 2);
+			Coordinates b1 = new Coordinates(0, 1);
+			if(k.isMoved() == true || r.isMoved() == true)
+			{
+				return null;
+			}
+			else if(board.getFigure(d1) == null && board.getFigure(c1) == null && board.getFigure(b1) == null)
+			{
+				Coordinates[] reachable = {c1, d1};
+				MovementInDirection m = new MovementInDirection(Directions.QueenSideCastling, reachable);
+				return m;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		else
+		{
+			Coordinates d8 = new Coordinates(7, 3);
+			Coordinates c8 = new Coordinates(7, 2);
+			Coordinates b8 = new Coordinates(7, 1);
+			if(k.isMoved() == true || r.isMoved() == true)
+			{
+				return null;
+			}
+			else if(board.getFigure(d8) == null && board.getFigure(c8) == null && board.getFigure(b8) == null)
+			{
+				Coordinates[] reachable = {c8, d8};
+				MovementInDirection m = new MovementInDirection(Directions.QueenSideCastling, reachable);
+				return m;
+			}
+			else
+			{
+				return null;
+			}
+		}
+	}
+	
 	
 
 	
