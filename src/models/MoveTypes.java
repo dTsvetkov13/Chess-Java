@@ -22,7 +22,7 @@ public class MoveTypes
 		int col = f.getCoordinates().getColumn();
 		
 		//this for calculates the reachable cells to the right (East) of the figure
-		for(int i = col; i <= 7; i++)
+		for(int i = col; i <= Constants.MAX_COLUMN_VALUE; i++)
 		{
 			Coordinates coor = new Coordinates(row, i);
 			Figure temp = board.getFigure(coor);
@@ -62,7 +62,7 @@ public class MoveTypes
 		}
 		
 		//this for calculates the reachable cells to the left (West) of the figure
-		for(int i = col; i >= 0; i--)
+		for(int i = col; i >= Constants.MIN_COLUMN_VALUE; i--)
 		{
 			Coordinates coor = new Coordinates(row, i);
 			Figure temp = board.getFigure(coor);
@@ -115,7 +115,7 @@ public class MoveTypes
 		int index = 0;
 		
 		//this for calculates the reachable cells above (North) the figure, if such exist
-		for(int i = row + 1; i <= 7; i++)
+		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++)
 		{
 			Coordinates coor = new Coordinates(i, col);
 			Figure temp = board.getFigure(coor);
@@ -154,7 +154,7 @@ public class MoveTypes
 		}
 		
 		//this for calculates the reachable cells below (South) the figure, if such exist
-		for(int i = row - 1; i >= 0; i--)
+		for(int i = row - 1; i >= Constants.MIN_ROW_VALUE; i--)
 		{
 			Coordinates coor = new Coordinates(i, col);
 			Figure temp = board.getFigure(coor);
