@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -27,40 +28,46 @@ public class BoardView extends JPanel
 		super.paintComponent(g);
 		Figure[][] figures = board.getAllFigures();
 		CellView tempCell;
-		Rectangle tempRect = new Rectangle(0, 0);
-		tempRect.width = this.getWidth() / (Constants.MAX_COLUMN_VALUE + 1);
-		tempRect.height = this.getHeight() / (Constants.MAX_ROW_VALUE + 1);
+		Rectangle tempCellBounds = new Rectangle(0, 0);
+		tempCellBounds.width = this.getWidth() / (Constants.MAX_COLUMN_VALUE + 1);
+		tempCellBounds.height = this.getHeight() / (Constants.MAX_ROW_VALUE + 1);
 		
-		if(Game.getInstance().getPlayerOnTurn().getTeam().equals(Team.White))
-		{
+		boolean isWhiteCell = true;
+		
+		if(true)
+		{	
 			for(int row = 0; row < figures.length; row++)
 			{
-				tempRect.x = 0;
+				tempCellBounds.x = 0;
 				for(int column = 0; column < figures[row].length; column++)
 				{
-					tempCell = new CellView(figures[row][column], new Coordinates(row, column));
-					tempCell.setBounds(tempRect);
-					tempCell.setLayout(null);
+					tempCell = createCellView(figures[row][column], new Coordinates(row, column),
+							  				  tempCellBounds, isWhiteCell);
+					
 					this.add(tempCell);
-					tempRect.x += tempRect.width;
+					tempCellBounds.x += tempCellBounds.width;
+					isWhiteCell = !isWhiteCell;
 				}
-				tempRect.y += tempRect.height;
+				tempCellBounds.y += tempCellBounds.height;
+				isWhiteCell = !isWhiteCell;
 			}
 		}
 		else
 		{
 			for(int row = Constants.MAX_ROW_VALUE; row >= Constants.MIN_ROW_VALUE; row--)
 			{
-				tempRect.x = 0;
+				tempCellBounds.x = 0;
 				for(int column = Constants.MAX_COLUMN_VALUE; column >= Constants.MIN_COLUMN_VALUE; column--)
 				{
-					tempCell = new CellView(figures[row][column], new Coordinates(row, column));
-					tempCell.setBounds(tempRect);
-					tempCell.setLayout(null);
+					tempCell = createCellView(figures[row][column], new Coordinates(row, column),
+											  tempCellBounds, isWhiteCell);
+					
 					this.add(tempCell);
-					tempRect.x += tempRect.width;
+					tempCellBounds.x += tempCellBounds.width;
+					isWhiteCell = !isWhiteCell;
 				}
-				tempRect.y += tempRect.height;
+				tempCellBounds.y += tempCellBounds.height;
+				isWhiteCell = !isWhiteCell;
 			}
 		}
 		
@@ -68,6 +75,25 @@ public class BoardView extends JPanel
 		{
 			comp.repaint();
 		}
+	}
+	
+	private CellView createCellView(Figure figure, Coordinates coordinates, Rectangle bounds, boolean isWhiteCell)
+	{
+		CellView result = new CellView(figure, coordinates);
+		result.setBounds(bounds);
+		result.setLayout(null);
+		
+		//Example colors
+		if(isWhiteCell)
+		{
+			result.setBackground(new Color(160, 143, 71));
+		}
+		else
+		{
+			result.setBackground(new Color(1, 113, 13));
+		}
+		
+		return result;
 	}
 	
 	@Override
