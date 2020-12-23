@@ -1,9 +1,11 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -25,6 +27,8 @@ public class CellView extends JPanel
 	
 	public CellView(Figure figure, Coordinates coordinates)
 	{
+		this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		
 		if(Validator.isNull(coordinates))
 		{
 			if(Validator.isNull(figure))
@@ -74,6 +78,7 @@ public class CellView extends JPanel
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		
 		if(!Validator.isNull(this.getFigure()))
 		{
 			UIFigureDrawer.drawfigure(this.getFigure().getType(), g, this.getFigure().getTeam(), this.getBounds());
