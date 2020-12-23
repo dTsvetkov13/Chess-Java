@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import common.Validator;
@@ -28,6 +27,7 @@ public class CellView extends JPanel
 	public CellView(Figure figure, Coordinates coordinates)
 	{
 		this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		this.addMouseListener(this);
 		
 		if(Validator.isNull(coordinates))
 		{
@@ -96,7 +96,7 @@ public class CellView extends JPanel
 	@Override
 	public void mouseClicked(MouseEvent arg0)
 	{
-		if(Validator.isNull(Game.getInstance().getListener()))
+		if(!Validator.isNull(Game.getInstance().getListener()))
 		{
 			Game.getInstance().getListener().onCellClicked(this);
 		}
