@@ -34,7 +34,7 @@ public class BoardView extends JPanel
 		
 		boolean isWhiteCell = true;
 		
-		if(true)
+		if(Game.getInstance().getPlayerOnTurn().getTeam().equals(Team.White))
 		{	
 			for(int row = 0; row < figures.length; row++)
 			{
@@ -54,6 +54,8 @@ public class BoardView extends JPanel
 		}
 		else
 		{
+			isWhiteCell = false;
+			
 			for(int row = Constants.MAX_ROW_VALUE; row >= Constants.MIN_ROW_VALUE; row--)
 			{
 				tempCellBounds.x = 0;
