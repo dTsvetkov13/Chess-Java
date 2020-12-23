@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import common.Constants;
 import enums.Team;
 import models.Board;
+import models.Coordinates;
 import models.Game;
 import models.figures.Figure;
 
@@ -23,6 +24,7 @@ public class BoardView extends JPanel
 	@Override
 	public void paintComponent(Graphics g)
 	{
+		super.paintComponent(g);
 		Figure[][] figures = board.getAllFigures();
 		CellView tempCell;
 		Rectangle tempRect = new Rectangle(0, 0);
@@ -33,29 +35,38 @@ public class BoardView extends JPanel
 		{
 			for(int row = 0; row < figures.length; row++)
 			{
+				tempRect.x = 0;
 				for(int column = 0; column < figures[row].length; column++)
 				{
-					tempCell = new CellView(figures[row][column]);
+					tempCell = new CellView(figures[row][column], new Coordinates(row, column));
 					tempCell.setBounds(tempRect);
-					this.add(tempCell);
-					tempRect.x += tempRect.width;
-				}
-			}
-			tempRect.y += tempRect.height;
-		}
-		else
-		{
-			for(int row = Constants.MAX_ROW_VALUE; row >= Constants.MIN_ROW_VALUE; row--)
-			{
-				for(int column = Constants.MAX_COLUMN_VALUE; column >= Constants.MIN_COLUMN_VALUE; column--)
-				{
-					tempCell = new CellView(figures[row][column]);
-					tempCell.setBounds(tempRect);
+					tempCell.setLayout(null);
 					this.add(tempCell);
 					tempRect.x += tempRect.width;
 				}
 				tempRect.y += tempRect.height;
 			}
+		}
+		else
+		{
+			for(int row = Constants.MAX_ROW_VALUE; row >= Constants.MIN_ROW_VALUE; row--)
+			{
+				tempRect.x = 0;
+				for(int column = Constants.MAX_COLUMN_VALUE; column >= Constants.MIN_COLUMN_VALUE; column--)
+				{
+					tempCell = new CellView(figures[row][column], new Coordinates(row, column));
+					tempCell.setBounds(tempRect);
+					tempCell.setLayout(null);
+					this.add(tempCell);
+					tempRect.x += tempRect.width;
+				}
+				tempRect.y += tempRect.height;
+			}
+		}
+		
+		for(var comp : this.getComponents())
+		{
+			comp.repaint();
 		}
 	}
 	
