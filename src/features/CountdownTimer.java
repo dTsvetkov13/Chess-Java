@@ -27,12 +27,14 @@ public class CountdownTimer
 
 	public void setSeconds(int seconds)
 	{
-		this.seconds = seconds;
+		if(seconds >= 0)
+			this.seconds = seconds;
 	}
 	
 	public void setMinutes(int minutes)
 	{
-		this.minutes = minutes;
+		if(minutes >= 0)
+			this.minutes = minutes;
 	}
 	
 	public int getSeconds()
@@ -52,28 +54,24 @@ public class CountdownTimer
 
 	        public void run() 
 	        {
-	        	while(getSeconds() > 0)
-	        		System.out.println(setInterval(getMinutes(), getSeconds()));
+	        		System.out.println(setIntervalSeconds(getSeconds()));
+	        		if(getSeconds() == 0)
+	        		{
+	        			System.out.println(setIntervalMinutes(getMinutes()));
+	        		}
 
 	        }
 	    }, delay, period);
 	}
 	
-	private static final int setInterval(int minutes, int seconds) 
+	private static final int setIntervalSeconds(int seconds) 
 	{
-		while(seconds >= 0 && seconds <= 59 && minutes >= 0 && minutes <= 59)
-		{
-		    if(seconds > 0) 
-		    {
-		    	return --intervalSeconds;
-		    }    
-		    else
-		    {
-		    	intervalMinutes -= 1;
-		    	intervalSeconds = 59;    	
-		    }
-		}
-		return -1;
+		return --intervalSeconds;
+	}
+	
+	private static final int setIntervalMinutes(int minutes) 
+	{
+		return --intervalMinutes;
 	}
 	
 

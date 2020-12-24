@@ -4,7 +4,8 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Stopwatch {
+public class Stopwatch 
+{
 	static int interval;
 	static Timer timer;
 	static int secs;
