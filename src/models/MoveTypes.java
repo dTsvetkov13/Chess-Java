@@ -2,7 +2,10 @@ package models;
 
 import common.Constants;
 import enums.Directions;
+import enums.Team;
 import models.figures.Figure;
+import models.figures.King;
+import models.figures.Rook;
 
 
 public class MoveTypes 
@@ -19,7 +22,7 @@ public class MoveTypes
 		int col = f.getCoordinates().getColumn();
 		
 		//this for calculates the reachable cells to the right (East) of the figure
-		for(int i = col; i <= 7; i++)
+		for(int i = col; i <= Constants.MAX_COLUMN_VALUE; i++)
 		{
 			Coordinates coor = new Coordinates(row, i);
 			Figure temp = board.getFigure(coor);
@@ -59,7 +62,7 @@ public class MoveTypes
 		}
 		
 		//this for calculates the reachable cells to the left (West) of the figure
-		for(int i = col; i >= 0; i--)
+		for(int i = col; i >= Constants.MIN_COLUMN_VALUE; i--)
 		{
 			Coordinates coor = new Coordinates(row, i);
 			Figure temp = board.getFigure(coor);
@@ -112,7 +115,7 @@ public class MoveTypes
 		int index = 0;
 		
 		//this for calculates the reachable cells above (North) the figure, if such exist
-		for(int i = row + 1; i <= 7; i++)
+		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++)
 		{
 			Coordinates coor = new Coordinates(i, col);
 			Figure temp = board.getFigure(coor);
@@ -151,7 +154,7 @@ public class MoveTypes
 		}
 		
 		//this for calculates the reachable cells below (South) the figure, if such exist
-		for(int i = row - 1; i >= 0; i--)
+		for(int i = row - 1; i >= Constants.MIN_ROW_VALUE; i--)
 		{
 			Coordinates coor = new Coordinates(i, col);
 			Figure temp = board.getFigure(coor);
@@ -354,14 +357,14 @@ public class MoveTypes
 		return reachable2;
 	}
 	
-	public static MovementInDirection[] kingMove(Figure f)
+	public static MovementInDirection[] kingMove(Figure f, Figure r1, Figure r2)
 	{
 		//needs optimising
 		//doesn't check for impossible moves
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
 		int index = 0;
-		MovementInDirection[] reachableTemp = new MovementInDirection[8];
+		MovementInDirection[] reachableTemp = new MovementInDirection[10];
 		
 		//checks for possible moves in row below the King's, if it exists
 		for(int i = row - 1, j = col - 1, count = 0; i >= 0 && count <= 2; j++, count++)
@@ -527,6 +530,40 @@ public class MoveTypes
 			}
 		}
 		
+		//checks for possible Castling
+		if(r1.getCoordinates() == new Coordinates(0, 0) || r1.getCoordinates() == new Coordinates(7, 0))
+		{
+			MovementInDirection ksc = MoveTypes.kingSideCastling((King)f, (Rook)r2);
+			MovementInDirection qsc = MoveTypes.queenSideCastling((King)f, (Rook)r1);
+			if(ksc != null)
+			{
+				reachableTemp[index] = ksc;
+				index++;
+			}
+			if(qsc != null)
+			{
+				reachableTemp[index] = qsc;
+				index++;
+			}
+		}
+		else if(r1.getCoordinates() == new Coordinates(0, 7) || r1.getCoordinates() == new Coordinates(7, 7))
+		{
+			MovementInDirection ksc = MoveTypes.kingSideCastling((King)f, (Rook)r1);
+			MovementInDirection qsc = MoveTypes.queenSideCastling((King)f, (Rook)r2);
+			if(ksc != null)
+			{
+				reachableTemp[index] = ksc;
+				index++;
+			}
+			if(qsc != null)
+			{
+				reachableTemp[index] = qsc;
+				index++;
+			}
+		}
+		
+		
+		//returns an array without nulls
 		MovementInDirection[] reachable = new MovementInDirection[index];
 		
 		index = 0;
@@ -749,6 +786,94 @@ public class MoveTypes
 		}
 		
 		return reachable;
+	}
+	
+	public static MovementInDirection kingSideCastling(King k, Rook r)
+	{
+		//doesn't check whether King is checked or cells are guarded
+		if(k.getTeam().equals(Team.White))
+		{
+			Coordinates g1 = new Coordinates(0, 6);
+			Coordinates f1 = new Coordinates(0, 5);
+			if(k.isMoved() == true || r.isMoved() == true)
+			{
+				return null;
+			}
+			else if(board.getFigure(g1) == null && board.getFigure(f1) == null)
+			{
+				Coordinates[] reachable = {g1, f1};
+				MovementInDirection m = new MovementInDirection(Directions.KingSideCastling, reachable);
+				return m;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		else
+		{
+			Coordinates g8 = new Coordinates(7, 6);
+			Coordinates f8 = new Coordinates(7, 5);
+			if(k.isMoved() == true || r.isMoved() == true)
+			{
+				return null;
+			}
+			else if(board.getFigure(g8) == null && board.getFigure(f8) == null)
+			{
+				Coordinates[] reachable = {g8, f8};
+				MovementInDirection m = new MovementInDirection(Directions.KingSideCastling, reachable);
+				return m;
+			}
+			else
+			{
+				return null;
+			}
+		}
+	}
+	
+	public static MovementInDirection queenSideCastling(King k, Rook r)
+	{
+		//doesn't check whther King is checked or cells are guarded
+		if(k.getTeam().equals(Team.White))
+		{
+			Coordinates d1 = new Coordinates(0, 3);
+			Coordinates c1 = new Coordinates(0, 2);
+			Coordinates b1 = new Coordinates(0, 1);
+			if(k.isMoved() == true || r.isMoved() == true)
+			{
+				return null;
+			}
+			else if(board.getFigure(d1) == null && board.getFigure(c1) == null && board.getFigure(b1) == null)
+			{
+				Coordinates[] reachable = {c1, d1};
+				MovementInDirection m = new MovementInDirection(Directions.QueenSideCastling, reachable);
+				return m;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		else
+		{
+			Coordinates d8 = new Coordinates(7, 3);
+			Coordinates c8 = new Coordinates(7, 2);
+			Coordinates b8 = new Coordinates(7, 1);
+			if(k.isMoved() == true || r.isMoved() == true)
+			{
+				return null;
+			}
+			else if(board.getFigure(d8) == null && board.getFigure(c8) == null && board.getFigure(b8) == null)
+			{
+				Coordinates[] reachable = {c8, d8};
+				MovementInDirection m = new MovementInDirection(Directions.QueenSideCastling, reachable);
+				return m;
+			}
+			else
+			{
+				return null;
+			}
+		}
 	}
 	
 	

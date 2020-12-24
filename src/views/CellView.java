@@ -1,17 +1,19 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JComponent;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 
 import common.Validator;
 import models.Coordinates;
 import models.Game;
 import models.figures.Figure;
 
-public class CellView extends JComponent
+public class CellView extends JPanel
 					  implements MouseListener 
 {
 	private Figure figure;
@@ -24,6 +26,9 @@ public class CellView extends JComponent
 	
 	public CellView(Figure figure, Coordinates coordinates)
 	{
+		this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		this.addMouseListener(this);
+		
 		if(Validator.isNull(coordinates))
 		{
 			if(Validator.isNull(figure))
@@ -36,19 +41,24 @@ public class CellView extends JComponent
 				this.setCoordinates(figure.getCoordinates());
 			}
 		}
+		else
+		{
+			this.setFigure(figure);
+			this.setCoordinates(coordinates);
+		}
 	}
 	
 	private void setFigure(Figure figure)
 	{
-		if(Validator.isNull(figure))
+		if(!Validator.isNull(figure))
 		{
 			this.figure = figure;
 		}
 	}
 	
-	private void setCoordinates(Coordinates coordinates)
+	public void setCoordinates(Coordinates coordinates)
 	{
-		if(Validator.isNull(coordinates))
+		if(!Validator.isNull(coordinates))
 		{
 			this.coordinates = coordinates;
 		}
@@ -67,16 +77,26 @@ public class CellView extends JComponent
 	@Override
 	public void paintComponent(Graphics g)
 	{
+		super.paintComponent(g);
+		
 		if(!Validator.isNull(this.getFigure()))
 		{
 			UIFigureDrawer.drawfigure(this.getFigure().getType(), g, this.getFigure().getTeam(), this.getBounds());
 		}
 	}
 	
+	public void repaint()
+	{
+		if(this.getGraphics() != null)
+		{
+			this.paint(this.getGraphics());
+		}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0)
 	{
-		if(Validator.isNull(Game.getInstance().getListener()))
+		if(!Validator.isNull(Game.getInstance().getListener()))
 		{
 			Game.getInstance().getListener().onCellClicked(this);
 		}
