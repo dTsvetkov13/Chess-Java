@@ -21,7 +21,7 @@ public class Board
 	}
 	
 	private void setAllFigures() //Black up and White down
-	{
+	{	
 		Team team = Team.Black;
 		figures[0][0] = new Rook(new Coordinates(0, 0), team);
 		figures[0][1] = new Knight(new Coordinates(0, 1), team);
@@ -66,9 +66,12 @@ public class Board
 	
 	public Figure getFigure(Coordinates coordinates)
 	{
-		if(isInRange(coordinates))
+		if(!Validator.isNull(coordinates))
 		{
-			return figures[coordinates.getRow()][coordinates.getColumn()];
+			if(isInRange(coordinates))
+			{
+				return figures[coordinates.getRow()][coordinates.getColumn()];
+			}
 		}
 		
 		return null;
@@ -76,20 +79,31 @@ public class Board
 	
 	public boolean isInRange(Coordinates coordinates)
 	{
-		if(Validator.isGreaterThan(Constants.MAX_COLUMN_VALUE, coordinates.getColumn())
-			|| Validator.isLessThan(Constants.MIN_COLUMN_VALUE, coordinates.getColumn())
-			|| Validator.isGreaterThan(Constants.MAX_COLUMN_VALUE, coordinates.getRow())
-			|| Validator.isLessThan(Constants.MIN_COLUMN_VALUE, coordinates.getRow()))
+		if(!Validator.isNull(coordinates))
 		{
-			return false;
+			if(Validator.isGreaterThan(Constants.MAX_COLUMN_VALUE, coordinates.getColumn())
+					|| Validator.isLessThan(Constants.MIN_COLUMN_VALUE, coordinates.getColumn())
+					|| Validator.isGreaterThan(Constants.MAX_COLUMN_VALUE, coordinates.getRow())
+					|| Validator.isLessThan(Constants.MIN_COLUMN_VALUE, coordinates.getRow()))
+			{
+					return false;
+			}
+			else
+			{
+				return true;
+			}
 		}
-		
-		return true;
+		return false;
 	}
 	
 	public void moveFigure(Coordinates from, Coordinates to)
 	{
-		
+		if(!Validator.isNull(from) && !Validator.isNull(to))
+		{
+			this.figures[to.getRow()][to.getColumn()] = this.figures[from.getRow()][from.getColumn()];
+			this.figures[from.getRow()][from.getColumn()] = null;
+			this.figures[to.getRow()][to.getColumn()].setCoordinates(to);
+		}
 	}
 	
 	public int howManyFiguresReach(Coordinates coordinates, Team from)
