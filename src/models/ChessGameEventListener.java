@@ -1,8 +1,7 @@
 package models;
 
-import javax.swing.JFrame;
-
 import common.Validator;
+import enums.Team;
 import models.figures.Figure;
 import views.BoardView;
 import views.CellView;
@@ -12,10 +11,9 @@ import views.screens.GameScreen;
 public class ChessGameEventListener implements GameEventListener
 {
 	@Override
-	public void onBoardChanged(BoardView boardView)
+	public void onBoardChanged()
 	{
 		//team change
-		boardView.repaint();
 	}
 
 	@Override
@@ -27,21 +25,20 @@ public class ChessGameEventListener implements GameEventListener
 	@Override
 	public void onGameOver(Game game)
 	{
-		game.addScreen(new EndingScreen("Game Over",
-				game.getInstance().getWindow().getExtendedState() == JFrame.MAXIMIZED_BOTH));
+		game.addScreen(new EndingScreen("Game Over"));
 	}
 
 	@Override
 	public void onGameStart(Game game)
 	{
-		game.addScreen(new GameScreen("Chess",
-			   	game.getInstance().getWindow().getExtendedState() == JFrame.MAXIMIZED_BOTH));
+		game.addScreen(new GameScreen("Chess"));
 	}
 
 	@Override
 	public void onFigureClicked(Figure figure)
 	{
 		figure.CalculateReachableCells();
+		
 	}
 
 	@Override
@@ -50,6 +47,8 @@ public class ChessGameEventListener implements GameEventListener
 		if(Board.getInstance().getFigure(from).isOneOfReachableCells(to))
 		{
 			Board.getInstance().moveFigure(from, to);
+			Game.getInstance().getListener().onBoardChanged();
+			Game.getInstance().getListener().onFigureTaken();
 		}
 	}
 
@@ -61,12 +60,52 @@ public class ChessGameEventListener implements GameEventListener
 			throw new IllegalArgumentException("CellView cannot be null!");
 		}
 		
-		Board.getInstance().coordinatesSelected(cellView.getCoordinates());
+		determineBoardBehaviour(cellView.getCoordinates());
 		
-		if(Board.getInstance().getFigure(cellView.getCoordinates()).getTeam()
-				.equals(Game.getInstance().getPlayerOnTurn().getTeam()))
+		if(!Validator.isNull(Board.getInstance().getFigure(cellView.getCoordinates())) &&
+		    Board.getInstance().getFigure(cellView.getCoordinates()).getTeam()
+			.equals(Game.getInstance().getPlayerOnTurn().getTeam()))
 		{
 			//set the CellView to be selected
+		}
+	}
+	
+	private void determineBoardBehaviour(Coordinates coordinates)
+	{
+		if(Validator.isNull(coordinates))
+		{
+			throw new IllegalArgumentException("Coordinates cannot be null!");
+		}
+		
+		Board board = Board.getInstance();
+		Figure selectedFigure = board.getFigure(coordinates);
+		Team playerOnTurnTeam = Game.getInstance().getPlayerOnTurn().getTeam();
+		Figure lastSelectedFigure = board.getFigure(board.getLastSelectedFigure());
+		
+		if(!Validator.isNull(selectedFigure)
+		   && selectedFigure.getTeam().equals(playerOnTurnTeam))
+		{
+			board.setLastSelectedFigure(coordinates);
+			Game.getInstance().getListener().onFigureClicked(selectedFigure);
+			System.out.println("Figure clicked");
+		}
+		else
+		{
+			if(!Validator.isNull(lastSelectedFigure))
+			{
+				if(lastSelectedFigure.getTeam().equals(playerOnTurnTeam))
+				{
+					System.out.println("Destination clicked");
+					Game.getInstance().getListener()
+									  .onDestinationClicked(board.getLastSelectedFigure(),
+											  				coordinates);
+				}
+			}
+			else
+			{
+				System.out.println("Else clicked");
+				//TODO: Think of a way to announce the player to select again
+			}
 		}
 	}
 }
