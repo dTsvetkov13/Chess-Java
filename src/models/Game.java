@@ -3,11 +3,11 @@ package models;
 import java.awt.CardLayout;
 import java.awt.Rectangle;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 import common.Constants;
 import common.Validator;
-import views.screens.MenuScreen;
 import views.screens.Screen;
 
 public class Game
@@ -59,7 +59,8 @@ public class Game
 	{
 		if(screen != null)
 		{
-			this.window.add(screen);	
+			this.window.add(screen);
+			System.out.println("Bounds: " + screen.getBounds());
 		}
 	}
 	
@@ -94,5 +95,35 @@ public class Game
 	public GameEventListener getListener()
 	{
 		return this.listener;
+	}
+	
+	//Method for testing, delete later
+	public void addComponent(JComponent comp)
+	{
+		this.window.add(comp);
+	}
+	
+	public void addPlayerAt(int index, Player player)
+	{
+		if(!Validator.isNull(player))
+		{
+			if(Validator.isLessThan(this.players.length, index))
+			{
+				this.players[index] = player;
+			}
+		}
+	}
+	
+	public Player getPlayerAt(int index)
+	{
+		if(Validator.isGreaterThan(-1, index)
+			&& Validator.isLessThan(this.players.length, index))
+		{
+			return this.players[index];
+		}
+		else
+		{
+			return null;
+		}
 	}
 }

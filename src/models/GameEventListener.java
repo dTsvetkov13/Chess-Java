@@ -6,7 +6,7 @@ import views.CellView;
 
 public interface GameEventListener
 {
-	void onBoardChanged(BoardView boardView);
+	void onBoardChanged();
 	void onFigureTaken();
 	void onGameOver(Game game);
 	void onGameStart(Game game);
