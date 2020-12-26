@@ -12,9 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import models.Board;
 import models.Player;
 
-public class GameScreen extends Screen //frame.setLayout(new FlowLayout()); - za Denis
+public class GameScreen extends Screen 
 {
 	public final static int FONT_SIZE = 25;
 	
@@ -50,6 +51,14 @@ public class GameScreen extends Screen //frame.setLayout(new FlowLayout()); - za
 		this.drawPnlLeftSide();
 		this.drawBoard();
 		this.drawPnlRightSide();
+	}
+	
+	public void repaintBoard(BoardView boardView)
+	{
+		if(boardView != null)
+		{
+			boardView.repaint();
+		}
 	}
 	
 	private void drawPnlLeftSide()
