@@ -1,6 +1,7 @@
 package views.screens;
 import views.BoardView;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,17 +14,24 @@ import javax.swing.border.EmptyBorder;
 
 import models.Player;
 
-public class GameScreen extends Screen
+public class GameScreen extends Screen //frame.setLayout(new FlowLayout()); - za Denis
 {
+	public final static int FONT_SIZE = 25;
+	
+	public final static Insets PNL_TAKEN_FIGURES_INSETS = new Insets(140, 150, 140, 150); // top left bottom right
+	public final static Insets PNL_LEFT_INSETS = new Insets(40, 5, 700, 5);
+	public final static Insets PNL_RIGHT_INSETS = new Insets(470, 5, 20, 5);
+	public final static Insets PNL_BOARD_INSETS = new Insets(500, 450, 500, 450);
+	
+	public final static Color FIGURE_LOST = new Color(222,184,135);
+	public final static Color INFORMATION = new Color(184,134,11);
 	public final static Color BORDER_FIELD_COLOR = new Color(240,230,140);
 	//255,222,173 255,228,181 - other colors
 	public final static Color BORDER_FIELD_DARKER_COLOR = new Color(139,69,19);
 	//139,69,19 160,82,45 - other colors 
-	public final static Color FIGURE_LOST = new Color(222,184,135);
-	public final static Color INFORMATION = new Color(184,134,11);
 	
-	//private Player playerOne;
-	//private Player playerTwo;
+	private Player firstPlayer;
+	private Player secondPlayer;
 	private BoardView chessBoard;
 	
 	private BoxLayout layout;
@@ -48,37 +56,21 @@ public class GameScreen extends Screen
 	{
 		JPanel left = new JPanel();
 		left.setBackground(BACKGROUND);
-		left.setBorder(new EmptyBorder(new Insets(40, 5, 700, 5)));// top left bottom right
+		left.setBorder(new EmptyBorder(PNL_LEFT_INSETS));
 		left.setVisible(true);
 		
-		left.add(pnlPlayerOne());
+		//String player = firstPlayer.getUsername(); 
+		String playerName = "Pesho";
+		left.add(pnlPlayer(playerName));
+		
 		this.add(left);
 	}
-	
-	private JPanel pnlPlayerOne()
-	{
-		JPanel playerOne = new JPanel();
-		BoxLayout boxlayoutPalyerOne = new BoxLayout(playerOne, BoxLayout.Y_AXIS);
-		playerOne.setLayout(boxlayoutPalyerOne);
-		
-		JLabel nicknameOne = new JLabel("Pesho");
-		nicknameOne.setFont(new Font("Serif", Font.BOLD, 25));
-		
-		JPanel pnlTakenByPlayerOne = new JPanel();
-		pnlTakenByPlayerOne.setBackground(FIGURE_LOST);
-		pnlTakenByPlayerOne.setBorder(new EmptyBorder(new Insets(140, 150, 140, 150)));// top left bottom right
-		
-		playerOne.add(nicknameOne);
-		playerOne.add(pnlTakenByPlayerOne);
-		
-		return playerOne;
-	}
-	
+
 	private void drawBoard()
 	{
 		JPanel middle = new JPanel();
 		middle.setBackground(Color.GRAY);
-		middle.setBorder(new EmptyBorder(new Insets(500, 430, 500, 430)));// top left bottom right
+		middle.setBorder(new EmptyBorder(PNL_BOARD_INSETS));
 				
 		this.add(middle);
 	}
@@ -87,29 +79,31 @@ public class GameScreen extends Screen
 	{
 		JPanel right = new JPanel();
 		right.setBackground(BACKGROUND);
-		right.setBorder(new EmptyBorder(new Insets(470, 5, 20, 5)));// top left bottom right
+		right.setBorder(new EmptyBorder(PNL_RIGHT_INSETS));
 		
-		right.add(pnlPlayerTwo());
+		//String player = secondPlayer.getUsername(); 
+		String playerName = "Gosho";
+		right.add(pnlPlayer(playerName));
 		
 		this.add(right);
 	}
 	
-	private JPanel pnlPlayerTwo()
+	private JPanel pnlPlayer(String playerName)
 	{
-		JPanel playerTwo = new JPanel();
-		BoxLayout boxlayoutPalyerTwo = new BoxLayout(playerTwo, BoxLayout.Y_AXIS);
-		playerTwo.setLayout(boxlayoutPalyerTwo);
+		JPanel player = new JPanel();
+		BoxLayout boxlayoutPlayer = new BoxLayout(player, BoxLayout.Y_AXIS);
+		player.setLayout(boxlayoutPlayer);
 		
-		JLabel nicknameTwo = new JLabel("Gosho");
-		nicknameTwo.setFont(new Font("Serif", Font.BOLD, 25));
+		JLabel nickname = new JLabel(playerName);
+		nickname.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
 		
-		JPanel pnlTakenByPlayerTwo = new JPanel();
-		pnlTakenByPlayerTwo.setBackground(FIGURE_LOST);
-		pnlTakenByPlayerTwo.setBorder(new EmptyBorder(new Insets(140, 150, 140, 150)));// top left bottom right
+		JPanel pnlTakenFigures = new JPanel();
+		pnlTakenFigures.setBackground(FIGURE_LOST);
+		pnlTakenFigures.setBorder(new EmptyBorder(PNL_TAKEN_FIGURES_INSETS));
 		
-		playerTwo.add(nicknameTwo);
-		playerTwo.add(pnlTakenByPlayerTwo);
+		player.add(nickname);
+		player.add(pnlTakenFigures);
 		
-		return playerTwo;
+		return player;
 	}
 }
