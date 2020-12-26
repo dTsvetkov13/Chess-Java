@@ -1,28 +1,20 @@
 package views.screens;
 import views.BoardView;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import models.Player;
 
 public class GameScreen extends Screen
 {
-	public final static int WIDTH = 1616;
-	public final static int HEIGHT = 910;
-	
-	public final static int PNL_INFORMATION_X = 5;
-	public final static int PNL_INFORMATION_Y = 5;
-	
-	public final static int SPACE = 10;
-	
-	public final static int BOARD_SIZE = HEIGHT * 8 / 10;
-	
-	public final static int SMALL_SQUARE_SIZE = (HEIGHT - 35 - BOARD_SIZE) / 2;
-	
-	public final static int LOST_FIGURES_WIDTH = ((WIDTH - HEIGHT) / 2) - 15 - (SMALL_SQUARE_SIZE / 2);
-	public final static int LOST_FIGURES_HEIGHT = (int) (LOST_FIGURES_WIDTH * 1.3);
-	
-	//*may add class with colors
 	public final static Color BORDER_FIELD_COLOR = new Color(240,230,140);
 	//255,222,173 255,228,181 - other colors
 	public final static Color BORDER_FIELD_DARKER_COLOR = new Color(139,69,19);
@@ -34,97 +26,90 @@ public class GameScreen extends Screen
 	//private Player playerTwo;
 	private BoardView chessBoard;
 	
+	private BoxLayout layout;
+	
 	public GameScreen(String name)
 	{
 		super(name);
+		layout = new BoxLayout(this, BoxLayout.X_AXIS);
+		this.setLayout(layout);
+		
 		drawGameScreen();
 	}
 	
-	//add only panels - information, lost figures, letters(A-H) and numbers(1-8)
-	//should add board and labels with nicknames of players
 	public void drawGameScreen()
 	{
-		this.drawInformation();
-		this.drawPanelsOfLostFigures();
-		this.drawBorder();
+		this.drawPnlLeftSide();
+		this.drawBoard();
+		this.drawPnlRightSide();
 	}
 	
-	private void drawInformation()
+	private void drawPnlLeftSide()
 	{
-		JPanel information = new JPanel();
+		JPanel left = new JPanel();
+		left.setBackground(BACKGROUND);
+		left.setBorder(new EmptyBorder(new Insets(40, 5, 700, 5)));// top left bottom right
+		left.setVisible(true);
 		
-		information.setBounds(PNL_INFORMATION_X, PNL_INFORMATION_Y, SMALL_SQUARE_SIZE / 2, SMALL_SQUARE_SIZE / 2);
-		information.setBackground(INFORMATION);
-		information.setVisible(true);
-		
-		this.add(information);
+		left.add(pnlPlayerOne());
+		this.add(left);
 	}
 	
-	private void drawPanelOfLostFigures(int x, int y)
+	private JPanel pnlPlayerOne()
 	{
-		JPanel pnlLostFigures = new JPanel();
+		JPanel playerOne = new JPanel();
+		BoxLayout boxlayoutPalyerOne = new BoxLayout(playerOne, BoxLayout.Y_AXIS);
+		playerOne.setLayout(boxlayoutPalyerOne);
 		
-		pnlLostFigures.setBounds(x, y, LOST_FIGURES_WIDTH, LOST_FIGURES_HEIGHT);
-		pnlLostFigures.setBackground(FIGURE_LOST);
-		pnlLostFigures.setVisible(true);
+		JLabel nicknameOne = new JLabel("Pesho");
+		nicknameOne.setFont(new Font("Serif", Font.BOLD, 25));
 		
-		this.add(pnlLostFigures);
+		JPanel pnlTakenByPlayerOne = new JPanel();
+		pnlTakenByPlayerOne.setBackground(FIGURE_LOST);
+		pnlTakenByPlayerOne.setBorder(new EmptyBorder(new Insets(140, 150, 140, 150)));// top left bottom right
+		
+		playerOne.add(nicknameOne);
+		playerOne.add(pnlTakenByPlayerOne);
+		
+		return playerOne;
 	}
 	
-	private void drawPanelsOfLostFigures()
+	private void drawBoard()
 	{
-		int x = SMALL_SQUARE_SIZE / 2 + SPACE;
-		int y = PNL_INFORMATION_Y;
-		
-		drawPanelOfLostFigures(x, y);
-		
-		x = HEIGHT + LOST_FIGURES_WIDTH;
-		y = HEIGHT - LOST_FIGURES_HEIGHT;
-		
-		drawPanelOfLostFigures(x, y);
+		JPanel middle = new JPanel();
+		middle.setBackground(Color.GRAY);
+		middle.setBorder(new EmptyBorder(new Insets(500, 430, 500, 430)));// top left bottom right
+				
+		this.add(middle);
 	}
 	
-	private void makePanelHorizontally(int x, int y)
+	private void drawPnlRightSide()
 	{
-		JPanel panel = new JPanel();
+		JPanel right = new JPanel();
+		right.setBackground(BACKGROUND);
+		right.setBorder(new EmptyBorder(new Insets(470, 5, 20, 5)));// top left bottom right
 		
-		panel.setBounds(x, y, BOARD_SIZE, SMALL_SQUARE_SIZE);
-		panel.setBackground(Color.black);
-		panel.setVisible(true);
+		right.add(pnlPlayerTwo());
 		
-		this.add(panel);
+		this.add(right);
 	}
 	
-	private void makePanelVertically(int x, int y)
+	private JPanel pnlPlayerTwo()
 	{
-		JPanel panel = new JPanel();
+		JPanel playerTwo = new JPanel();
+		BoxLayout boxlayoutPalyerTwo = new BoxLayout(playerTwo, BoxLayout.Y_AXIS);
+		playerTwo.setLayout(boxlayoutPalyerTwo);
 		
-		panel.setBounds(x, y, SMALL_SQUARE_SIZE, BOARD_SIZE);
-		panel.setBackground(Color.black);
-		panel.setVisible(true);
+		JLabel nicknameTwo = new JLabel("Gosho");
+		nicknameTwo.setFont(new Font("Serif", Font.BOLD, 25));
 		
-		this.add(panel);
-	}
-	
-	//draw panels for letters(A-H) and numbers(1-8) 
-	private void drawBorder()
-	{
-		int x = ((WIDTH - HEIGHT) / 2) + SMALL_SQUARE_SIZE;
-		int y = 0;
+		JPanel pnlTakenByPlayerTwo = new JPanel();
+		pnlTakenByPlayerTwo.setBackground(FIGURE_LOST);
+		pnlTakenByPlayerTwo.setBorder(new EmptyBorder(new Insets(140, 150, 140, 150)));// top left bottom right
 		
-		makePanelHorizontally(x, y);
+		playerTwo.add(nicknameTwo);
+		playerTwo.add(pnlTakenByPlayerTwo);
 		
-		y = SMALL_SQUARE_SIZE + BOARD_SIZE;
-		
-		makePanelHorizontally(x, y);
-		
-		x -= SMALL_SQUARE_SIZE;
-		y = SMALL_SQUARE_SIZE;
-		
-		makePanelVertically(x, y);
-		
-		x += SMALL_SQUARE_SIZE + BOARD_SIZE;
-		
-		makePanelVertically(x, y);
+		return playerTwo;
 	}
 }
