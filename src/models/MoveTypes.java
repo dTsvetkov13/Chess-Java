@@ -317,7 +317,7 @@ public class MoveTypes
 	
 	public static Coordinates[] pawnMove(Figure f) 
 	{
-		Coordinates[] reachable = new Coordinates[3];
+		Coordinates[] reachable = new Coordinates[4];
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
 		int index=0;
@@ -327,6 +327,16 @@ public class MoveTypes
 		{
 			reachable[index]=coor;
 			index++;
+			if(f.getCoordinates().getRow()==1) 
+			{
+				coor = new Coordinates(row-2, col);
+				temp = board.getFigure(coor);
+				if(temp == null) 
+				{
+					reachable[index]=coor;
+					index++;
+				}
+			}
 		}
 		coor = new Coordinates(row-1, col+1);
 		temp = board.getFigure(coor);
