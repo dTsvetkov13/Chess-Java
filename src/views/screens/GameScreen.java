@@ -53,11 +53,11 @@ public class GameScreen extends Screen
 		this.drawPnlRightSide();
 	}
 	
-	public void repaintBoard(BoardView boardView)
+	public void repaintBoard()
 	{
-		if(boardView != null)
+		if(this.chessBoard != null)
 		{
-			boardView.repaint();
+			chessBoard.repaint();
 		}
 	}
 	
