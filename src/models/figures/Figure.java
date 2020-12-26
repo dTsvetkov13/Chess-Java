@@ -1,5 +1,6 @@
 package models.figures;
 
+import common.Validator;
 import enums.FigureType;
 import enums.Team;
 import models.Coordinates;
@@ -21,6 +22,21 @@ public abstract class Figure
 			this.team = team;
 			this.isMoved = false;
 			this.reachableCells = new Coordinates[32]; // TO DO: make constant for it
+		}
+	}
+	
+	public Figure(Figure figure)
+	{
+		this(figure.getCoordinates(), figure.getTeam());
+		this.isMoved = figure.isMoved();
+		this.type = figure.getType();
+	}
+	
+	public void setCoordinates(Coordinates coordinates)
+	{
+		if(!Validator.isNull(coordinates))
+		{
+			this.coordinates = coordinates;
 		}
 	}
 	
