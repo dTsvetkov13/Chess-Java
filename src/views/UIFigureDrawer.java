@@ -20,7 +20,7 @@ public class UIFigureDrawer
 			graphics.setColor(Color.black);
 		}
 		else
-		{
+		{		
 			graphics.setColor(Color.white);
 		}
 		
@@ -110,7 +110,7 @@ public class UIFigureDrawer
 	private static void drawPawn(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		Rectangle2D.Double rect = new Rectangle2D.Double(0, 0, bounds.width * 0.5, bounds.height * 0.5); 
+		Rectangle2D.Double rect = new Rectangle2D.Double(0.8 * bounds.width, 0.2 * bounds.height, bounds.width * 0.4, bounds.height * 0.4); 
 		
 		graphics2D.draw(rect);
 		graphics2D.fill(rect);
@@ -121,6 +121,7 @@ public class UIFigureDrawer
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		Rectangle2D.Double rect = new Rectangle2D.Double(0, 0, bounds.width, bounds.height);
 		
+		//graphics2D.setColor(Color.black);
 		graphics2D.draw(rect);
 		graphics2D.fill(rect);
 	}
