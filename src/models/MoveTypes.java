@@ -886,7 +886,7 @@ public class MoveTypes
 		}
 	}
 	
-	public String toString(Figure f)
+	public static String toString(Figure f)
 	{
 		Coordinates[] reachable = f.getReachableCells();
 		String result = f.getTeam() + ", " + f.getType();
