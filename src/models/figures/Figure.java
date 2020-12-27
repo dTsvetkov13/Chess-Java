@@ -4,6 +4,7 @@ import common.Validator;
 import enums.FigureType;
 import enums.Team;
 import models.Coordinates;
+import models.MovementInDirection;
 
 public abstract class Figure 
 {
@@ -71,6 +72,22 @@ public abstract class Figure
 	}
 	
 	public abstract int CalculateReachableCells();
+	
+	public void addCoordinatesFromMovementInDirection(MovementInDirection directions)
+	{
+		for(int i = 0; i < directions.getMove().length; i++)
+		{
+			this.addReachableCell(directions.getMove()[i]);
+		}
+	}
+	
+	public void addCoordinatesFromMovementInDirectionArray(MovementInDirection[] array)
+	{
+		for(int i = 0; i < array.length; i++)
+		{
+			this.addCoordinatesFromMovementInDirection(array[i]);
+		}
+	}
 	
 	public void addReachableCell(Coordinates coordinates)
 	{

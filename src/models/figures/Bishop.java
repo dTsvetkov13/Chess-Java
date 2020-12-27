@@ -3,6 +3,8 @@ package models.figures;
 import enums.FigureType;
 import enums.Team;
 import models.Coordinates;
+import models.MoveTypes;
+import models.MovementInDirection;
 
 public class Bishop extends Figure 
 {
@@ -17,7 +19,12 @@ public class Bishop extends Figure
 	@Override
 	public int CalculateReachableCells() 
 	{
-		return 0;
+		super.reachableCellsCount = 0;
+		
+		MovementInDirection[] directions = MoveTypes.vertical(this);//needs to be changed-diagonal
+		super.addCoordinatesFromMovementInDirectionArray(directions);
+		
+		return super.getReachableCellsCount();
 	}
 
 }

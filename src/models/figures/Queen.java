@@ -3,6 +3,8 @@ package models.figures;
 import enums.FigureType;
 import enums.Team;
 import models.Coordinates;
+import models.MoveTypes;
+import models.MovementInDirection;
 
 public class Queen extends Figure
 {
@@ -16,7 +18,16 @@ public class Queen extends Figure
 	@Override
 	public int CalculateReachableCells() 
 	{
-			return 0;
+		super.reachableCellsCount = 0;
+		
+		MovementInDirection[] directions = MoveTypes.vertical(this);
+		super.addCoordinatesFromMovementInDirectionArray(directions);
+		directions = MoveTypes.horizontal(this);
+		super.addCoordinatesFromMovementInDirectionArray(directions);
+		//directions = MoveTypes.diagonal(this); to be changed
+		super.addCoordinatesFromMovementInDirectionArray(directions);
+		
+		return super.getReachableCellsCount();
 	}
 
 }

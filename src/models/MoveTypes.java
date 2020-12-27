@@ -843,7 +843,7 @@ public class MoveTypes
 	
 	public static MovementInDirection queenSideCastling(King k, Rook r)
 	{
-		//doesn't check whther King is checked or cells are guarded
+		//doesn't check whether King is checked or cells are guarded
 		if(k.getTeam().equals(Team.White))
 		{
 			Coordinates d1 = new Coordinates(0, 3);
