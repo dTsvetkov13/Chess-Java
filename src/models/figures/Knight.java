@@ -3,6 +3,8 @@ package models.figures;
 import enums.FigureType;
 import enums.Team;
 import models.Coordinates;
+import models.MoveTypes;
+import models.MovementInDirection;
 
 public class Knight extends Figure
 {
@@ -15,6 +17,11 @@ public class Knight extends Figure
 	@Override
 	public int CalculateReachableCells() 
 	{
-			return 0;
+		super.reachableCellsCount = 0;
+		
+		MovementInDirection[] directions = MoveTypes.knightMove(this);
+		super.addCoordinatesFromMovementInDirectionArray(directions);
+		
+		return super.getReachableCellsCount();
 	}
 }
