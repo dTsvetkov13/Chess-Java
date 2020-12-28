@@ -886,19 +886,6 @@ public class MoveTypes
 		}
 	}
 	
-	public static String toString(Figure f)
-	{
-		Coordinates[] reachable = f.getReachableCells();
-		String result = f.getTeam() + ", " + f.getType();
-		result += "\nCurrent Coordinates: " + f.getCoordinates().getRow() + "; " + f.getCoordinates().getColumn();
-		result += "\nReachable Coordinates: ";
-		for(int i = 0; i < reachable.length; i++)
-		{
-			result += "\n" + reachable[i].getRow() + "; " + reachable[i].getColumn(); 
-		}
-		
-		return result;
-	}
 	
 	
 
