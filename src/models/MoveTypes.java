@@ -205,7 +205,9 @@ public class MoveTypes
 		int col = f.getCoordinates().getColumn();
 		int index=0;
 		int k=col;
+		
 		// This loop checks the possible moves in the following order - lower right
+		
 		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++)
 		{
 			k++;
@@ -240,7 +242,9 @@ public class MoveTypes
 		reachable[index] = m;
 		index++;
 		k=col;
+		
 		// This loop checks the possible moves in the following order - lower left
+		
 		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++) 
 		{
 			k--;
@@ -276,7 +280,9 @@ public class MoveTypes
 		reachable[index] = m1;
 		index++;
 		k=col;
+		
 		// This loop checks the possible moves in the following order- upper right
+		
 		for(int i = row - 1; i >= Constants.MIN_ROW_VALUE; i--) 
 		{
 			k++;
@@ -312,7 +318,9 @@ public class MoveTypes
 		reachable[index] = m2;
 		index++;
 		k=col;
+		
 		// This loop checks the possible moves in the following order - upper left
+		
 		for(int i = row - 1; i > Constants.MIN_ROW_VALUE; i--) 
 		{
 			k--;
