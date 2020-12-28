@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import common.Constants;
 import common.Validator;
+import views.screens.GameScreen;
 import views.screens.Screen;
 
 public class Game
@@ -15,9 +16,8 @@ public class Game
 	private static Game gameInstance = null;
 	private JFrame window;
 	private CardLayout layout;
-	private Player[] players;
-	private int playerOnTurnIndex;
 	private GameEventListener listener;
+	private Screen lastScreen;
 	
 	private Game()
 	{
@@ -25,7 +25,6 @@ public class Game
 		layout = new CardLayout();
 		window.setLayout(layout);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		players = new Player[Constants.PLAYERS_COUNT];
 	}
 	
 	public static Game getInstance()
@@ -60,28 +59,18 @@ public class Game
 		if(screen != null)
 		{
 			this.window.add(screen);
-			System.out.println("Bounds: " + screen.getBounds());
+			this.lastScreen = screen;
 		}
+	}
+	
+	public void changeToPreviousScreen()
+	{
+		this.layout.previous(this.window.getContentPane());
 	}
 	
 	public JFrame getWindow()
 	{
 		return this.window;
-	}
-	
-	public void changeTurn()
-	{
-		this.playerOnTurnIndex++;
-		
-		if(this.playerOnTurnIndex >= this.players.length)
-		{
-			this.playerOnTurnIndex = 0;
-		}
-	}
-	
-	public Player getPlayerOnTurn()
-	{
-		return this.players[this.playerOnTurnIndex];
 	}
 	
 	public void setListener(GameEventListener listener)
@@ -103,27 +92,8 @@ public class Game
 		this.window.add(comp);
 	}
 	
-	public void addPlayerAt(int index, Player player)
+	public Screen getLastScreen()
 	{
-		if(!Validator.isNull(player))
-		{
-			if(Validator.isLessThan(this.players.length, index))
-			{
-				this.players[index] = player;
-			}
-		}
-	}
-	
-	public Player getPlayerAt(int index)
-	{
-		if(Validator.isGreaterThan(-1, index)
-			&& Validator.isLessThan(this.players.length, index))
-		{
-			return this.players[index];
-		}
-		else
-		{
-			return null;
-		}
+		return this.lastScreen;
 	}
 }
