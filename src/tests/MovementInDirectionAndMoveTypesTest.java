@@ -42,9 +42,9 @@ public class MovementInDirectionAndMoveTypesTest {
 		System.out.println("");
 		
 		//third - test on horizontal and vertical via Rook
-		//result - incorrect output, problems with logic in MoveTypes.horizontal and vertical
+		//result - moves correctly
 		Coordinates coor2 = new Coordinates(4, 5);
-		Figure rook = new Rook(coor1, Team.Black);
+		Figure rook = new Rook(coor2, Team.Black);
 		System.out.println("Type of Figure: Rook");
 		System.out.println("Current coordinates: " + coor2.getRow() + "; " + coor2.getColumn());
 		MovementInDirection[] rookMoves1 = MoveTypes.horizontal(rook);

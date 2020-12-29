@@ -33,17 +33,19 @@ public class MoveTypes
 				{
 					for(int j = i; j <= 7; j++)
 					{
-						reachableEast[j] = null;
+						reachableEast[index] = null;
+						index++;
 					}
 					break;
 				}
 				else
 				{
-					reachableEast[i] = coor;
+					reachableEast[index] = coor;
 					index++;
 					for(int j = i + 1; j < 8; j++)
 					{
-						reachableEast[j] = null;
+						reachableEast[index] = null;
+						index++;
 					}
 					break;
 				}
@@ -62,6 +64,8 @@ public class MoveTypes
 			movementIndex++;
 		}
 		
+		index = 0;
+		
 		//this for calculates the reachable cells to the left (West) of the figure
 		for(int i = col; i >= Constants.MIN_COLUMN_VALUE; i--)
 		{
@@ -73,24 +77,26 @@ public class MoveTypes
 				{
 					for(int j = i; j >= 0; j--)
 					{
-						reachableWest[j] = null;
+						reachableWest[index] = null;
+						index++;
 					}
 					break;
 				}
 				else
 				{
-					reachableWest[i] = coor;
+					reachableWest[index] = coor;
 					index++;
 					for(int j = i - 1; j >= 0; j--)
 					{
-						reachableWest[j] = null;
+						reachableWest[index] = null;
+						index++;
 					}
 					break;
 				}
 			}
 			else
 			{
-				reachableWest[i] = coor;
+				reachableWest[index] = coor;
 				index++;
 			}
 		}
@@ -102,6 +108,7 @@ public class MoveTypes
 			movementIndex++;
 		}
 		
+		index = 0;
 		
 		return reachable;
 	}
