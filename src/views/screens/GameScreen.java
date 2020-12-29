@@ -1,10 +1,8 @@
 package views.screens;
 import views.BoardView;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
@@ -13,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import models.Board;
+import models.Game;
 import models.Player;
 
 public class GameScreen extends Screen 
@@ -22,7 +21,11 @@ public class GameScreen extends Screen
 	public final static Insets PNL_TAKEN_FIGURES_INSETS = new Insets(140, 150, 140, 150); // top left bottom right
 	public final static Insets PNL_LEFT_INSETS = new Insets(40, 5, 700, 5);
 	public final static Insets PNL_RIGHT_INSETS = new Insets(470, 5, 20, 5);
-	public final static Insets PNL_BOARD_INSETS = new Insets(500, 450, 500, 450);
+	public final static Insets PNL_NUMBERS = new Insets(0, 5, 0, 5);
+	public final static Insets LETTERS_LBL_INSETS = new Insets(0, 38, 0, 38);
+	public final static Insets NUMBERS_LBL_INSETS = new Insets(30, 0, 30, 0);
+	
+	public final static int CHESS_BOARD_SIZE = 700;
 	
 	public final static Color FIGURE_LOST = new Color(222,184,135);
 	public final static Color INFORMATION = new Color(184,134,11);
@@ -31,15 +34,15 @@ public class GameScreen extends Screen
 	public final static Color BORDER_FIELD_DARKER_COLOR = new Color(139,69,19);
 	//139,69,19 160,82,45 - other colors 
 	
-	private Player firstPlayer;
-	private Player secondPlayer;
 	private BoardView chessBoard;
-	
 	private BoxLayout layout;
 	
 	public GameScreen(String name)
 	{
 		super(name);
+		
+		if(chessBoard == null) chessBoard = new BoardView(); // use Validator
+		
 		layout = new BoxLayout(this, BoxLayout.X_AXIS);
 		this.setLayout(layout);
 		
@@ -68,7 +71,7 @@ public class GameScreen extends Screen
 		left.setBorder(new EmptyBorder(PNL_LEFT_INSETS));
 		left.setVisible(true);
 		
-		//String player = firstPlayer.getUsername(); 
+		//String name = Game.getInstance().getPlayerAt(0); 
 		String playerName = "Pesho";
 		left.add(pnlPlayer(playerName));
 		
@@ -79,8 +82,30 @@ public class GameScreen extends Screen
 	{
 		JPanel middle = new JPanel();
 		middle.setBackground(Color.GRAY);
-		middle.setBorder(new EmptyBorder(PNL_BOARD_INSETS));
-				
+		middle.setLayout(new BoxLayout(middle, BoxLayout.Y_AXIS));
+	
+		chessBoard.setSize(CHESS_BOARD_SIZE, CHESS_BOARD_SIZE);
+		chessBoard.setVisible(true);
+		
+		JPanel board = new JPanel();
+		board.setBackground(BACKGROUND);
+		board.setLayout(new BoxLayout(board, BoxLayout.X_AXIS));
+		board.setVisible(true);
+		
+		JPanel leftPnlNumbers = pnlNumbers();
+		JPanel rightPnlNumbers = pnlNumbers();
+		
+		board.add(leftPnlNumbers);
+		board.add(chessBoard);
+		board.add(rightPnlNumbers);
+
+		JPanel pnlTopLetters = pnlLetters();
+		JPanel pnlBottomLetters = pnlLetters();
+		
+		middle.add(pnlTopLetters);
+		middle.add(board);
+		middle.add(pnlBottomLetters);
+		
 		this.add(middle);
 	}
 	
@@ -90,7 +115,7 @@ public class GameScreen extends Screen
 		right.setBackground(BACKGROUND);
 		right.setBorder(new EmptyBorder(PNL_RIGHT_INSETS));
 		
-		//String player = secondPlayer.getUsername(); 
+		//Should get username of player
 		String playerName = "Gosho";
 		right.add(pnlPlayer(playerName));
 		
@@ -114,5 +139,46 @@ public class GameScreen extends Screen
 		player.add(pnlTakenFigures);
 		
 		return player;
+	}
+	
+	private JPanel pnlLetters()
+	{
+		JPanel pnlLetters = new JPanel();
+		
+		pnlLetters.setBackground(BACKGROUND);
+		
+		String[] arrLablels = {"A", "B", "C", "D", "E", "F", "G", "H"};
+		for(String lable : arrLablels)
+		{
+			JLabel lbl = new JLabel(lable);
+			
+			lbl.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
+			lbl.setBorder(new EmptyBorder(LETTERS_LBL_INSETS));
+			
+			pnlLetters.add(lbl);
+		}
+		
+		return pnlLetters;
+	}
+	
+	private JPanel pnlNumbers()
+	{
+		JPanel pnlNumbers = new JPanel();
+		
+		pnlNumbers.setLayout(new BoxLayout(pnlNumbers, BoxLayout.Y_AXIS));
+		pnlNumbers.setBorder(new EmptyBorder(PNL_NUMBERS));
+		pnlNumbers.setBackground(BACKGROUND);
+		
+		for(int i = 1; i <= 8 ; i++)//add constants
+		{
+			JLabel lbl = new JLabel(String.format("%d", i));
+			
+			lbl.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
+			lbl.setBorder(new EmptyBorder(NUMBERS_LBL_INSETS));
+			
+			pnlNumbers.add(lbl);
+		}
+		
+		return pnlNumbers;
 	}
 }

@@ -14,7 +14,7 @@ import models.Game;
 import models.figures.Figure;
 
 public class CellView extends JPanel
-					  implements MouseListener 
+					  implements MouseListener
 {
 	private Figure figure;
 	private Coordinates coordinates;
@@ -48,12 +48,9 @@ public class CellView extends JPanel
 		}
 	}
 	
-	private void setFigure(Figure figure)
+	public void setFigure(Figure figure)
 	{
-		if(!Validator.isNull(figure))
-		{
-			this.figure = figure;
-		}
+		this.figure = figure;
 	}
 	
 	public void setCoordinates(Coordinates coordinates)
@@ -96,6 +93,8 @@ public class CellView extends JPanel
 	@Override
 	public void mouseClicked(MouseEvent arg0)
 	{
+		System.out.println("CellView: " + arg0.getX() + " " + arg0.getY() + " " + arg0.getComponent());
+		
 		if(!Validator.isNull(Game.getInstance().getListener()))
 		{
 			Game.getInstance().getListener().onCellClicked(this);
