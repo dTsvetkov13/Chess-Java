@@ -18,11 +18,12 @@ public class MoveTypes
 		Coordinates[] reachableWest = new Coordinates[8];
 		Coordinates[] reachableEast = new Coordinates[8];
 		int index = 0;
+		int movementIndex = 0;
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
 		
 		//this for calculates the reachable cells to the right (East) of the figure
-		for(int i = col; i <= Constants.MAX_COLUMN_VALUE; i++)
+		for(int i = col + 1; i <= Constants.MAX_COLUMN_VALUE; i++)
 		{
 			Coordinates coor = new Coordinates(row, i);
 			Figure temp = board.getFigure(coor);
@@ -49,7 +50,7 @@ public class MoveTypes
 			}
 			else
 			{
-				reachableEast[i] = coor;
+				reachableEast[index] = coor;
 				index++;
 			}
 		}
@@ -57,8 +58,8 @@ public class MoveTypes
 		if(col <= 7) 
 		{
 			MovementInDirection m = new MovementInDirection(Directions.East, reachableEast);
-			reachable[index] = m;
-			index++;
+			reachable[movementIndex] = m;
+			movementIndex++;
 		}
 		
 		//this for calculates the reachable cells to the left (West) of the figure
@@ -97,8 +98,8 @@ public class MoveTypes
 		if(col >= 0)
 		{
 			MovementInDirection m1 = new MovementInDirection(Directions.West, reachableWest);
-			reachable[index] = m1;
-			index++;
+			reachable[movementIndex] = m1;
+			movementIndex++;
 		}
 		
 		
@@ -113,6 +114,7 @@ public class MoveTypes
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
 		int index = 0;
+		int movementIndex = 0;
 		
 		//this for calculates the reachable cells below (South) the figure, if such exist
 		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++)
@@ -149,8 +151,8 @@ public class MoveTypes
 		if(row < 7)
 		{
 			MovementInDirection m = new MovementInDirection(Directions.South, reachableNorth);
-			reachable[index] = m;
-			index++;
+			reachable[movementIndex] = m;
+			movementIndex++;
 		}
 		
 		//this for calculates the reachable cells above (North) the figure, if such exist
@@ -187,8 +189,8 @@ public class MoveTypes
 		if(row > 0)
 		{
 			MovementInDirection m1 = new MovementInDirection(Directions.North, reachableSouth);
-			reachable[index] = m1;
-			index++;
+			reachable[movementIndex] = m1;
+			movementIndex++;
 		}
 		
 		return reachable;
