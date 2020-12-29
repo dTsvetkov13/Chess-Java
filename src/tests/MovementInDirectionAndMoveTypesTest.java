@@ -7,6 +7,7 @@ import models.MovementInDirection;
 import models.figures.Figure;
 import models.figures.King;
 import models.figures.Knight;
+import models.figures.Pawn;
 import models.figures.Rook;
 
 public class MovementInDirectionAndMoveTypesTest {
@@ -59,7 +60,34 @@ public class MovementInDirectionAndMoveTypesTest {
 		{
 			System.out.println(rookMoves2[i].toString());
 		}
-
+		
+		System.out.println("");
+		
+		//fourth - test on pawnMove, pawn not moved before
+		//result - incorrect output
+		Coordinates coor3 = new Coordinates(1, 1);
+		Figure pawn = new Pawn(coor3, Team.Black);
+		System.out.println("Type of Figure: Pawn");
+		System.out.println("Current coordinates: " + coor3.getRow() + "; " + coor3.getColumn());
+		MovementInDirection[] pawnMove = MoveTypes.pawnMove(pawn);
+		for(int i = 0; i < pawnMove.length; i++)
+		{
+			System.out.println(pawnMove[i].toString());
+		}
+		
+		System.out.println("");
+		
+		//fifth - test on pawnMove, pawn moved before
+		//result - throws arrayIndexOutOfBounds exception
+		Coordinates coor4 = new Coordinates(3, 3);
+		Figure pawnMoved = new Pawn(coor4, Team.Black);
+		System.out.println("Type of Figure: Pawn");
+		System.out.println("Current coordinates: " + coor4.getRow() + "; " + coor4.getColumn());
+		MovementInDirection[] pawnMove1 = MoveTypes.pawnMove(pawnMoved);
+		for(int i = 0; i < pawnMove1.length; i++)
+		{
+			System.out.println(pawnMove1[i].toString());
+		}
 	}
 
 }
