@@ -114,7 +114,7 @@ public class MoveTypes
 		int col = f.getCoordinates().getColumn();
 		int index = 0;
 		
-		//this for calculates the reachable cells above (North) the figure, if such exist
+		//this for calculates the reachable cells below (South) the figure, if such exist
 		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++)
 		{
 			Coordinates coor = new Coordinates(i, col);
@@ -148,12 +148,12 @@ public class MoveTypes
 		
 		if(row < 7)
 		{
-			MovementInDirection m = new MovementInDirection(Directions.North, reachableNorth);
+			MovementInDirection m = new MovementInDirection(Directions.South, reachableNorth);
 			reachable[index] = m;
 			index++;
 		}
 		
-		//this for calculates the reachable cells below (South) the figure, if such exist
+		//this for calculates the reachable cells above (North) the figure, if such exist
 		for(int i = row - 1; i >= Constants.MIN_ROW_VALUE; i--)
 		{
 			Coordinates coor = new Coordinates(i, col);
@@ -186,7 +186,7 @@ public class MoveTypes
 		
 		if(row > 0)
 		{
-			MovementInDirection m1 = new MovementInDirection(Directions.South, reachableSouth);
+			MovementInDirection m1 = new MovementInDirection(Directions.North, reachableSouth);
 			reachable[index] = m1;
 			index++;
 		}
@@ -696,6 +696,8 @@ public class MoveTypes
 				Figure temp = board.getFigure(coor);
 				if(temp != null)
 				{
+					System.out.println(temp.getTeam());
+					System.out.println("Our figure: " + f.getTeam());
 					if(!temp.getTeam().equals(f.getTeam()))
 					{
 						Coordinates[] reachable2 = new Coordinates[1];

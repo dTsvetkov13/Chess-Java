@@ -13,8 +13,8 @@ public class MovementInDirectionAndMoveTypesTest {
 		
 		//first - test of knightMove
 		// isn't correct, allows capturing of figures of one's own team but not of the opposite
-		Coordinates coor = new Coordinates(4, 2);
-		Figure knight = new Knight(coor, Team.Black);
+		Coordinates coor = new Coordinates(3, 2);
+		Figure knight = new Knight(coor, Team.White);
 		System.out.println("Type of figure: Knight");
 		System.out.println("Current coordinates: " + coor.getRow() + "; " + coor.getColumn());
 		MovementInDirection[] knightMoves = MoveTypes.knightMove(knight);
