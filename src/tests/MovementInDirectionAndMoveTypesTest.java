@@ -44,7 +44,7 @@ public class MovementInDirectionAndMoveTypesTest {
 		System.out.println("");
 		
 		//third - test on horizontal and vertical via Rook
-		//result - moves correctly
+		//result - doesn't stop when encountering other-Team figures
 		Coordinates coor2 = new Coordinates(4, 5);
 		Figure rook = new Rook(coor2, Team.Black);
 		System.out.println("Type of Figure: Rook");

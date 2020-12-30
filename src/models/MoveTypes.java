@@ -134,8 +134,7 @@ public class MoveTypes
 				{
 					for(int j = i; j <= 7; j++)
 					{
-						reachableNorth[index] = null;
-						index++;
+						reachableNorth[j] = null;
 					}
 					break;
 				}
@@ -145,14 +144,13 @@ public class MoveTypes
 					index++;
 					for(int j = i + 1; j <= 7; j++)
 					{
-						reachableNorth[index] = null;
-						index++;
+						reachableNorth[j] = null;
 					}
 				}
 			}
 			else
 			{
-				reachableNorth[index] = coor;
+				reachableNorth[i] = coor;
 				index++;
 			}
 		}
@@ -175,24 +173,22 @@ public class MoveTypes
 				{
 					for(int j = i; j >= 0; j--)
 					{
-						reachableSouth[index] = null;
-						index++;
+						reachableSouth[j] = null;
 					}
 				}
 				else
 				{
-					reachableSouth[index] = coor;
+					reachableSouth[i] = coor;
 					index++;
 					for(int j = i - 1; j >= 0; j--)
 					{
-						reachableSouth[index] = null;
-						index++;
+						reachableSouth[j] = null;
 					}
 				}
 			}
 			else
 			{
-				reachableSouth[index] = coor;
+				reachableSouth[i] = coor;
 				index++;
 			}
 		}
