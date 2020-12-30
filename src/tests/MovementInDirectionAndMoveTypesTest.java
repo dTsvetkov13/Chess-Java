@@ -92,7 +92,7 @@ public class MovementInDirectionAndMoveTypesTest {
 		*/
 		
 		//sixth - test on diagonal
-		//result - 
+		//result - throws IndexArrayOutOfBounds Exception
 		Coordinates coor5 = new Coordinates(4, 3);
 		Figure bishop = new Bishop(coor5, Team.Black);
 		System.out.println("Type of Figure: Bishop");
