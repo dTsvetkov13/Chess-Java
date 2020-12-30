@@ -34,7 +34,7 @@ public class Player {
 	
 	public void setUsername(String username) 
 	{
-		if(Validator.isNullOrEmpty(username))
+		if(!Validator.isNullOrEmpty(username))
 		{
 			this.username = username;
 		}
@@ -50,7 +50,10 @@ public class Player {
 	
 	public void setTakenFigures(Figure[] takenFigures) 
 	{
-		this.takenFigures = takenFigures;
+		if(!Validator.isNull(takenFigures))
+		{
+			this.takenFigures = takenFigures;
+		}
 	}
 	
 	//TO DO: should be optimize
