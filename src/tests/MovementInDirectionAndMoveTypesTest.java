@@ -65,7 +65,7 @@ public class MovementInDirectionAndMoveTypesTest {
 		System.out.println("");
 		
 		//fourth - test on pawnMove, pawn not moved before
-		//result - incorrect output
+		//result - moves correctly
 		Coordinates coor3 = new Coordinates(1, 1);
 		Figure pawn = new Pawn(coor3, Team.Black);
 		System.out.println("Type of Figure: Pawn");
@@ -79,8 +79,8 @@ public class MovementInDirectionAndMoveTypesTest {
 		System.out.println("");
 		
 		//fifth - test on pawnMove, pawn moved before
-		//result - throws arrayIndexOutOfBounds exception
-		/*Coordinates coor4 = new Coordinates(3, 3);
+		//result - moves correctly
+		Coordinates coor4 = new Coordinates(3, 3);
 		Figure pawnMoved = new Pawn(coor4, Team.Black);
 		System.out.println("Type of Figure: Pawn");
 		System.out.println("Current coordinates: " + coor4.getRow() + "; " + coor4.getColumn());
@@ -89,11 +89,11 @@ public class MovementInDirectionAndMoveTypesTest {
 		{
 			System.out.println(pawnMove1[i].toString());
 		}
-		*/
+		
 		
 		//sixth - test on diagonal
 		//result - throws IndexArrayOutOfBounds Exception
-		Coordinates coor5 = new Coordinates(4, 3);
+		/*Coordinates coor5 = new Coordinates(4, 3);
 		Figure bishop = new Bishop(coor5, Team.Black);
 		System.out.println("Type of Figure: Bishop");
 		System.out.println("Current coordinates: " + coor5.getRow() + "; " + coor5.getColumn());
@@ -102,6 +102,22 @@ public class MovementInDirectionAndMoveTypesTest {
 		{
 			System.out.println(bishopMoves[i].toString());
 		}
+		*/
+		
+		System.out.println("");
+		
+		//seventh - test on pawnMove, figure capturing
+		//result - moves correctly
+		Coordinates coor6 = new Coordinates(5, 2);
+		Figure pawnCapture = new Pawn(coor6, Team.Black);
+		System.out.println("Type of Figure: Pawn");
+		System.out.println("Current coordinates: " + coor6.getRow() + "; " + coor6.getColumn());
+		MovementInDirection[] pawnMovesCapture = MoveTypes.pawnMove(pawnCapture);
+		for(int i = 0; i < pawnMovesCapture.length; i++)
+		{
+			System.out.println(pawnMovesCapture[i].toString());
+		}
+		
 
 	}
 
