@@ -47,7 +47,7 @@ public class Move
 
 	public void setCoordinatesFrom(Coordinates coordinatesFrom)
 	{
-		if(Validator.isNull(coordinatesFrom))
+		if(!Validator.isNull(coordinatesFrom))
 		{
 			this.coordinatesFrom = coordinatesFrom;
 		}
@@ -55,7 +55,7 @@ public class Move
 
 	public void setCoordinatesTo(Coordinates coordinatesTo)
 	{
-		if(Validator.isNull(coordinatesTo))
+		if(!Validator.isNull(coordinatesTo))
 		{
 			this.coordinatesTo = coordinatesTo;
 		}
@@ -63,7 +63,7 @@ public class Move
 
 	public void setMovedFigure(Figure movedFigure)
 	{
-		if(Validator.isNull(movedFigure))
+		if(!Validator.isNull(movedFigure))
 		{
 			this.movedFigure = movedFigure;
 		}
