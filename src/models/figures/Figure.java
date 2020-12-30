@@ -44,7 +44,6 @@ public abstract class Figure
 	
 	public void setMoved(boolean isMoved)
 	{
-		isMoved = true;
 		this.isMoved = isMoved;
 	}
 	
