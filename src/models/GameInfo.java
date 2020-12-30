@@ -66,4 +66,17 @@ public class GameInfo
 			throw new IllegalArgumentException();
 		}
 	}
+	
+	public void addMove(Move move)
+	{
+		if(!Validator.isNull(move))
+		{
+			this.moves.push(move);
+		}
+	}
+	
+	public Move getLastMove()
+	{
+		return this.moves.get(this.moves.size() - 1);
+	}
 }
