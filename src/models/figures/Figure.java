@@ -14,6 +14,7 @@ public abstract class Figure
 	protected FigureType type;
 	protected Coordinates[] reachableCells;
 	protected int reachableCellsCount;
+	protected boolean isSelected;
 	
 	public Figure(Coordinates coordinates, Team team)
 	{
@@ -39,6 +40,17 @@ public abstract class Figure
 		{
 			this.coordinates = coordinates;
 		}
+	}
+	
+	public void setMoved(boolean isMoved)
+	{
+		isMoved = true;
+		this.isMoved = isMoved;
+	}
+	
+	public void setSelected(boolean isSelected)
+	{
+		this.isSelected = isSelected;
 	}
 	
 	public Coordinates getCoordinates()
@@ -69,6 +81,11 @@ public abstract class Figure
 	public int getReachableCellsCount()
 	{
 		return reachableCellsCount;
+	}
+	
+	public boolean isSelected()
+	{
+		return isSelected;
 	}
 	
 	public abstract int CalculateReachableCells();
