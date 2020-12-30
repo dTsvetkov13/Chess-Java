@@ -4,6 +4,7 @@ import enums.Team;
 import models.Coordinates;
 import models.MoveTypes;
 import models.MovementInDirection;
+import models.figures.Bishop;
 import models.figures.Figure;
 import models.figures.King;
 import models.figures.Knight;
@@ -79,7 +80,7 @@ public class MovementInDirectionAndMoveTypesTest {
 		
 		//fifth - test on pawnMove, pawn moved before
 		//result - throws arrayIndexOutOfBounds exception
-		Coordinates coor4 = new Coordinates(3, 3);
+		/*Coordinates coor4 = new Coordinates(3, 3);
 		Figure pawnMoved = new Pawn(coor4, Team.Black);
 		System.out.println("Type of Figure: Pawn");
 		System.out.println("Current coordinates: " + coor4.getRow() + "; " + coor4.getColumn());
@@ -88,6 +89,20 @@ public class MovementInDirectionAndMoveTypesTest {
 		{
 			System.out.println(pawnMove1[i].toString());
 		}
+		*/
+		
+		//sixth - test on diagonal
+		//result - 
+		Coordinates coor5 = new Coordinates(4, 3);
+		Figure bishop = new Bishop(coor5, Team.Black);
+		System.out.println("Type of Figure: Bishop");
+		System.out.println("Current coordinates: " + coor5.getRow() + "; " + coor5.getColumn());
+		MovementInDirection[] bishopMoves = MoveTypes.diagonal(bishop);
+		for(int i = 0; i < bishopMoves.length; i++)
+		{
+			System.out.println(bishopMoves[i].toString());
+		}
+
 	}
 
 }
