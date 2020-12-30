@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Stack;
+
 import common.Constants;
 import common.Validator;
 
@@ -8,10 +10,12 @@ public class GameInfo
 	private static GameInfo instance = null;
 	private Player[] players;
 	private int playerOnTurnIndex;
+	private Stack<Move> moves;
 	
 	private GameInfo()
 	{
 		players = new Player[Constants.PLAYERS_COUNT];
+		moves = new Stack<Move>();
 	}
 	
 	public static GameInfo getInstance()
