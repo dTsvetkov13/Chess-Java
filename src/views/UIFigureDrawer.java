@@ -121,7 +121,6 @@ public class UIFigureDrawer
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		Rectangle2D.Double rect = new Rectangle2D.Double(0, 0, bounds.width, bounds.height);
 		
-		//graphics2D.setColor(Color.black);
 		graphics2D.draw(rect);
 		graphics2D.fill(rect);
 	}
