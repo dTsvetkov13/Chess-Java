@@ -18,11 +18,12 @@ public class MoveTypes
 		Coordinates[] reachableWest = new Coordinates[8];
 		Coordinates[] reachableEast = new Coordinates[8];
 		int index = 0;
+		int movementIndex = 0;
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
 		
 		//this for calculates the reachable cells to the right (East) of the figure
-		for(int i = col; i <= Constants.MAX_COLUMN_VALUE; i++)
+		for(int i = col + 1; i <= Constants.MAX_COLUMN_VALUE; i++)
 		{
 			Coordinates coor = new Coordinates(row, i);
 			Figure temp = board.getFigure(coor);
@@ -32,24 +33,26 @@ public class MoveTypes
 				{
 					for(int j = i; j <= 7; j++)
 					{
-						reachableEast[j] = null;
+						reachableEast[index] = null;
+						index++;
 					}
 					break;
 				}
 				else
 				{
-					reachableEast[i] = coor;
+					reachableEast[index] = coor;
 					index++;
 					for(int j = i + 1; j < 8; j++)
 					{
-						reachableEast[j] = null;
+						reachableEast[index] = null;
+						index++;
 					}
 					break;
 				}
 			}
 			else
 			{
-				reachableEast[i] = coor;
+				reachableEast[index] = coor;
 				index++;
 			}
 		}
@@ -57,9 +60,11 @@ public class MoveTypes
 		if(col <= 7) 
 		{
 			MovementInDirection m = new MovementInDirection(Directions.East, reachableEast);
-			reachable[index] = m;
-			index++;
+			reachable[movementIndex] = m;
+			movementIndex++;
 		}
+		
+		index = 0;
 		
 		//this for calculates the reachable cells to the left (West) of the figure
 		for(int i = col; i >= Constants.MIN_COLUMN_VALUE; i--)
@@ -72,24 +77,26 @@ public class MoveTypes
 				{
 					for(int j = i; j >= 0; j--)
 					{
-						reachableWest[j] = null;
+						reachableWest[index] = null;
+						index++;
 					}
 					break;
 				}
 				else
 				{
-					reachableWest[i] = coor;
+					reachableWest[index] = coor;
 					index++;
 					for(int j = i - 1; j >= 0; j--)
 					{
-						reachableWest[j] = null;
+						reachableWest[index] = null;
+						index++;
 					}
 					break;
 				}
 			}
 			else
 			{
-				reachableWest[i] = coor;
+				reachableWest[index] = coor;
 				index++;
 			}
 		}
@@ -97,10 +104,11 @@ public class MoveTypes
 		if(col >= 0)
 		{
 			MovementInDirection m1 = new MovementInDirection(Directions.West, reachableWest);
-			reachable[index] = m1;
-			index++;
+			reachable[movementIndex] = m1;
+			movementIndex++;
 		}
 		
+		index = 0;
 		
 		return reachable;
 	}
@@ -113,8 +121,9 @@ public class MoveTypes
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
 		int index = 0;
+		int movementIndex = 0;
 		
-		//this for calculates the reachable cells above (North) the figure, if such exist
+		//this for calculates the reachable cells below (South) the figure, if such exist
 		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++)
 		{
 			Coordinates coor = new Coordinates(i, col);
@@ -148,12 +157,12 @@ public class MoveTypes
 		
 		if(row < 7)
 		{
-			MovementInDirection m = new MovementInDirection(Directions.North, reachableNorth);
-			reachable[index] = m;
-			index++;
+			MovementInDirection m = new MovementInDirection(Directions.South, reachableNorth);
+			reachable[movementIndex] = m;
+			movementIndex++;
 		}
 		
-		//this for calculates the reachable cells below (South) the figure, if such exist
+		//this for calculates the reachable cells above (North) the figure, if such exist
 		for(int i = row - 1; i >= Constants.MIN_ROW_VALUE; i--)
 		{
 			Coordinates coor = new Coordinates(i, col);
@@ -186,188 +195,289 @@ public class MoveTypes
 		
 		if(row > 0)
 		{
-			MovementInDirection m1 = new MovementInDirection(Directions.South, reachableSouth);
-			reachable[index] = m1;
-			index++;
+			MovementInDirection m1 = new MovementInDirection(Directions.North, reachableSouth);
+			reachable[movementIndex] = m1;
+			movementIndex++;
 		}
 		
 		return reachable;
 	}
 	
-	public static Coordinates[] diagonal(Figure f) 
+	public static MovementInDirection[] diagonal(Figure f) 
 	{
-		Coordinates[] reachable = new Coordinates[13];
+		MovementInDirection[] reachable = new MovementInDirection[4];
+		Coordinates[] reachableUpperLeft = new Coordinates[8];
+		Coordinates[] reachableLowerLeft = new Coordinates[8];
+		Coordinates[] reachableUpperRight = new Coordinates[8];
+		Coordinates[] reachableLowerRight = new Coordinates[8];
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
+		int movementIndex=0;
 		int index=0;
-		int j=col;
-		// This loop checks the possible moves in the following order - down and to the right
+		int k=col;
+		
+		// This loop checks the possible moves in the following order - lower right
+		
 		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++)
 		{
-			j++;
-			Coordinates coor = new Coordinates(i, j);
+			k++;
+			Coordinates coor = new Coordinates(i, k);
 			Figure temp = board.getFigure(coor);
 			if(temp != null)
 			{
-				if(temp.getTeam().equals(f.getTeam())) 
+				if(!temp.getTeam().equals(f.getTeam()))
 				{
-					break;
-				}
-				else  
-				{
-					reachable[index]=coor;
+					reachableLowerRight[index] = coor;
 					index++;
 					break;
 				}
+				if(temp.getTeam().equals(f.getTeam()))
+				{
+					break;
+				}
 			}
-			else 
+			else
 			{
-				reachable[index]=coor;
+				reachableLowerRight[index] = coor;
 				index++;
-				
 			}
 		}
-		j=col;
-		// This loop checks the possible moves in the following order - down and to the left
+		Coordinates[] reachableLowerRight2 = new Coordinates[index];
+		for(int i = 0; i < index; i++) 
+		{
+			reachableLowerRight2[i] = reachableLowerRight[i];
+		}
+		MovementInDirection m = new MovementInDirection(Directions.LowerRight, reachableLowerRight2);
+		reachable[movementIndex] = m;
+		movementIndex++;
+		index=0;
+		k=col;
+		
+		// This loop checks the possible moves in the following order - lower left
+		
 		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++) 
 		{
-			j--;
-			Coordinates coor = new Coordinates(i, j);
+			k--;
+			Coordinates coor = new Coordinates(i, k);
 			Figure temp = board.getFigure(coor);
-			if(temp!=null) 
+			if(temp != null)
 			{
-				if(temp.getTeam().equals(f.getTeam())) 
+				if(!temp.getTeam().equals(f.getTeam()))
 				{
-					break;
-				}
-				else  
-				{
-					reachable[index]=coor;
+					reachableLowerLeft[index] = coor;
 					index++;
 					break;
 				}
+				if(temp.getTeam().equals(f.getTeam()))
+				{
+					break;
+				}
 			}
-			else 
+			else
 			{
-				reachable[index]=coor;
+				reachableLowerLeft[index] = coor;
 				index++;
-			
 			}
 			
 		}
-		j=col;
-		// This loop checks the possible moves in the following order - up and to the right
+		Coordinates[] reachableLowerLeft2 = new Coordinates[index];
+		for(int i = 0; i < index; i++) 
+		{
+			reachableLowerLeft2[i] = reachableLowerLeft[i];
+		}
+		MovementInDirection m1 = new MovementInDirection(Directions.LowerLeft, reachableLowerLeft2);
+		reachable[movementIndex] = m1;
+		movementIndex++;
+		k=col;
+		index=0;
+		
+		// This loop checks the possible moves in the following order- upper right
+		
 		for(int i = row - 1; i >= Constants.MIN_ROW_VALUE; i--) 
 		{
-			j++;
-			Coordinates coor = new Coordinates(i, j);
+			k++;
+			Coordinates coor = new Coordinates(i, k);
 			Figure temp = board.getFigure(coor);
-			if(temp!=null) {
-				if(temp.getTeam().equals(f.getTeam())) 
+			if(temp != null)
+			{
+				if(!temp.getTeam().equals(f.getTeam()))
 				{
-					break;
-				}else  
-				{
-					reachable[index]=coor;
+					reachableUpperRight[index] = coor;
 					index++;
 					break;
 				}
-			}else {
-				reachable[index]=coor;
+				if(temp.getTeam().equals(f.getTeam()))
+				{
+					break;
+				}
+			}
+			else
+			{
+				reachableUpperRight[index] = coor;
 				index++;
-				
 			}
 			
 		}
-		j=col;
-		// This loop checks the possible moves in the following order - up and to the left
+		Coordinates[] reachableUpperRight2 = new Coordinates[index];
+		for(int i = 0; i < index; i++) 
+		{
+			reachableUpperRight2[i] = reachableUpperRight[i];
+		}
+		MovementInDirection m2 = new MovementInDirection(Directions.UpperRight, reachableUpperRight2);
+		reachable[movementIndex] = m2;
+		movementIndex++;
+		k=col;
+		index=0;
+		
+		// This loop checks the possible moves in the following order - upper left
+		
 		for(int i = row - 1; i > Constants.MIN_ROW_VALUE; i--) 
 		{
-			j--;
-			Coordinates coor = new Coordinates(i, j);
+			k--;
+			Coordinates coor = new Coordinates(i, k);
 			Figure temp = board.getFigure(coor);
-			if(temp!=null) 
+			if(temp != null)
 			{
-				if(temp.getTeam().equals(f.getTeam())) 
+				if(!temp.getTeam().equals(f.getTeam()))
 				{
-					break;
-				}
-				else  
-				{
-					reachable[index]=coor;
+					reachableUpperLeft[index] = coor;
 					index++;
 					break;
 				}
+				if(temp.getTeam().equals(f.getTeam()))
+				{
+					break;
+				}
 			}
-			else 
+			else
 			{
-				reachable[index]=coor;
+				reachableUpperLeft[index] = coor;
 				index++;
 			}
 			
 		}
-		
-		Coordinates[] reachable2 = new Coordinates[index];
+		Coordinates[] reachableUpperLeft2 = new Coordinates[index];
 		for(int i = 0; i < index; i++) 
 		{
-			reachable2[i]=reachable[i];
+			reachableUpperLeft2[i] = reachableUpperLeft[i];
 		}
-		return reachable2;
+		MovementInDirection m3 = new MovementInDirection(Directions.UpperLeft, reachableUpperLeft2);
+		reachable[movementIndex] = m3;
+		movementIndex++;
+		
+		return reachable;
 	}
 	
-	public static Coordinates[] pawnMove(Figure f) 
+	public static MovementInDirection[] pawnMove(Figure f) 
 	{
-		Coordinates[] reachable = new Coordinates[4];
+		MovementInDirection[] reachable = new MovementInDirection[3];
+		Coordinates[] reachableUpperLeft = new Coordinates[1];
+		Coordinates[] reachableUpperRight = new Coordinates[1];
+		Coordinates[] reachableNorth = new Coordinates[2];
+		Coordinates[] reachableSouth= new Coordinates[2];
+		Coordinates[] reachableLowerLeft= new Coordinates[1];
+		Coordinates[] reachableLowerRight= new Coordinates[1];
+		
+		
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
-		int index=0;
-		Coordinates coor = new Coordinates(row-1, col);
-		Figure temp = board.getFigure(coor);
-		if(temp == null) 
+		int movementIndex=0;
+		
+		if(f.getTeam().equals(Team.Black)) 
 		{
-			reachable[index]=coor;
-			index++;
-			if(f.getCoordinates().getRow()==1) 
+			Coordinates coor = new Coordinates(row+1, col);
+			Figure temp = board.getFigure(coor);
+			if(temp == null) 
 			{
-				coor = new Coordinates(row-2, col);
-				temp = board.getFigure(coor);
-				if(temp == null) 
+				reachableSouth[0]=coor;
+				if(f.getCoordinates().getRow()==1) 
 				{
-					reachable[index]=coor;
-					index++;
+					coor = new Coordinates(row+2, col);
+					temp = board.getFigure(coor);
+					if(temp == null) 
+					{
+						reachableSouth[1]=coor;
+					}
 				}
 			}
-		}
-		coor = new Coordinates(row-1, col+1);
-		temp = board.getFigure(coor);
-		if(temp != null) 
-		{
-			if(!temp.getTeam().equals(f.getTeam())) 
+			MovementInDirection m = new MovementInDirection(Directions.South, reachableSouth);
+			reachable[movementIndex] = m;
+			movementIndex++;
+			coor = new Coordinates(row+1, col+1);
+			temp = board.getFigure(coor);
+			if(temp != null) 
 			{
-				reachable[index]=coor;
-				index++;
-			}	
-		}
-		coor = new Coordinates(row-1, col-1);
-		temp = board.getFigure(coor);
-		if(temp != null) 
-		{
-			if(!temp.getTeam().equals(f.getTeam())) 
+				if(!temp.getTeam().equals(f.getTeam())) 
+				{
+					reachableLowerRight[0]=coor;
+				}	
+			}
+			MovementInDirection m1 = new MovementInDirection(Directions.LowerRight, reachableLowerRight);
+			reachable[movementIndex] = m1;
+			movementIndex++;
+			coor = new Coordinates(row+1, col-1);
+			temp = board.getFigure(coor);
+			if(temp != null) 
 			{
-				reachable[index]=coor;
-				index++;
-			}	
+				if(!temp.getTeam().equals(f.getTeam())) 
+				{
+					 reachableLowerLeft[0]=coor;
+				}	
+			}
+			MovementInDirection m2 = new MovementInDirection(Directions.LowerLeft,  reachableLowerLeft);
+			reachable[movementIndex] = m2;
+			movementIndex++;	
+		}
+		if(f.getTeam().equals(Team.White)) 
+		{
+			Coordinates coor = new Coordinates(row-1, col);
+			Figure temp = board.getFigure(coor);
+			if(temp == null) 
+			{
+				reachableNorth[0]=coor;
+				if(f.getCoordinates().getRow()==6) 
+				{
+					coor = new Coordinates(row-2, col);
+					temp = board.getFigure(coor);
+					if(temp == null) 
+					{
+						reachableNorth[1]=coor;
+					}
+				}
+			}
+			MovementInDirection m = new MovementInDirection(Directions.North, reachableNorth);
+			reachable[movementIndex] = m;
+			movementIndex++;
+			coor = new Coordinates(row-1, col+1);
+			temp = board.getFigure(coor);
+			if(temp != null) 
+			{
+				if(!temp.getTeam().equals(f.getTeam())) 
+				{
+					reachableUpperRight[0]=coor;
+				}	
+			}
+			MovementInDirection m1 = new MovementInDirection(Directions.UpperRight, reachableUpperRight);
+			reachable[movementIndex] = m1;
+			movementIndex++;
+			coor = new Coordinates(row-1, col-1);
+			temp = board.getFigure(coor);
+			if(temp != null) 
+			{
+				if(!temp.getTeam().equals(f.getTeam())) 
+				{
+					reachableUpperLeft[0]=coor;
+				}	
+			}
+			MovementInDirection m2 = new MovementInDirection(Directions.UpperLeft, reachableUpperLeft);
+			reachable[movementIndex] = m2;
+			movementIndex++;	
 		}
 		
-		Coordinates[] reachable2 = new Coordinates[index];
-		for(int i = 0; i < index; i++) 
-		{
-			reachable2[i]=reachable[i];
-		}
-		return reachable2;
+		return reachable;
 	}
 	
-	public static MovementInDirection[] kingMove(Figure f, Figure r1, Figure r2)
+	public static MovementInDirection[] kingMove(Figure f)
 	{
 		//needs optimising
 		//doesn't check for impossible moves
@@ -376,7 +486,7 @@ public class MoveTypes
 		int index = 0;
 		MovementInDirection[] reachableTemp = new MovementInDirection[10];
 		
-		//checks for possible moves in row below the King's, if it exists
+		//checks for possible moves in row above the King's, if it exists
 		for(int i = row - 1, j = col - 1, count = 0; i >= 0 && count <= 2; j++, count++)
 		{
 			if(j >= 0 && j <= 7)
@@ -392,16 +502,16 @@ public class MoveTypes
 						MovementInDirection m;
 						if(j == col - 1)
 						{
-							m = new MovementInDirection(Directions.LowerLeft, reachable1);
+							m = new MovementInDirection(Directions.UpperLeft, reachable1);
 			
 						}
 						else if(j == col)
 						{
-							m = new MovementInDirection(Directions.South, reachable1);
+							m = new MovementInDirection(Directions.North, reachable1);
 						}
 						else
 						{
-							m = new MovementInDirection(Directions.LowerRight, reachable1);
+							m = new MovementInDirection(Directions.UpperRight, reachable1);
 						}
 						
 						reachableTemp[index] = m;
@@ -415,16 +525,16 @@ public class MoveTypes
 					MovementInDirection m;
 					if(j == col - 1)
 					{
-						m = new MovementInDirection(Directions.LowerLeft, reachable1);
+						m = new MovementInDirection(Directions.UpperLeft, reachable1);
 		
 					}
 					else if(j == col)
 					{
-						m = new MovementInDirection(Directions.South, reachable1);
+						m = new MovementInDirection(Directions.North, reachable1);
 					}
 					else
 					{
-						m = new MovementInDirection(Directions.LowerRight, reachable1);
+						m = new MovementInDirection(Directions.UpperRight, reachable1);
 					}
 					
 					reachableTemp[index] = m;
@@ -433,7 +543,7 @@ public class MoveTypes
 			}
 		}
 		
-		//checks for possible moves in the row above the King's, if it exists 
+		//checks for possible moves in the row below the King's, if it exists 
 		for(int i = row + 1, j = col - 1, count = 0;i <= 7 && count <= 2; j++, count++)
 		{
 			if(j >= 0 && j <= 7)
@@ -449,15 +559,15 @@ public class MoveTypes
 						MovementInDirection m;
 						if(j == col - 1)
 						{
-							m = new MovementInDirection(Directions.UpperLeft, reachable2);
+							m = new MovementInDirection(Directions.LowerLeft, reachable2);
 						}
 						else if(j == col)
 						{
-							m = new MovementInDirection(Directions.North, reachable2);
+							m = new MovementInDirection(Directions.South, reachable2);
 						}
 						else
 						{
-							m = new MovementInDirection(Directions.UpperRight, reachable2);
+							m = new MovementInDirection(Directions.LowerRight, reachable2);
 						}
 						
 						reachableTemp[index] = m;
@@ -471,15 +581,15 @@ public class MoveTypes
 					MovementInDirection m;
 					if(j == col - 1)
 					{
-						m = new MovementInDirection(Directions.UpperLeft, reachable2);
+						m = new MovementInDirection(Directions.LowerLeft, reachable2);
 					}
 					else if(j == col)
 					{
-						m = new MovementInDirection(Directions.North, reachable2);
+						m = new MovementInDirection(Directions.South, reachable2);
 					}
 					else
 					{
-						m = new MovementInDirection(Directions.UpperRight, reachable2);
+						m = new MovementInDirection(Directions.LowerRight, reachable2);
 					}
 					
 					reachableTemp[index] = m;
@@ -541,37 +651,46 @@ public class MoveTypes
 		}
 		
 		//checks for possible Castling
-		if(r1.getCoordinates() == new Coordinates(0, 0) || r1.getCoordinates() == new Coordinates(7, 0))
-		{
-			MovementInDirection ksc = MoveTypes.kingSideCastling((King)f, (Rook)r2);
-			MovementInDirection qsc = MoveTypes.queenSideCastling((King)f, (Rook)r1);
-			if(ksc != null)
-			{
-				reachableTemp[index] = ksc;
-				index++;
-			}
-			if(qsc != null)
-			{
-				reachableTemp[index] = qsc;
-				index++;
-			}
-		}
-		else if(r1.getCoordinates() == new Coordinates(0, 7) || r1.getCoordinates() == new Coordinates(7, 7))
-		{
-			MovementInDirection ksc = MoveTypes.kingSideCastling((King)f, (Rook)r1);
-			MovementInDirection qsc = MoveTypes.queenSideCastling((King)f, (Rook)r2);
-			if(ksc != null)
-			{
-				reachableTemp[index] = ksc;
-				index++;
-			}
-			if(qsc != null)
-			{
-				reachableTemp[index] = qsc;
-				index++;
-			}
-		}
 		
+		if(f.getTeam().equals(Team.Black))
+		{
+			Coordinates a8 = new Coordinates(0, 0);
+			Coordinates h8 = new Coordinates(0, 7);
+			Figure r1 = board.getFigure(a8);
+			Figure r2 = board.getFigure(h8);
+			MovementInDirection kingSideCastling = MoveTypes.kingSideCastling((King)f, (Rook)r2);
+			MovementInDirection queenSideCastling = MoveTypes.queenSideCastling((King)f, (Rook)r1);
+			if(kingSideCastling != null)
+			{
+				reachableTemp[index] = kingSideCastling;
+				index++;
+			}
+			if(queenSideCastling != null)
+			{
+				reachableTemp[index] = queenSideCastling;
+				index++;
+			}
+		}
+		else
+		{
+			Coordinates a1 = new Coordinates(7, 0);
+			Coordinates h1 = new Coordinates(7, 7);
+			Figure r1 = board.getFigure(a1);
+			Figure r2 = board.getFigure(h1);
+			MovementInDirection kingSideCastling = MoveTypes.kingSideCastling((King)f, (Rook)r2);
+			MovementInDirection queenSideCastling = MoveTypes.queenSideCastling((King)f, (Rook)r1);
+			if(kingSideCastling != null)
+			{
+				reachableTemp[index] = kingSideCastling;
+				index++;
+			}
+			if(queenSideCastling != null)
+			{
+				reachableTemp[index] = queenSideCastling;
+				index++;
+			}
+			
+		}
 		
 		//returns an array without nulls
 		MovementInDirection[] reachable = new MovementInDirection[index];
@@ -597,7 +716,7 @@ public class MoveTypes
 		MovementInDirection[] reachableTemp = new MovementInDirection[8];
 		int index = 0;
 		
-		//checks for possible moves in row two times below the Knight's, if it exists
+		//checks for possible moves in row two times above the Knight's, if it exists
 		for(int i = row - 2, j = col - 1, count = 0; i >= 0 && count <= 1; j += 2, count++)
 		{
 			if(j >= 0 && j <= 7)
@@ -613,11 +732,11 @@ public class MoveTypes
 						MovementInDirection m;
 						if(j == col - 1)
 						{
-							m = new MovementInDirection(Directions.LowerLeft, reachable1);
+							m = new MovementInDirection(Directions.UpperLeft, reachable1);
 						}
 						else
 						{
-							m = new MovementInDirection(Directions.LowerRight, reachable1);
+							m = new MovementInDirection(Directions.UpperRight, reachable1);
 						}
 						reachableTemp[index] = m;
 						index++;
@@ -630,11 +749,11 @@ public class MoveTypes
 					MovementInDirection m;
 					if(j == col - 1)
 					{
-						m = new MovementInDirection(Directions.LowerLeft, reachable1);
+						m = new MovementInDirection(Directions.UpperLeft, reachable1);
 					}
 					else
 					{
-						m = new MovementInDirection(Directions.LowerRight, reachable1);
+						m = new MovementInDirection(Directions.UpperRight, reachable1);
 					}
 					reachableTemp[index] = m;
 					index++;
@@ -642,7 +761,7 @@ public class MoveTypes
 			}
 		}
 		
-		//checks for possible moves in row below Knight's, if it exists
+		//checks for possible moves in row above Knight's, if it exists
 		for(int i = row - 1, j = col - 2, count = 0; i >= 0 && count <= 1; j += 4, count++)
 		{
 			if(j >= 0 && j <= 7)
@@ -658,11 +777,11 @@ public class MoveTypes
 						MovementInDirection m;
 						if(j == col - 2)
 						{
-							m = new MovementInDirection(Directions.LowerLeft, reachable1);
+							m = new MovementInDirection(Directions.UpperLeft, reachable1);
 						}
 						else
 						{
-							m = new MovementInDirection(Directions.LowerRight, reachable1);
+							m = new MovementInDirection(Directions.UpperRight, reachable1);
 						}
 						reachableTemp[index] = m;
 						index++;
@@ -675,11 +794,11 @@ public class MoveTypes
 					MovementInDirection m;
 					if(j == col - 2)
 					{
-						m = new MovementInDirection(Directions.LowerLeft, reachable1);
+						m = new MovementInDirection(Directions.UpperLeft, reachable1);
 					}
 					else
 					{
-						m = new MovementInDirection(Directions.LowerRight, reachable1);
+						m = new MovementInDirection(Directions.UpperRight, reachable1);
 					}
 					reachableTemp[index] = m;
 					index++;
@@ -687,7 +806,7 @@ public class MoveTypes
 			}
 		}
 		
-		//checks for possible moves in row two times above Knight's, if it exists
+		//checks for possible moves in row two times below Knight's, if it exists
 		for(int i = row + 2, j = col - 1, count = 0; i <= 7 && count <= 1; j += 2, count++)
 		{
 			if(j >= 0 && j <= 7)
@@ -696,6 +815,8 @@ public class MoveTypes
 				Figure temp = board.getFigure(coor);
 				if(temp != null)
 				{
+					System.out.println(temp.getTeam());
+					System.out.println("Our figure: " + f.getTeam());
 					if(!temp.getTeam().equals(f.getTeam()))
 					{
 						Coordinates[] reachable2 = new Coordinates[1];
@@ -703,11 +824,11 @@ public class MoveTypes
 						MovementInDirection m;
 						if(j == col - 1)
 						{
-							m = new MovementInDirection(Directions.UpperLeft, reachable2);
+							m = new MovementInDirection(Directions.LowerLeft, reachable2);
 						}
 						else
 						{
-							m = new MovementInDirection(Directions.UpperRight, reachable2);
+							m = new MovementInDirection(Directions.LowerRight, reachable2);
 						}
 						reachableTemp[index] = m;
 						index++;
@@ -720,11 +841,11 @@ public class MoveTypes
 					MovementInDirection m;
 					if(j == col - 1)
 					{
-						m = new MovementInDirection(Directions.UpperLeft, reachable2);
+						m = new MovementInDirection(Directions.LowerLeft, reachable2);
 					}
 					else
 					{
-						m = new MovementInDirection(Directions.UpperRight, reachable2);
+						m = new MovementInDirection(Directions.LowerRight, reachable2);
 					}
 					reachableTemp[index] = m;
 					index++;
@@ -733,7 +854,7 @@ public class MoveTypes
 			}
 		}
 		
-		//checks for possible moves in row above Knight's, if it exists
+		//checks for possible moves in row below Knight's, if it exists
 		
 		for(int i = row + 1, j = col - 2, count = 0; i <= 7 && count <= 1; j += 4, count++)
 		{
@@ -751,11 +872,11 @@ public class MoveTypes
 						
 						if(j == col - 2)
 						{
-							m = new MovementInDirection(Directions.UpperLeft, reachable2);
+							m = new MovementInDirection(Directions.LowerLeft, reachable2);
 						}
 						else
 						{
-							m = new MovementInDirection(Directions.UpperRight, reachable2);
+							m = new MovementInDirection(Directions.LowerRight, reachable2);
 						}
 						
 						reachableTemp[index] = m;
@@ -770,11 +891,11 @@ public class MoveTypes
 					
 					if(j == col - 2)
 					{
-						m = new MovementInDirection(Directions.UpperLeft, reachable2);
+						m = new MovementInDirection(Directions.LowerLeft, reachable2);
 					}
 					else
 					{
-						m = new MovementInDirection(Directions.UpperRight, reachable2);
+						m = new MovementInDirection(Directions.LowerRight, reachable2);
 					}
 					
 					reachableTemp[index] = m;
@@ -783,6 +904,8 @@ public class MoveTypes
 			}
 		}
 		
+		
+		//creates an array with no nulls
 		MovementInDirection[] reachable = new MovementInDirection[index];
 		index = 0;
 		
@@ -803,8 +926,8 @@ public class MoveTypes
 		//doesn't check whether King is checked or cells are guarded
 		if(k.getTeam().equals(Team.White))
 		{
-			Coordinates g1 = new Coordinates(0, 6);
-			Coordinates f1 = new Coordinates(0, 5);
+			Coordinates g1 = new Coordinates(7, 6);
+			Coordinates f1 = new Coordinates(7, 5);
 			if(k.isMoved() == true || r.isMoved() == true)
 			{
 				return null;
@@ -822,8 +945,8 @@ public class MoveTypes
 		}
 		else
 		{
-			Coordinates g8 = new Coordinates(7, 6);
-			Coordinates f8 = new Coordinates(7, 5);
+			Coordinates g8 = new Coordinates(0, 6);
+			Coordinates f8 = new Coordinates(0, 5);
 			if(k.isMoved() == true || r.isMoved() == true)
 			{
 				return null;
@@ -843,12 +966,12 @@ public class MoveTypes
 	
 	public static MovementInDirection queenSideCastling(King k, Rook r)
 	{
-		//doesn't check whther King is checked or cells are guarded
+		//doesn't check whether King is checked or cells are guarded
 		if(k.getTeam().equals(Team.White))
 		{
-			Coordinates d1 = new Coordinates(0, 3);
-			Coordinates c1 = new Coordinates(0, 2);
-			Coordinates b1 = new Coordinates(0, 1);
+			Coordinates d1 = new Coordinates(7, 3);
+			Coordinates c1 = new Coordinates(7, 2);
+			Coordinates b1 = new Coordinates(7, 1);
 			if(k.isMoved() == true || r.isMoved() == true)
 			{
 				return null;
@@ -866,9 +989,9 @@ public class MoveTypes
 		}
 		else
 		{
-			Coordinates d8 = new Coordinates(7, 3);
-			Coordinates c8 = new Coordinates(7, 2);
-			Coordinates b8 = new Coordinates(7, 1);
+			Coordinates d8 = new Coordinates(0, 3);
+			Coordinates c8 = new Coordinates(0, 2);
+			Coordinates b8 = new Coordinates(0, 1);
 			if(k.isMoved() == true || r.isMoved() == true)
 			{
 				return null;
@@ -886,19 +1009,6 @@ public class MoveTypes
 		}
 	}
 	
-	public static String toString(Figure f)
-	{
-		Coordinates[] reachable = f.getReachableCells();
-		String result = f.getTeam() + ", " + f.getType();
-		result += "\nCurrent Coordinates: " + f.getCoordinates().getRow() + "; " + f.getCoordinates().getColumn();
-		result += "\nReachable Coordinates: ";
-		for(int i = 0; i < reachable.length; i++)
-		{
-			result += "\n" + reachable[i].getRow() + "; " + reachable[i].getColumn(); 
-		}
-		
-		return result;
-	}
 	
 	
 

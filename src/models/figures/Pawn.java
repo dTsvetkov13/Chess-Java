@@ -3,6 +3,8 @@ package models.figures;
 import enums.FigureType;
 import enums.Team;
 import models.Coordinates;
+import models.MoveTypes;
+import models.MovementInDirection;
 
 public class Pawn extends Figure{
 
@@ -15,7 +17,15 @@ public class Pawn extends Figure{
 	@Override
 	public int CalculateReachableCells() 
 	{
-			return 0;
+		super.reachableCellsCount = 0;
+		
+		Coordinates[] directions = MoveTypes.pawnMove(this);
+		for(int i = 0; i < directions.length; i++)
+		{
+			super.addReachableCell(directions[i]);
+		}
+		
+		return super.getReachableCellsCount();
 	}
 
 }

@@ -40,4 +40,17 @@ public class MovementInDirection
 	{
 		return this.move;
 	}
+	
+	public String toString()
+	{
+		String result = "Direction: " + this.direction;
+		result += "\nAvailable moves: ";
+		for(int i = 0; i < this.move.length; i++)
+		{
+			if(this.move[i] != null)
+			result += "\n" + this.move[i].getRow() + "; " + this.move[i].getColumn();
+		}
+		
+		return result;
+	}
 }
