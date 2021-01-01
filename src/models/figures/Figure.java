@@ -89,14 +89,6 @@ public abstract class Figure
 	
 	public abstract int CalculateReachableCells();
 	
-	public void addCoordinatesFromMovementInDirection(MovementInDirection directions)
-	{
-		for(int i = 0; i < directions.getMove().length; i++)
-		{
-			this.addReachableCell(directions.getMove()[i]);
-		}
-	}
-	
 	public void addCoordinatesFromMovementInDirectionArray(MovementInDirection[] array)
 	{
 		for(int i = 0; i < array.length; i++)
@@ -105,14 +97,21 @@ public abstract class Figure
 		}
 	}
 	
+	public void addCoordinatesFromMovementInDirection(MovementInDirection directions)
+	{
+		for(int i = 0; i < directions.getMove().length; i++)
+		{
+			this.addReachableCell(directions.getMove()[i]);
+		}
+	}
+	
 	public void addReachableCell(Coordinates coordinates)
 	{
-		if(reachableCellsCount >= reachableCells.length && coordinates != null)
+		if(reachableCellsCount < reachableCells.length && coordinates != null)
 		{
 			reachableCells[reachableCellsCount] = coordinates;
 			reachableCellsCount++;
 		}
-		
 	}
 	
 	public boolean isOneOfReachableCells(Coordinates coordinates)
