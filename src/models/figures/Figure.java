@@ -91,17 +91,23 @@ public abstract class Figure
 	
 	public void addCoordinatesFromMovementInDirectionArray(MovementInDirection[] array)
 	{
-		for(int i = 0; i < array.length; i++)
+		if(!Validator.isNull(array))
 		{
-			this.addCoordinatesFromMovementInDirection(array[i]);
+			for(int i = 0; i < array.length; i++)
+			{
+				this.addCoordinatesFromMovementInDirection(array[i]);
+			}
 		}
 	}
 	
 	public void addCoordinatesFromMovementInDirection(MovementInDirection directions)
 	{
-		for(int i = 0; i < directions.getMove().length; i++)
+		if(!Validator.isNull(directions))
 		{
-			this.addReachableCell(directions.getMove()[i]);
+			for(int i = 0; i < directions.getMove().length; i++)
+			{
+				this.addReachableCell(directions.getMove()[i]);
+			}
 		}
 	}
 	
