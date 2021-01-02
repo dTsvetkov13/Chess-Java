@@ -17,7 +17,6 @@ public class MoveTypes
 		MovementInDirection[] reachable = new MovementInDirection[2];
 		Coordinates[] reachableWest = new Coordinates[8];
 		Coordinates[] reachableEast = new Coordinates[8];
-		int index = 0;
 		int movementIndex = 0;
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
@@ -31,43 +30,38 @@ public class MoveTypes
 			{
 				if(temp.getTeam().equals(f.getTeam()))
 				{
-					for(int j = i; j <= 7; j++)
+					for(int j = i; j <= Constants.MAX_COLUMN_VALUE; j++)
 					{
-						reachableEast[index] = null;
-						index++;
+						reachableEast[j] = null;
 					}
 					break;
 				}
 				else
 				{
-					reachableEast[index] = coor;
-					index++;
-					for(int j = i + 1; j < 8; j++)
+					reachableEast[i] = coor;
+					for(int j = i + 1; j <= Constants.MAX_COLUMN_VALUE; j++)
 					{
-						reachableEast[index] = null;
-						index++;
+						reachableEast[j] = null;
 					}
 					break;
 				}
 			}
 			else
 			{
-				reachableEast[index] = coor;
-				index++;
+				reachableEast[i] = coor;
 			}
 		}
 		
-		if(col <= 7) 
+		if(col <= Constants.MAX_COLUMN_VALUE) 
 		{
 			MovementInDirection m = new MovementInDirection(Directions.East, reachableEast);
 			reachable[movementIndex] = m;
 			movementIndex++;
 		}
 		
-		index = 0;
 		
 		//this for calculates the reachable cells to the left (West) of the figure
-		for(int i = col; i >= Constants.MIN_COLUMN_VALUE; i--)
+		for(int i = col - 1; i >= Constants.MIN_COLUMN_VALUE; i--)
 		{
 			Coordinates coor = new Coordinates(row, i);
 			Figure temp = board.getFigure(coor);
@@ -77,27 +71,23 @@ public class MoveTypes
 				{
 					for(int j = i; j >= 0; j--)
 					{
-						reachableWest[index] = null;
-						index++;
+						reachableWest[j] = null;
 					}
 					break;
 				}
 				else
 				{
-					reachableWest[index] = coor;
-					index++;
+					reachableWest[i] = coor;
 					for(int j = i - 1; j >= 0; j--)
 					{
-						reachableWest[index] = null;
-						index++;
+						reachableWest[j] = null;
 					}
 					break;
 				}
 			}
 			else
 			{
-				reachableWest[index] = coor;
-				index++;
+				reachableWest[i] = coor;
 			}
 		}
 		
@@ -108,7 +98,6 @@ public class MoveTypes
 			movementIndex++;
 		}
 		
-		index = 0;
 		
 		return reachable;
 	}
@@ -116,11 +105,10 @@ public class MoveTypes
 	public static MovementInDirection[] vertical(Figure f)
 	{
 		MovementInDirection[] reachable = new MovementInDirection[2];
-		Coordinates[] reachableNorth = new Coordinates[8];
 		Coordinates[] reachableSouth = new Coordinates[8];
+		Coordinates[] reachableNorth = new Coordinates[8];
 		int row = f.getCoordinates().getRow();
 		int col = f.getCoordinates().getColumn();
-		int index = 0;
 		int movementIndex = 0;
 		
 		//this for calculates the reachable cells below (South) the figure, if such exist
@@ -132,32 +120,30 @@ public class MoveTypes
 			{
 				if(temp.getTeam().equals(f.getTeam()))
 				{
-					for(int j = i; j <= 7; j++)
+					for(int j = i; j <= Constants.MAX_ROW_VALUE; j++)
 					{
-						reachableNorth[j] = null;
+						reachableSouth[j] = null;
 					}
 					break;
 				}
 				else
 				{
-					reachableNorth[i] = coor;
-					index++;
-					for(int j = i + 1; j <= 7; j++)
+					reachableSouth[i] = coor;
+					for(int j = i + 1; j <= Constants.MAX_ROW_VALUE; j++)
 					{
-						reachableNorth[j] = null;
+						reachableSouth[j] = null;
 					}
 				}
 			}
 			else
 			{
-				reachableNorth[i] = coor;
-				index++;
+				reachableSouth[i] = coor;
 			}
 		}
 		
-		if(row < 7)
+		if(row < Constants.MAX_ROW_VALUE)
 		{
-			MovementInDirection m = new MovementInDirection(Directions.South, reachableNorth);
+			MovementInDirection m = new MovementInDirection(Directions.South, reachableSouth);
 			reachable[movementIndex] = m;
 			movementIndex++;
 		}
@@ -171,31 +157,29 @@ public class MoveTypes
 			{
 				if(temp.getTeam().equals(f.getTeam()))
 				{
-					for(int j = i; j >= 0; j--)
+					for(int j = i; j >= Constants.MIN_ROW_VALUE; j--)
 					{
-						reachableSouth[j] = null;
+						reachableNorth[j] = null;
 					}
 				}
 				else
 				{
-					reachableSouth[i] = coor;
-					index++;
-					for(int j = i - 1; j >= 0; j--)
+					reachableNorth[i] = coor;
+					for(int j = i - 1; j >= Constants.MIN_ROW_VALUE; j--)
 					{
-						reachableSouth[j] = null;
+						reachableNorth[j] = null;
 					}
 				}
 			}
 			else
 			{
-				reachableSouth[i] = coor;
-				index++;
+				reachableNorth[i] = coor;
 			}
 		}
 		
-		if(row > 0)
+		if(row > Constants.MIN_ROW_VALUE)
 		{
-			MovementInDirection m1 = new MovementInDirection(Directions.North, reachableSouth);
+			MovementInDirection m1 = new MovementInDirection(Directions.North, reachableNorth);
 			reachable[movementIndex] = m1;
 			movementIndex++;
 		}
