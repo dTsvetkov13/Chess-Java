@@ -14,6 +14,7 @@ public abstract class Figure
 	protected FigureType type;
 	protected Coordinates[] reachableCells;
 	protected int reachableCellsCount;
+	protected boolean isSelected;
 	
 	public Figure(Coordinates coordinates, Team team)
 	{
@@ -39,6 +40,16 @@ public abstract class Figure
 		{
 			this.coordinates = coordinates;
 		}
+	}
+	
+	public void setMoved(boolean isMoved)
+	{
+		this.isMoved = isMoved;
+	}
+	
+	public void setSelected(boolean isSelected)
+	{
+		this.isSelected = isSelected;
 	}
 	
 	public Coordinates getCoordinates()
@@ -71,32 +82,42 @@ public abstract class Figure
 		return reachableCellsCount;
 	}
 	
-	public abstract int CalculateReachableCells();
-	
-	public void addCoordinatesFromMovementInDirection(MovementInDirection directions)
+	public boolean isSelected()
 	{
-		for(int i = 0; i < directions.getMove().length; i++)
-		{
-			this.addReachableCell(directions.getMove()[i]);
-		}
+		return isSelected;
 	}
+	
+	public abstract int CalculateReachableCells();
 	
 	public void addCoordinatesFromMovementInDirectionArray(MovementInDirection[] array)
 	{
-		for(int i = 0; i < array.length; i++)
+		if(!Validator.isNull(array))
 		{
-			this.addCoordinatesFromMovementInDirection(array[i]);
+			for(int i = 0; i < array.length; i++)
+			{
+				this.addCoordinatesFromMovementInDirection(array[i]);
+			}
+		}
+	}
+	
+	public void addCoordinatesFromMovementInDirection(MovementInDirection directions)
+	{
+		if(!Validator.isNull(directions))
+		{
+			for(int i = 0; i < directions.getMove().length; i++)
+			{
+				this.addReachableCell(directions.getMove()[i]);
+			}
 		}
 	}
 	
 	public void addReachableCell(Coordinates coordinates)
 	{
-		if(reachableCellsCount >= reachableCells.length && coordinates != null)
+		if(reachableCellsCount < reachableCells.length && coordinates != null)
 		{
 			reachableCells[reachableCellsCount] = coordinates;
 			reachableCellsCount++;
 		}
-		
 	}
 	
 	public boolean isOneOfReachableCells(Coordinates coordinates)

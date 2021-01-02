@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.JComponent;
 
+import common.Validator;
 import enums.FigureType;
 import enums.Team;
 
@@ -20,7 +21,7 @@ public class UIFigureDrawer
 			graphics.setColor(Color.black);
 		}
 		else
-		{
+		{		
 			graphics.setColor(Color.white);
 		}
 		
@@ -110,7 +111,24 @@ public class UIFigureDrawer
 	private static void drawPawn(Graphics graphics, Rectangle bounds)
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		Rectangle2D.Double rect = new Rectangle2D.Double(0, 0, bounds.width * 0.5, bounds.height * 0.5); 
+		
+		int rectWidth = (int) (0.3 * bounds.width);
+		int rectHeight = (int) (0.3 * bounds.height);
+		
+		Rectangle2D.Double rect;
+		
+		if(Validator.isGreaterThan(rectWidth, rectHeight))
+		{
+			rect = new Rectangle2D.Double((bounds.getWidth() - rectWidth) / 2,
+										  (bounds.getHeight() - rectWidth) / 2,
+										  rectWidth, rectWidth);
+		}
+		else
+		{
+			rect = new Rectangle2D.Double((bounds.getWidth() - rectWidth) / 2,
+										  (bounds.getHeight() - rectWidth) / 2,
+										  rectHeight, rectHeight);
+		}
 		
 		graphics2D.draw(rect);
 		graphics2D.fill(rect);
