@@ -12,8 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import common.Validator;
 import models.Board;
 import models.Game;
+import models.GameInfo;
 import models.Player;
 
 public class GameScreen extends Screen 
@@ -21,6 +23,10 @@ public class GameScreen extends Screen
 	public final static int FONT_SIZE = 25;
 	public final static int FIRST_NUMBER = 1;
 	public final static int LAST_NUMBER = 8;
+	public final static int MAX_NAME_LENGHT = 20;
+	
+	public final static String DEFAULT_PLAYER_ONE_NAME = "Player1"; 
+	public final static String DEFAULT_PLAYER_TWO_NAME = "Player2";
 	
 	public final static Insets PNL_RIGHT_INSETS = new Insets(470, 0, 0, 0);
 	public final static Insets LETTERS_LBL_INSETS = new Insets(-7, 38, -7, 38);
@@ -40,6 +46,8 @@ public class GameScreen extends Screen
 	
 	private BoardView chessBoard;
 	private BoxLayout layout;
+	private String playerOneName;
+	private String playerTwoName;
 	
 	public GameScreen(String name)
 	{
@@ -74,9 +82,14 @@ public class GameScreen extends Screen
 		
 		left.setBackground(BACKGROUND);
 		
-		//String name = Game.getInstance().getPlayerAt(0); 
-		String playerName = "Pesho";
-		left.add(pnlPlayer(playerName));
+		String name = null;
+		if(GameInfo.getInstance().getPlayerAt(0) != null)
+		{
+			name = GameInfo.getInstance().getPlayerAt(0).getUsername(); 
+		}
+		setPlayerOneName(name);
+		
+		left.add(pnlPlayer(this.playerOneName));
 		
 		this.add(left);
 	}
@@ -117,9 +130,14 @@ public class GameScreen extends Screen
 		right.setBackground(BACKGROUND);
 		right.setBorder(new EmptyBorder(PNL_RIGHT_INSETS));
 		
-		//Should get username of player
-		String playerName = "Gosho";
-		right.add(pnlPlayer(playerName));
+		String name = null;
+		if(GameInfo.getInstance().getPlayerAt(0) != null)
+		{
+			name = GameInfo.getInstance().getPlayerAt(1).getUsername(); 
+		}
+		setPlayerTwoName(name);
+		
+		right.add(pnlPlayer(this.playerTwoName));
 		
 		this.add(right);
 	}
@@ -142,6 +160,30 @@ public class GameScreen extends Screen
 		player.add(pnlTakenFigures);
 		
 		return player;
+	}
+	
+	private void setPlayerOneName(String name)
+	{
+		if(!Validator.isNullOrEmpty(name) && name.length() <= MAX_NAME_LENGHT)
+		{
+			this.playerOneName = name;
+		}
+		else 
+		{
+			this.playerOneName = DEFAULT_PLAYER_ONE_NAME;
+		}
+	}
+	
+	private void setPlayerTwoName(String name)
+	{
+		if(!Validator.isNullOrEmpty(name) && name.length() <= MAX_NAME_LENGHT)
+		{
+			this.playerTwoName = name;
+		}
+		else 
+		{
+			this.playerTwoName = DEFAULT_PLAYER_TWO_NAME;
+		}
 	}
 	
 	private JPanel pnlLetters()
