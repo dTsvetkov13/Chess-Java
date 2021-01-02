@@ -133,6 +133,7 @@ public class MoveTypes
 					{
 						reachableSouth[j] = null;
 					}
+					break;
 				}
 			}
 			else
@@ -161,6 +162,7 @@ public class MoveTypes
 					{
 						reachableNorth[j] = null;
 					}
+					break;
 				}
 				else
 				{
@@ -169,6 +171,7 @@ public class MoveTypes
 					{
 						reachableNorth[j] = null;
 					}
+					break;
 				}
 			}
 			else
