@@ -3,7 +3,8 @@ import views.BoardView;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
@@ -18,13 +19,13 @@ import models.Player;
 public class GameScreen extends Screen 
 {
 	public final static int FONT_SIZE = 25;
+	public final static int FIRST_NUMBER = 1;
+	public final static int LAST_NUMBER = 8;
 	
 	public final static Insets PNL_RIGHT_INSETS = new Insets(470, 0, 0, 0);
 	public final static Insets LETTERS_LBL_INSETS = new Insets(-7, 38, -7, 38);
 	public final static Insets NUMBERS_LBL_INSETS = new Insets(30, 0, 30, 0);
 	
-	public final static Dimension CHESS_BOARD_SIZE_MINIMUM_SIZE = new Dimension(500, 500);//
-	public final static Dimension CHESS_BOARD_SIZE_PREFERED_SIZE = new Dimension(700, 700);//
 	public final static Dimension PNL_TAKEN_FIGURES_MINIMUM_SIZE = new Dimension(250, 250);
 	public final static Dimension PNL_TAKEN_FIGURES_PREFERED_SIZE = new Dimension(310, 310);
 	public final static Dimension PNL_LETTERS_MINIMUM_SIZE = new Dimension(800, 20);
@@ -86,14 +87,11 @@ public class GameScreen extends Screen
 		
 		middle.setBackground(BACKGROUND);
 		middle.setLayout(new BoxLayout(middle, BoxLayout.Y_AXIS));
-	
-		chessBoard.setMinimumSize(CHESS_BOARD_SIZE_MINIMUM_SIZE);
-		chessBoard.setPreferredSize(CHESS_BOARD_SIZE_PREFERED_SIZE);
 		
 		JPanel board = new JPanel();
+		
 		board.setBackground(BACKGROUND);
 		board.setLayout(new BoxLayout(board, BoxLayout.X_AXIS));
-		board.setVisible(true);
 		
 		JPanel leftPnlNumbers = pnlNumbers();
 		JPanel rightPnlNumbers = pnlNumbers();
@@ -168,6 +166,28 @@ public class GameScreen extends Screen
 		return pnlLetters;
 	}
 	
+	private JPanel pnlRotateLetters()
+	{
+		JPanel pnlLetters = new JPanel();
+		
+		pnlLetters.setMinimumSize(PNL_LETTERS_MINIMUM_SIZE);
+		pnlLetters.setPreferredSize(PNL_LETTERS_PREFERED_SIZE);
+		pnlLetters.setBackground(BACKGROUND);
+		
+		String[] arrLetters = {"A", "B", "C", "D", "E", "F", "G", "H"};
+		for(int i = arrLetters.length - 1; i >= 0; i--)
+		{
+			JLabel lbl = new JLabel(arrLetters[i]);
+			
+			lbl.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
+			lbl.setBorder(new EmptyBorder(LETTERS_LBL_INSETS));
+			
+			pnlLetters.add(lbl);
+		}
+		
+		return pnlLetters;
+	}
+	
 	private JPanel pnlNumbers()
 	{
 		JPanel pnlNumbers = new JPanel();
@@ -175,7 +195,27 @@ public class GameScreen extends Screen
 		pnlNumbers.setLayout(new BoxLayout(pnlNumbers, BoxLayout.Y_AXIS));
 		pnlNumbers.setBackground(BACKGROUND);
 		
-		for(int i = 1; i <= 8 ; i++)//add constants
+		for(int i = FIRST_NUMBER; i <= LAST_NUMBER ; i++)
+		{
+			JLabel lbl = new JLabel(String.format("%d", i));
+			
+			lbl.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
+			lbl.setBorder(new EmptyBorder(NUMBERS_LBL_INSETS));
+			
+			pnlNumbers.add(lbl);
+		}
+		
+		return pnlNumbers;
+	}
+	
+	private JPanel pnlRotateNumbers()
+	{
+		JPanel pnlNumbers = new JPanel();
+		
+		pnlNumbers.setLayout(new BoxLayout(pnlNumbers, BoxLayout.Y_AXIS));
+		pnlNumbers.setBackground(BACKGROUND);
+		
+		for(int i = LAST_NUMBER; i >= FIRST_NUMBER ; i--)
 		{
 			JLabel lbl = new JLabel(String.format("%d", i));
 			
