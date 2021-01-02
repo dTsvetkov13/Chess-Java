@@ -1,6 +1,7 @@
 package views.screens;
 import views.BoardView;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import java.awt.Insets;
@@ -18,14 +19,16 @@ public class GameScreen extends Screen
 {
 	public final static int FONT_SIZE = 25;
 	
-	public final static Insets PNL_TAKEN_FIGURES_INSETS = new Insets(140, 150, 140, 150); // top left bottom right
-	public final static Insets PNL_LEFT_INSETS = new Insets(40, 5, 700, 5);
-	public final static Insets PNL_RIGHT_INSETS = new Insets(470, 5, 20, 5);
-	public final static Insets PNL_NUMBERS = new Insets(0, 5, 0, 5);
-	public final static Insets LETTERS_LBL_INSETS = new Insets(0, 38, 0, 38);
+	public final static Insets PNL_RIGHT_INSETS = new Insets(470, 0, 0, 0);
+	public final static Insets LETTERS_LBL_INSETS = new Insets(-7, 38, -7, 38);
 	public final static Insets NUMBERS_LBL_INSETS = new Insets(30, 0, 30, 0);
 	
-	public final static int CHESS_BOARD_SIZE = 700;
+	public final static Dimension CHESS_BOARD_SIZE_MINIMUM_SIZE = new Dimension(500, 500);//
+	public final static Dimension CHESS_BOARD_SIZE_PREFERED_SIZE = new Dimension(700, 700);//
+	public final static Dimension PNL_TAKEN_FIGURES_MINIMUM_SIZE = new Dimension(250, 250);
+	public final static Dimension PNL_TAKEN_FIGURES_PREFERED_SIZE = new Dimension(310, 310);
+	public final static Dimension PNL_LETTERS_MINIMUM_SIZE = new Dimension(800, 20);
+	public final static Dimension PNL_LETTERS_PREFERED_SIZE = new Dimension(800, 25);
 	
 	public final static Color FIGURE_LOST = new Color(222,184,135);
 	public final static Color INFORMATION = new Color(184,134,11);
@@ -67,9 +70,8 @@ public class GameScreen extends Screen
 	private void drawPnlLeftSide()
 	{
 		JPanel left = new JPanel();
+		
 		left.setBackground(BACKGROUND);
-		left.setBorder(new EmptyBorder(PNL_LEFT_INSETS));
-		left.setVisible(true);
 		
 		//String name = Game.getInstance().getPlayerAt(0); 
 		String playerName = "Pesho";
@@ -81,11 +83,12 @@ public class GameScreen extends Screen
 	private void drawBoard()
 	{
 		JPanel middle = new JPanel();
-		middle.setBackground(Color.GRAY);
+		
+		middle.setBackground(BACKGROUND);
 		middle.setLayout(new BoxLayout(middle, BoxLayout.Y_AXIS));
 	
-		chessBoard.setSize(CHESS_BOARD_SIZE, CHESS_BOARD_SIZE);
-		chessBoard.setVisible(true);
+		chessBoard.setMinimumSize(CHESS_BOARD_SIZE_MINIMUM_SIZE);
+		chessBoard.setPreferredSize(CHESS_BOARD_SIZE_PREFERED_SIZE);
 		
 		JPanel board = new JPanel();
 		board.setBackground(BACKGROUND);
@@ -112,6 +115,7 @@ public class GameScreen extends Screen
 	private void drawPnlRightSide()
 	{
 		JPanel right = new JPanel();
+		
 		right.setBackground(BACKGROUND);
 		right.setBorder(new EmptyBorder(PNL_RIGHT_INSETS));
 		
@@ -133,7 +137,8 @@ public class GameScreen extends Screen
 		
 		JPanel pnlTakenFigures = new JPanel();
 		pnlTakenFigures.setBackground(FIGURE_LOST);
-		pnlTakenFigures.setBorder(new EmptyBorder(PNL_TAKEN_FIGURES_INSETS));
+		pnlTakenFigures.setMinimumSize(PNL_TAKEN_FIGURES_MINIMUM_SIZE);
+		pnlTakenFigures.setPreferredSize(PNL_TAKEN_FIGURES_PREFERED_SIZE);
 		
 		player.add(nickname);
 		player.add(pnlTakenFigures);
@@ -145,12 +150,14 @@ public class GameScreen extends Screen
 	{
 		JPanel pnlLetters = new JPanel();
 		
+		pnlLetters.setMinimumSize(PNL_LETTERS_MINIMUM_SIZE);
+		pnlLetters.setPreferredSize(PNL_LETTERS_PREFERED_SIZE);
 		pnlLetters.setBackground(BACKGROUND);
 		
-		String[] arrLablels = {"A", "B", "C", "D", "E", "F", "G", "H"};
-		for(String lable : arrLablels)
+		String[] arrLetters = {"A", "B", "C", "D", "E", "F", "G", "H"};
+		for(String letter : arrLetters)
 		{
-			JLabel lbl = new JLabel(lable);
+			JLabel lbl = new JLabel(letter);
 			
 			lbl.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
 			lbl.setBorder(new EmptyBorder(LETTERS_LBL_INSETS));
@@ -166,7 +173,6 @@ public class GameScreen extends Screen
 		JPanel pnlNumbers = new JPanel();
 		
 		pnlNumbers.setLayout(new BoxLayout(pnlNumbers, BoxLayout.Y_AXIS));
-		pnlNumbers.setBorder(new EmptyBorder(PNL_NUMBERS));
 		pnlNumbers.setBackground(BACKGROUND);
 		
 		for(int i = 1; i <= 8 ; i++)//add constants
