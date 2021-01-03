@@ -208,28 +208,28 @@ public class MoveTypes
 		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++)
 		{
 			k++;
-			if(k > Constants.MAX_COLUMN_VALUE) {
-				break;
-			}
-			Coordinates coor = new Coordinates(i, k);
-			Figure temp = board.getFigure(coor);
-			if(temp != null)
+			if(k <= Constants.MAX_COLUMN_VALUE) 
 			{
-				if(!temp.getTeam().equals(f.getTeam()))
+				Coordinates coor = new Coordinates(i, k);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(!temp.getTeam().equals(f.getTeam()))
+					{
+						reachableLowerRight[index] = coor;
+						index++;
+						break;
+					}
+					if(temp.getTeam().equals(f.getTeam()))
+					{
+						break;
+					}
+				}
+				else
 				{
 					reachableLowerRight[index] = coor;
 					index++;
-					break;
 				}
-				if(temp.getTeam().equals(f.getTeam()))
-				{
-					break;
-				}
-			}
-			else
-			{
-				reachableLowerRight[index] = coor;
-				index++;
 			}
 		}
 		Coordinates[] reachableLowerRight2 = new Coordinates[index];
@@ -248,28 +248,28 @@ public class MoveTypes
 		for(int i = row + 1; i <= Constants.MAX_ROW_VALUE; i++) 
 		{
 			k--;
-			if(k < Constants.MIN_COLUMN_VALUE) {
-				break;
-			}
-			Coordinates coor = new Coordinates(i, k);
-			Figure temp = board.getFigure(coor);
-			if(temp != null)
+			if(k >= Constants.MIN_COLUMN_VALUE)
 			{
-				if(!temp.getTeam().equals(f.getTeam()))
+				Coordinates coor = new Coordinates(i, k);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(!temp.getTeam().equals(f.getTeam()))
+					{
+						reachableLowerLeft[index] = coor;
+						index++;
+						break;
+					}
+					if(temp.getTeam().equals(f.getTeam()))
+					{
+						break;
+					}
+				}
+				else
 				{
 					reachableLowerLeft[index] = coor;
 					index++;
-					break;
 				}
-				if(temp.getTeam().equals(f.getTeam()))
-				{
-					break;
-				}
-			}
-			else
-			{
-				reachableLowerLeft[index] = coor;
-				index++;
 			}
 			
 		}
@@ -289,28 +289,28 @@ public class MoveTypes
 		for(int i = row - 1; i >= Constants.MIN_ROW_VALUE; i--) 
 		{
 			k++;
-			if(k > Constants.MAX_COLUMN_VALUE) {
-				break;
-			}
-			Coordinates coor = new Coordinates(i, k);
-			Figure temp = board.getFigure(coor);
-			if(temp != null)
+			if(k <= Constants.MAX_COLUMN_VALUE) 
 			{
-				if(!temp.getTeam().equals(f.getTeam()))
+				Coordinates coor = new Coordinates(i, k);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(!temp.getTeam().equals(f.getTeam()))
+					{
+						reachableUpperRight[index] = coor;
+						index++;
+						break;
+					}
+					if(temp.getTeam().equals(f.getTeam()))
+					{
+						break;
+					}
+				}
+				else
 				{
 					reachableUpperRight[index] = coor;
 					index++;
-					break;
 				}
-				if(temp.getTeam().equals(f.getTeam()))
-				{
-					break;
-				}
-			}
-			else
-			{
-				reachableUpperRight[index] = coor;
-				index++;
 			}
 			
 		}
@@ -330,28 +330,28 @@ public class MoveTypes
 		for(int i = row - 1; i > Constants.MIN_ROW_VALUE; i--) 
 		{
 			k--;
-			if(k < Constants.MIN_COLUMN_VALUE) {
-				break;
-			}
-			Coordinates coor = new Coordinates(i, k);
-			Figure temp = board.getFigure(coor);
-			if(temp != null)
+			if(k >= Constants.MIN_COLUMN_VALUE)
 			{
-				if(!temp.getTeam().equals(f.getTeam()))
+				Coordinates coor = new Coordinates(i, k);
+				Figure temp = board.getFigure(coor);
+				if(temp != null)
+				{
+					if(!temp.getTeam().equals(f.getTeam()))
+					{
+						reachableUpperLeft[index] = coor;
+						index++;
+						break;
+					}
+					if(temp.getTeam().equals(f.getTeam()))
+					{
+						break;
+					}
+				}
+				else
 				{
 					reachableUpperLeft[index] = coor;
 					index++;
-					break;
 				}
-				if(temp.getTeam().equals(f.getTeam()))
-				{
-					break;
-				}
-			}
-			else
-			{
-				reachableUpperLeft[index] = coor;
-				index++;
 			}
 			
 		}
