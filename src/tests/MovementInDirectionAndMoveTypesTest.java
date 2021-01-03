@@ -44,8 +44,7 @@ public class MovementInDirectionAndMoveTypesTest {
 		System.out.println("");
 		
 		//third - test on horizontal and vertical via Rook
-		//result - doesn't stop when encountering other-Team figures
-		//possible reason - doesn't get out of for loop when encountering other-Team figure
+		//result - seems to move correctly, but used to give wrong output; move tests to follow
 		Coordinates coor2 = new Coordinates(4, 5);
 		Figure rook = new Rook(coor2, Team.Black);
 		System.out.println("Type of Figure: Rook");
@@ -118,6 +117,31 @@ public class MovementInDirectionAndMoveTypesTest {
 		{
 			System.out.println(pawnMovesCapture[i].toString());
 		}
+		
+		System.out.println("");
+		
+		//eighth - test on horizontal and vertical via Rook vol2
+		//IMPORTANT NOTE - YOU TEMPERED WITH THE BOARD CONSTRUCTOR TO MAKE THIS!!!
+		//MAKE SURE TO FIX THE CONSTRUCTOR AFTER TESTING!!!
+		//result - doesn't work
+		Coordinates coor7 = new Coordinates(4, 1);
+		Figure rook1 = new Rook(coor7, Team.White);
+		MovementInDirection[] rookMovesHorizontal = MoveTypes.horizontal(rook1);;
+		MovementInDirection[] rookMovesVertical = MoveTypes.vertical(rook1);
+		System.out.println("Type of Figure: Rook");
+		System.out.println("Current coordinates: " + coor7.getRow() + "; " + coor7.getColumn());
+		System.out.println("Horizontal Moves: ");
+		for(int i = 0; i < rookMovesHorizontal.length; i++)
+		{
+			System.out.println(rookMovesHorizontal[i].toString());
+		}
+		System.out.println("Vertical Moves: ");
+		for(int i = 0; i < rookMovesVertical.length; i++)
+		{
+			System.out.println(rookMovesVertical[i].toString());
+		}
+		
+
 		
 
 	}
