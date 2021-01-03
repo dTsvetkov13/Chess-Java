@@ -1,6 +1,7 @@
 package models;
 
 import common.Constants;
+import common.Validator;
 import enums.Directions;
 import enums.Team;
 import models.figures.Figure;
@@ -707,8 +708,8 @@ public class MoveTypes
 			Coordinates h1 = new Coordinates(7, 7);
 			Figure r1 = board.getFigure(a1);
 			Figure r2 = board.getFigure(h1);
-			MovementInDirection kingSideCastling = MoveTypes.kingSideCastling((King)f, (Rook)r2);
-			MovementInDirection queenSideCastling = MoveTypes.queenSideCastling((King)f, (Rook)r1);
+			MovementInDirection kingSideCastling = MoveTypes.kingSideCastling(f, r2);
+			MovementInDirection queenSideCastling = MoveTypes.queenSideCastling(f, r1);
 			if(kingSideCastling != null)
 			{
 				reachableTemp[index] = kingSideCastling;
@@ -954,11 +955,11 @@ public class MoveTypes
 	public static MovementInDirection kingSideCastling(Figure k, Figure r)
 	{
 		//doesn't check whether King is checked or cells are guarded
-		if(!k.getClass().equals(King.class) || !r.getClass().equals(Rook.class))
+		if(Validator.isNull(r))
 		{
 			return null;
 		}
-		else if(k == null || r == null)
+		else if(!k.getClass().equals(King.class) || !r.getClass().equals(Rook.class))
 		{
 			return null;
 		}
@@ -1006,11 +1007,11 @@ public class MoveTypes
 	public static MovementInDirection queenSideCastling(Figure k, Figure r)
 	{
 		//doesn't check whether King is checked or cells are guarded
-		if(!k.getClass().equals(King.class) || !r.getClass().equals(Rook.class))
+		if(Validator.isNull(r))
 		{
 			return null;
 		}
-		else if(k == null || r == null)
+		else if(!k.getClass().equals(King.class) || !r.getClass().equals(Rook.class))
 		{
 			return null;
 		}
