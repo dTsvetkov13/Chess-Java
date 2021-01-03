@@ -327,7 +327,7 @@ public class MoveTypes
 		
 		// This loop checks the possible moves in the following order - upper left
 		
-		for(int i = row - 1; i > Constants.MIN_ROW_VALUE; i--) 
+		for(int i = row - 1; i >= Constants.MIN_ROW_VALUE; i--) 
 		{
 			k--;
 			if(k >= Constants.MIN_COLUMN_VALUE)
