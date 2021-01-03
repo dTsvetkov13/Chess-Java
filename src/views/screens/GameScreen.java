@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import common.Validator;
+import enums.Team;
 import models.Board;
 import models.Game;
 import models.GameInfo;
@@ -106,16 +107,31 @@ public class GameScreen extends Screen
 		board.setBackground(BACKGROUND);
 		board.setLayout(new BoxLayout(board, BoxLayout.X_AXIS));
 		
-		JPanel leftPnlNumbers = pnlNumbers();
-		JPanel rightPnlNumbers = pnlNumbers();
+		JPanel leftPnlNumbers = new JPanel();
+		JPanel rightPnlNumbers = new JPanel();
+		
+		JPanel pnlTopLetters = new JPanel();
+		JPanel pnlBottomLetters = new JPanel();
+		
+		if(GameInfo.getInstance().getPlayerOnTurn().getTeam().equals(Team.Black))
+		{
+			leftPnlNumbers = pnlRotateNumbers();
+			rightPnlNumbers = pnlRotateNumbers();
+			pnlTopLetters = pnlRotateLetters();
+			pnlBottomLetters = pnlRotateLetters();
+		}
+		else 
+		{
+			leftPnlNumbers = pnlNumbers();
+			rightPnlNumbers = pnlNumbers();
+			pnlTopLetters = pnlLetters();
+			pnlBottomLetters = pnlLetters();
+		}
 		
 		board.add(leftPnlNumbers);
 		board.add(chessBoard);
 		board.add(rightPnlNumbers);
 
-		JPanel pnlTopLetters = pnlLetters();
-		JPanel pnlBottomLetters = pnlLetters();
-		
 		middle.add(pnlTopLetters);
 		middle.add(board);
 		middle.add(pnlBottomLetters);
