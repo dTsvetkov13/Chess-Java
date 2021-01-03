@@ -958,6 +958,10 @@ public class MoveTypes
 		{
 			return null;
 		}
+		else if(k == null || r == null)
+		{
+			return null;
+		}
 		else if(k.getTeam().equals(Team.White)) 
 		{
 		
@@ -1003,6 +1007,10 @@ public class MoveTypes
 	{
 		//doesn't check whether King is checked or cells are guarded
 		if(!k.getClass().equals(King.class) || !r.getClass().equals(Rook.class))
+		{
+			return null;
+		}
+		else if(k == null || r == null)
 		{
 			return null;
 		}
