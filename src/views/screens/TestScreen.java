@@ -1,6 +1,8 @@
 package views.screens;
 import java.awt.FlowLayout;
 
+import javax.print.attribute.SetOfIntegerSyntax;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 import models.Board;
@@ -16,7 +18,7 @@ public class TestScreen
 		window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
-		//window.setLayout(new FlowLayout());
+		window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.LINE_AXIS));
 		
 		//GameScreen test
 		GameScreen game = new GameScreen("chess");
@@ -36,7 +38,7 @@ public class TestScreen
 		window.setTitle(gameOver.getName());
 		window.add(gameOver);*/
 		
-		//window.pack();
+		window.pack();
 		window.repaint();
 	}
 }
