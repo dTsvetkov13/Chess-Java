@@ -1005,6 +1005,7 @@ public class MoveTypes
 			else
 			{
 				return null;
+				
 			}
 		}
 	}
