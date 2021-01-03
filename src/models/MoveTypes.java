@@ -1043,8 +1043,7 @@ public class MoveTypes
 			}
 			else
 			{
-				return null;
-				
+				return null;	
 			}
 		}
 	}
