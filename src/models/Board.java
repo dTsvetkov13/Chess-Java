@@ -39,7 +39,7 @@ public class Board
 		figures[7][3] = new Queen(new Coordinates(7, 3), team);
 		figures[7][4] = new King(new Coordinates(7, 4), team);
 		figures[7][5] = new Bishop(new Coordinates(7, 5), team);
-		figures[7][6] = new Knight(new Coordinates(7, 6), team);
+		figures[7][6] = new Knight(new Coordinates(7, 6), team); //7, 6
 		figures[7][7] = new Rook(new Coordinates(7, 7), team);
 		
 		for(int i = 0; i <= Constants.MAX_COLUMN_VALUE; i++)

@@ -8,7 +8,7 @@ import models.figures.Figure;
 public class Player {
 	
 	private String username;
-	private Team Team;
+	private Team team;
 	private Figure[] takenFigures;
 	private int takenFiguresIndex;
 	
@@ -19,7 +19,7 @@ public class Player {
 	
 	public Team getTeam()
 	{
-		return Team;
+		return team;
 	}
 	
 	public Figure[] getTakenFigures()
@@ -42,10 +42,7 @@ public class Player {
 	
 	public void setTeam(Team team) 
 	{
-		if(team == Team.Black || team == Team.White)
-		{
-			this.Team = team;
-		}
+		this.team = team;
 	}
 	
 	public void setTakenFigures(Figure[] takenFigures) 
@@ -56,25 +53,20 @@ public class Player {
 		}
 	}
 	
-	//TO DO: should be optimize
 	public Player()
 	{
-		setUsername("Player1");
-		setTeam(Team.Black);
-		setTakenFigures(new Figure[Constants.MAX_FIGURES_TAKEN_COUNT]);
+		this("Player1", Team.Black, new Figure[Constants.MAX_FIGURES_TAKEN_COUNT]);
 	}	
 	
-	public Player(String username, Team Team)
+	public Player(String username, Team team)
 	{
-		setUsername(username);
-		setTeam(Team);
-		setTakenFigures(new Figure[Constants.MAX_FIGURES_TAKEN_COUNT]);
+		this(username, team, new Figure[Constants.MAX_FIGURES_TAKEN_COUNT]);
 	}
 	
-	public Player(String username, Team Team, Figure[] takenFigures)
+	public Player(String username, Team team, Figure[] takenFigures)
 	{
 		setUsername(username);
-		setTeam(Team);
+		setTeam(team);
 		setTakenFigures(takenFigures);
 	}
 	
