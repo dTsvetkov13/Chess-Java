@@ -70,13 +70,7 @@ public class UIFigureDrawer
 				 new int[] {bounds.height, bounds.height, 0}, 3);
 		
 		graphics.drawPolygon(new int[] {0, bounds.width, bounds.width / 2}, 
-							 new int[] {bounds.height, bounds.height, 0}, 3);
-		if(team == Team.White)
-		{
-			graphics.setColor(Color.black);
-			graphics.drawPolygon(new int[] {0, bounds.width, bounds.width / 2}, 
-							 	 new int[] {bounds.height, bounds.height, 0}, 3);
-		}	
+							 new int[] {bounds.height, bounds.height, 0}, 3);	
 	}
 	
 	private static void drawKnight(Graphics graphics, Rectangle bounds, Team team)
@@ -89,13 +83,6 @@ public class UIFigureDrawer
 		graphics2D.fill(rect2);
 		graphics2D.draw(rect);
 		graphics2D.draw(rect2);
-		
-		if(team == Team.White)
-		{
-			graphics2D.setColor(Color.black);
-			graphics2D.draw(rect);
-			graphics2D.draw(rect2);
-		}	
 	}
 	
 	private static void drawQueen(Graphics graphics, Rectangle bounds, Team team)
@@ -106,11 +93,6 @@ public class UIFigureDrawer
 		
 		graphics.fillOval((greaterValue - smallerValue) / 2, 0, smallerValue, smallerValue);
 		graphics.drawOval((greaterValue - smallerValue) / 2, 0, smallerValue, smallerValue);
-		if(team == Team.White)
-		{
-			graphics.setColor(Color.black);
-			graphics.drawOval((greaterValue - smallerValue) / 2, 0, smallerValue, smallerValue);
-		}	
 	}
 	
 	private static void drawKing(Graphics graphics, Rectangle bounds, Team team)
@@ -123,14 +105,7 @@ public class UIFigureDrawer
 		graphics2D.fill(rect);
 		graphics2D.fill(rect2);
 		graphics2D.draw(rect);
-		graphics2D.draw(rect2);
-		
-		if(team == Team.White)
-		{
-			graphics2D.setColor(Color.black);
-			graphics2D.draw(rect);
-			graphics2D.draw(rect2);
-		}	
+		graphics2D.draw(rect2);	
 	}
 	
 	private static void drawPawn(Graphics graphics, Rectangle bounds, Team team)
@@ -157,12 +132,6 @@ public class UIFigureDrawer
 		
 		graphics2D.fill(rect);
 		graphics2D.draw(rect);
-		
-		if(team == Team.White)
-		{
-			graphics2D.setColor(Color.black);
-			graphics2D.draw(rect);
-		}
 	}
 	
 	private static void drawRook(Graphics graphics, Rectangle bounds, Team team)
@@ -172,11 +141,5 @@ public class UIFigureDrawer
 		
 		graphics2D.fill(rect);
 		graphics2D.draw(rect);
-		
-		if(team == Team.White)
-		{
-			graphics2D.setColor(Color.black);
-			graphics2D.draw(rect);
-		}
 	}
 }
