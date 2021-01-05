@@ -33,6 +33,7 @@ public class Timer
 	
 	public void countdownSecond()
 	{
+		System.out.println(minutes + ":" + seconds);
 		if(this.seconds == 0)
 		{
 			this.minutes--;
