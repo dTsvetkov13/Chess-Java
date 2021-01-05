@@ -39,7 +39,7 @@ public class Timer
 	
 	public void stop()
 	{
-		
+		return;
 	}
 	
 	public String toString()
