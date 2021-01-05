@@ -4,18 +4,11 @@ public class Timer
 {
 	private int seconds;
 	private int minutes;
-	private CountdownTimerTask[] timer;
 	
 	public Timer(int minutes, int seconds)
 	{
 		this.minutes = minutes;
 		this.seconds = seconds;
-	}
-	
-	public Timer()
-	{
-		this.minutes = 0;
-		this.seconds = 0;
 	}
 	
 	public int getSeconds()
@@ -30,11 +23,22 @@ public class Timer
 	
 	public void run() throws InterruptedException
 	{
-		for(int i = 0; i < timer.length; i++)
+		int totalSeconds = this.minutes * 60 + this.seconds;
+		for(int i = 0; i < totalSeconds; i++)
 		{
-			run();
 			Thread.sleep(1000);
+			countdownSecond();
 		}
+	}
+	
+	public void countdownSecond()
+	{
+		if(this.seconds == 0)
+		{
+			this.minutes--;
+			this.seconds = 60;
+		}
+		this.seconds--;
 	}
 	
 	public void stop()
