@@ -98,8 +98,6 @@ public class BoardView extends JPanel
 		}
 		else
 		{
-			isWhiteCell = false;
-			
 			for(int row = Constants.MAX_ROW_VALUE; row >= Constants.MIN_ROW_VALUE; row--)
 			{
 				for(int column = Constants.MAX_COLUMN_VALUE; column >= Constants.MIN_COLUMN_VALUE; column--)
@@ -127,6 +125,14 @@ public class BoardView extends JPanel
 			}
 		}
 		
+		Coordinates lastSelectedFigureCoordinates = Board.getInstance().getLastSelectedFigure();
+		
+		if(!Validator.isNull(lastSelectedFigureCoordinates))
+		{
+			Figure figure = Board.getInstance().getFigure(lastSelectedFigureCoordinates);
+			colorAllReachableCells(figure);
+		}	
+		
 		for(var comp : this.getComponents())
 		{
 			comp.repaint();
@@ -139,6 +145,37 @@ public class BoardView extends JPanel
 		if(this.getGraphics() != null)
 		{
 			this.printComponent(this.getGraphics());
+		}
+	}
+	
+	private void colorAllReachableCells(Figure figure)
+	{
+		if(!Validator.isNull(figure))
+		{
+			Coordinates[] reachableCells = figure.getReachableCells();
+			int reachableCellsCount = figure.getReachableCellsCount();
+			
+			if(GameInfo.getInstance().getPlayerOnTurn().getTeam().equals(Team.White))
+			{
+				Coordinates coor;
+				
+				for(int i = 0; i < reachableCellsCount; i++)
+				{
+					coor = reachableCells[i];
+					this.cellViews[coor.getRow()][coor.getColumn()].setBackground(Color.blue);
+				}
+			}
+			else
+			{
+				Coordinates coor;
+				
+				for(int i = 0; i < reachableCellsCount; i++)
+				{
+					coor = reachableCells[i];
+					this.cellViews[Constants.MAX_ROW_VALUE - coor.getRow()]
+								  [Constants.MAX_COLUMN_VALUE - coor.getColumn()].setBackground(Color.blue);
+				}
+			}
 		}
 	}
 }
