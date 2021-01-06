@@ -14,7 +14,7 @@ public class ChessGameEventListener implements GameEventListener
 	public void onBoardChanged()
 	{
 		GameInfo.getInstance().changeTurn();
-		Game.getInstance().repaintTheBoard();
+		Game.getInstance().boardRepaint();
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class ChessGameEventListener implements GameEventListener
 	{
 		figure.CalculateReachableCells();
 		figure.setSelected(true);
-		Game.getInstance().repaintTheBoard();
+		Game.getInstance().boardRepaint();
 	}
 
 	@Override

@@ -58,8 +58,10 @@ public class Game
 	{
 		if(screen != null)
 		{
+			System.out.println("Screen added");
 			this.window.add(screen);
 			this.lastScreen = screen;
+			this.layout.previous(this.window.getContentPane());
 		}
 	}
 	
@@ -90,6 +92,12 @@ public class Game
 	public void addComponent(JComponent comp)
 	{
 		this.window.add(comp);
+	}
+	
+	public void repaintTheBoard()
+	{
+		this.window.revalidate();
+		((GameScreen) this.getLastScreen()).repaint();
 	}
 	
 	public Screen getLastScreen()
