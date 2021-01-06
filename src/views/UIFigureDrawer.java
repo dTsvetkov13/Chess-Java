@@ -77,7 +77,7 @@ public class UIFigureDrawer
 	{
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		Rectangle2D.Double rect = new Rectangle2D.Double(0, 0, bounds.width, bounds.height * 0.3); 
-		Rectangle2D.Double rect2 = new Rectangle2D.Double(0, bounds.width * 0.45, bounds.width * 0.3, bounds.height); 
+		Rectangle2D.Double rect2 = new Rectangle2D.Double(0, 0, bounds.width * 0.3, bounds.height); 
 		
 		graphics2D.fill(rect);
 		graphics2D.fill(rect2);
