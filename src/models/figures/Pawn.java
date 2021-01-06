@@ -19,11 +19,8 @@ public class Pawn extends Figure{
 	{
 		super.reachableCellsCount = 0;
 		
-		Coordinates[] directions = MoveTypes.pawnMove(this);
-		for(int i = 0; i < directions.length; i++)
-		{
-			super.addReachableCell(directions[i]);
-		}
+		MovementInDirection[] directions = MoveTypes.pawnMove(this);
+		this.addCoordinatesFromMovementInDirectionArray(directions);
 		
 		return super.getReachableCellsCount();
 	}

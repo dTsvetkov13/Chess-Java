@@ -20,7 +20,7 @@ public class King extends Figure
 	{
 		super.reachableCellsCount = 0;
 		
-		MovementInDirection[] directions = MoveTypes.kingMove(this, null, null);//to be modified
+		MovementInDirection[] directions = MoveTypes.kingMove(this);
 		super.addCoordinatesFromMovementInDirectionArray(directions);
 		
 		return super.getReachableCellsCount();

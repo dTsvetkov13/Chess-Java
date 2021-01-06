@@ -24,7 +24,7 @@ public class Queen extends Figure
 		super.addCoordinatesFromMovementInDirectionArray(directions);
 		directions = MoveTypes.horizontal(this);
 		super.addCoordinatesFromMovementInDirectionArray(directions);
-		//directions = MoveTypes.diagonal(this); to be changed
+		directions = MoveTypes.diagonal(this);
 		super.addCoordinatesFromMovementInDirectionArray(directions);
 		
 		return super.getReachableCellsCount();

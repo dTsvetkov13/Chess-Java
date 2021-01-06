@@ -21,7 +21,7 @@ public class Bishop extends Figure
 	{
 		super.reachableCellsCount = 0;
 		
-		MovementInDirection[] directions = MoveTypes.vertical(this);//needs to be changed-diagonal
+		MovementInDirection[] directions = MoveTypes.diagonal(this);
 		super.addCoordinatesFromMovementInDirectionArray(directions);
 		
 		return super.getReachableCellsCount();
