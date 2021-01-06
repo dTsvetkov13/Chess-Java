@@ -4,10 +4,14 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import models.Game;
 
 public class MenuScreen extends Screen
 {
@@ -83,7 +87,14 @@ public class MenuScreen extends Screen
 		
 		JButton btnStart = new JButton("START");
 		btnStart.setFont(new Font("Arial", Font.PLAIN, BUTTON_FONT_SIZE));
-		//add action
+		
+		btnStart.addActionListener (new ActionListener ()
+		{
+			public void actionPerformed (ActionEvent e)
+			{
+				Game.getInstance().getListener().onGameStart(Game.getInstance());
+			}
+		});
 		
 		this.add(btnStart, gbc);
 	}
