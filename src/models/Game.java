@@ -94,7 +94,7 @@ public class Game
 		this.window.add(comp);
 	}
 	
-	public void repaintTheBoard()
+	public void boardRepaint()
 	{
 		this.window.revalidate();
 		((GameScreen) this.getLastScreen()).repaint();
