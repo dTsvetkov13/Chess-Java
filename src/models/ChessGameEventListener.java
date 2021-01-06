@@ -13,13 +13,14 @@ public class ChessGameEventListener implements GameEventListener
 	@Override
 	public void onBoardChanged()
 	{
-		//team change
+		GameInfo.getInstance().changeTurn();
+		Game.getInstance().repaintTheBoard();
 	}
 
 	@Override
 	public void onFigureTaken()
 	{
-		
+		//repaint figure taken
 	}
 
 	@Override
@@ -31,14 +32,16 @@ public class ChessGameEventListener implements GameEventListener
 	@Override
 	public void onGameStart(Game game)
 	{
-		game.addScreen(new GameScreen("Chess"));
+		System.out.println("onGameStart");
+		Game.getInstance().addScreen(new GameScreen("Chess"));
 	}
 
 	@Override
 	public void onFigureClicked(Figure figure)
 	{
 		figure.CalculateReachableCells();
-		
+		figure.setSelected(true);
+		Game.getInstance().repaintTheBoard();
 	}
 
 	@Override
@@ -60,14 +63,9 @@ public class ChessGameEventListener implements GameEventListener
 			throw new IllegalArgumentException("CellView cannot be null!");
 		}
 		
-		determineBoardBehaviour(cellView.getCoordinates());
+		Coordinates figureCoordinates = cellView.getCoordinates();
 		
-		if(!Validator.isNull(Board.getInstance().getFigure(cellView.getCoordinates())) &&
-		    Board.getInstance().getFigure(cellView.getCoordinates()).getTeam()
-			.equals(Game.getInstance().getPlayerOnTurn().getTeam()))
-		{
-			//set the CellView to be selected
-		}
+		determineBoardBehaviour(figureCoordinates);
 	}
 	
 	private void determineBoardBehaviour(Coordinates coordinates)
@@ -79,7 +77,7 @@ public class ChessGameEventListener implements GameEventListener
 		
 		Board board = Board.getInstance();
 		Figure selectedFigure = board.getFigure(coordinates);
-		Team playerOnTurnTeam = Game.getInstance().getPlayerOnTurn().getTeam();
+		Team playerOnTurnTeam = GameInfo.getInstance().getPlayerOnTurn().getTeam();
 		Figure lastSelectedFigure = board.getFigure(board.getLastSelectedFigure());
 		
 		if(!Validator.isNull(selectedFigure)
