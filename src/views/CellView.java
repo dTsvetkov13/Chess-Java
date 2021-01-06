@@ -2,6 +2,7 @@ package views;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -92,9 +93,7 @@ public class CellView extends JPanel
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0)
-	{
-		System.out.println("CellView: " + arg0.getX() + " " + arg0.getY() + " " + arg0.getComponent());
-		
+	{		
 		if(!Validator.isNull(Game.getInstance().getListener()))
 		{
 			Game.getInstance().getListener().onCellClicked(this);
