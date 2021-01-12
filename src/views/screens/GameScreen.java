@@ -54,7 +54,7 @@ public class GameScreen extends Screen
 	{
 		super(name);
 		
-		if(chessBoard == null) chessBoard = new BoardView(); // use Validator
+		if(Validator.isNull(chessBoard)) chessBoard = new BoardView();
 		
 		layout = new BoxLayout(this, BoxLayout.X_AXIS);
 		this.setLayout(layout);
@@ -115,15 +115,15 @@ public class GameScreen extends Screen
 		
 		if(GameInfo.getInstance().getPlayerOnTurn().getTeam().equals(Team.Black))
 		{
-			leftPnlNumbers = pnlRotateNumbers();
-			rightPnlNumbers = pnlRotateNumbers();
+			leftPnlNumbers = pnlNumbers();
+			rightPnlNumbers = pnlNumbers();
 			pnlTopLetters = pnlRotateLetters();
 			pnlBottomLetters = pnlRotateLetters();
 		}
 		else 
 		{
-			leftPnlNumbers = pnlNumbers();
-			rightPnlNumbers = pnlNumbers();
+			leftPnlNumbers = pnlRotateNumbers();
+			rightPnlNumbers = pnlRotateNumbers();
 			pnlTopLetters = pnlLetters();
 			pnlBottomLetters = pnlLetters();
 		}
