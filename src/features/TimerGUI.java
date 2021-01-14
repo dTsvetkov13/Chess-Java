@@ -19,6 +19,8 @@ public class TimerGUI
 		final int TEXTFIELD_HEIGHT = 20;
 		final int LABEL_TIMER_WIDTH = 100;
 		final int LABEL_TIMER_HEIGHT = 50;
+		final int BUTTON_WIDTH = 70;
+		final int BUTTON_HEIGHT = 30;
 		
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(window.EXIT_ON_CLOSE);
@@ -62,6 +64,11 @@ public class TimerGUI
 		lblTimer.setText(minutes + ":" + seconds); 
 		panel.add(lblTimer);
 		
+		JButton btnTimer = new JButton();
+		btnTimer.setBounds(LABEL_X + LABEL_WIDTH - 10, LABEL_Y*4 + LABEL_HEIGHT*3 + 30, BUTTON_WIDTH, BUTTON_HEIGHT);
+		btnTimer.setVisible(true);
+		btnTimer.setText("Start");
+		panel.add(btnTimer);
 		
 	}
 }
