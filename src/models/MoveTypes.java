@@ -3,9 +3,11 @@ package models;
 import common.Constants;
 import common.Validator;
 import enums.Directions;
+import enums.FigureType;
 import enums.Team;
 import models.figures.Figure;
 import models.figures.King;
+import models.figures.Pawn;
 import models.figures.Rook;
 
 
@@ -427,6 +429,24 @@ public class MoveTypes
 						reachableLowerRight[0]=coor;
 					}	
 				}
+				else 
+				{
+					Move lastMove = GameInfo.getInstance().getLastMove();
+					Figure lastMovedFigure=lastMove.getMovedFigure();
+					int coordinatesFromRow=lastMove.getCoordinatesFrom().getRow();
+					int coordinatesToRow=lastMove.getCoordinatesTo().getRow();
+					if(!lastMovedFigure.getTeam().equals(f.getTeam()) && lastMovedFigure.getType().equals(FigureType.Pawn))
+					{
+						if(lastMovedFigure.getCoordinates().getRow() == f.getCoordinates().getRow() && 
+								lastMovedFigure.getCoordinates().getColumn() == f.getCoordinates().getColumn() + 1) 
+						{
+							if((coordinatesToRow - coordinatesFromRow) == 2) 
+							{
+								reachableLowerRight[0]=coor;
+							}
+						}
+					}	
+				}
 				MovementInDirection m1 = new MovementInDirection(Directions.LowerRight, reachableLowerRight);
 				reachable[movementIndex] = m1;
 				movementIndex++;
@@ -440,6 +460,24 @@ public class MoveTypes
 					if(!temp.getTeam().equals(f.getTeam())) 
 					{
 						 reachableLowerLeft[0]=coor;
+					}	
+				}
+				else 
+				{
+					Move lastMove = GameInfo.getInstance().getLastMove();
+					Figure lastMovedFigure=lastMove.getMovedFigure();
+					int coordinatesFromRow=lastMove.getCoordinatesFrom().getRow();
+					int coordinatesToRow=lastMove.getCoordinatesTo().getRow();
+					if(!lastMovedFigure.getTeam().equals(f.getTeam()) && lastMovedFigure.getType().equals(FigureType.Pawn))
+					{
+						if(lastMovedFigure.getCoordinates().getRow() == f.getCoordinates().getRow() && 
+								lastMovedFigure.getCoordinates().getColumn() == f.getCoordinates().getColumn() - 1) 
+						{
+							if((coordinatesToRow - coordinatesFromRow) == 2) 
+							{
+								 reachableLowerLeft[0]=coor;
+							}
+						}
 					}	
 				}
 				MovementInDirection m2 = new MovementInDirection(Directions.LowerLeft,  reachableLowerLeft);
@@ -484,10 +522,30 @@ public class MoveTypes
 						reachableUpperRight[0]=coor;
 					}	
 				}
+				else 
+				{
+					Move lastMove = GameInfo.getInstance().getLastMove();
+					Figure lastMovedFigure=lastMove.getMovedFigure();
+					int coordinatesFromRow=lastMove.getCoordinatesFrom().getRow();
+					int coordinatesToRow=lastMove.getCoordinatesTo().getRow();
+					if(!lastMovedFigure.getTeam().equals(f.getTeam()) && lastMovedFigure.getType().equals(FigureType.Pawn))
+					{
+						if(lastMovedFigure.getCoordinates().getRow() == f.getCoordinates().getRow() && 
+								lastMovedFigure.getCoordinates().getColumn() == f.getCoordinates().getColumn() + 1) 
+						{
+							if((coordinatesFromRow - coordinatesToRow) == 2) 
+							{
+								reachableUpperRight[0]=coor;
+							}
+						}
+					}	
+				}
+			
+			}
 				MovementInDirection m1 = new MovementInDirection(Directions.UpperRight, reachableUpperRight);
 				reachable[movementIndex] = m1;
 				movementIndex++;
-			}
+			
 			if(row - 1 >= Constants.MIN_ROW_VALUE && col - 1 >= Constants.MIN_COLUMN_VALUE) 
 			{
 				coor = new Coordinates(row-1, col-1);
@@ -497,6 +555,24 @@ public class MoveTypes
 					if(!temp.getTeam().equals(f.getTeam())) 
 					{
 						reachableUpperLeft[0]=coor;
+					}	
+				}
+				else 
+				{
+					Move lastMove = GameInfo.getInstance().getLastMove();
+					Figure lastMovedFigure=lastMove.getMovedFigure();
+					int coordinatesFromRow=lastMove.getCoordinatesFrom().getRow();
+					int coordinatesToRow=lastMove.getCoordinatesTo().getRow();
+					if(!lastMovedFigure.getTeam().equals(f.getTeam()) && lastMovedFigure.getType().equals(FigureType.Pawn))
+					{
+						if(lastMovedFigure.getCoordinates().getRow() == f.getCoordinates().getRow() && 
+								lastMovedFigure.getCoordinates().getColumn() == f.getCoordinates().getColumn() - 1) 
+						{
+							if((coordinatesFromRow - coordinatesToRow) == 2) 
+							{
+								reachableUpperLeft[0]=coor;
+							}
+						}
 					}	
 				}
 				MovementInDirection m2 = new MovementInDirection(Directions.UpperLeft, reachableUpperLeft);
