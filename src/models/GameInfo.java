@@ -106,6 +106,18 @@ public class GameInfo
 		}
 	}
 	
+	public ArrayList<Method> getCertainFigureMovements(FigureType figureType)
+	{
+		if(this.figureMovements.containsKey(figureType))
+		{
+			return this.figureMovements.get(figureType);
+		}
+		else
+		{
+			throw new IllegalArgumentException("There are no movements for such FigureType!");
+		}
+	}
+	
 	public void changeTurn()
 	{
 		this.playerOnTurnIndex++;
