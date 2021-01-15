@@ -39,11 +39,6 @@ public class GameScreen extends Screen
 	public final static Dimension PNL_LETTERS_PREFERED_SIZE = new Dimension(800, 25);
 	
 	public final static Color FIGURE_LOST = new Color(222,184,135);
-	public final static Color INFORMATION = new Color(184,134,11);
-	public final static Color BORDER_FIELD_COLOR = new Color(240,230,140);
-	//255,222,173 255,228,181 - other colors
-	public final static Color BORDER_FIELD_DARKER_COLOR = new Color(139,69,19);
-	//139,69,19 160,82,45 - other colors 
 	
 	private BoardView chessBoard;
 	private BoxLayout layout;
@@ -83,12 +78,7 @@ public class GameScreen extends Screen
 		
 		left.setBackground(BACKGROUND);
 		
-		String name = null;
-		if(GameInfo.getInstance().getPlayerAt(0) != null)
-		{
-			name = GameInfo.getInstance().getPlayerAt(0).getUsername(); 
-		}
-		setPlayerOneName(name);
+		setPlayerOneName(GameInfo.getInstance().getPlayerAt(0).getUsername());//change to playerOnTurn
 		
 		left.add(pnlPlayer(this.playerOneName));
 		
@@ -146,12 +136,7 @@ public class GameScreen extends Screen
 		right.setBackground(BACKGROUND);
 		right.setBorder(new EmptyBorder(PNL_RIGHT_INSETS));
 		
-		String name = null;
-		if(GameInfo.getInstance().getPlayerAt(0) != null)
-		{
-			name = GameInfo.getInstance().getPlayerAt(1).getUsername(); 
-		}
-		setPlayerTwoName(name);
+		setPlayerTwoName(GameInfo.getInstance().getPlayerAt(1).getUsername());//change to playerOnTurn
 		
 		right.add(pnlPlayer(this.playerTwoName));
 		
@@ -285,4 +270,5 @@ public class GameScreen extends Screen
 		
 		return pnlNumbers;
 	}
+	
 }

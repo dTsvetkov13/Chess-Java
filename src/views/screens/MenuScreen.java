@@ -11,7 +11,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import enums.Team;
 import models.Game;
+import models.GameInfo;
+import models.Player;
 
 public class MenuScreen extends Screen
 {
@@ -28,6 +31,8 @@ public class MenuScreen extends Screen
 	public final static int DEFAULT_PADDING = 0;
 	
 	private GridBagConstraints gbc;
+	private JTextField firstFieldForPlayer;
+	private JTextField secondFieldForPlayer;
 	
 	public MenuScreen(String name)
 	{
@@ -46,12 +51,13 @@ public class MenuScreen extends Screen
 	
 		//make first row (label textField)
 		drawInformativeLabel(DEFAULT_PADDING, DEFAULT_PADDING, "Player 1 :");
-		drawFieldForNameOfPlayer(DEFAULT_PADDING + 1, DEFAULT_PADDING);
+		this.firstFieldForPlayer = fieldForNameOfPlayer(DEFAULT_PADDING + 1, DEFAULT_PADDING);
+		
 		
 		//make second row (label textField)
 		drawInformativeLabel(DEFAULT_PADDING, DEFAULT_PADDING + 1, "Player 2 :");
-		drawFieldForNameOfPlayer(DEFAULT_PADDING + 1, DEFAULT_PADDING + 1);
-		
+		this.secondFieldForPlayer = fieldForNameOfPlayer(DEFAULT_PADDING + 1, DEFAULT_PADDING + 1);
+			
 		drawBtnStart();
 	}
 	
@@ -66,17 +72,19 @@ public class MenuScreen extends Screen
 		this.add(lblPlayer, gbc);
 	}
 	
-	private void drawFieldForNameOfPlayer(int gridx, int gridy) 
+	private JTextField fieldForNameOfPlayer(int gridx, int gridy) 
 	{
 		gbc.gridx = gridx;
 		gbc.gridy = gridy;
 		
-		JTextField txtPlayer1 = new JTextField();
+		JTextField txtPlayer = new JTextField();
 		
-		txtPlayer1.setColumns(TEXT_FIELD_COLUMNS);
-		txtPlayer1.setVisible(true);
+		txtPlayer.setColumns(TEXT_FIELD_COLUMNS);
+		//txtPlayer.setVisible(true);
 		
-		this.add(txtPlayer1, gbc);
+		this.add(txtPlayer, gbc);
+		
+		return txtPlayer;
 	}
 	
 	private void drawBtnStart()
@@ -92,6 +100,9 @@ public class MenuScreen extends Screen
 		{
 			public void actionPerformed (ActionEvent e)
 			{
+				GameInfo.getInstance().addPlayerAt(0, new Player(firstFieldForPlayer.getText(), Team.White));
+				GameInfo.getInstance().addPlayerAt(1, new Player(secondFieldForPlayer.getText(), Team.Black));
+				
 				Game.getInstance().getListener().onGameStart(Game.getInstance());
 			}
 		});
