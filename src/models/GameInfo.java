@@ -1,5 +1,6 @@
 package models;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,8 +57,6 @@ public class GameInfo
 			this.addMethodToFigureType(FigureType.Queen, "vertical");
 			this.addMethodToFigureType(FigureType.Queen, "diagonal");
 			this.addMethodToFigureType(FigureType.King, "kingMove");
-			this.addMethodToFigureType(FigureType.King, "kingSideCastling");
-			this.addMethodToFigureType(FigureType.King, "queenSideCastling");
 			this.addMethodToFigureType(FigureType.Pawn, "pawnMove");
 			this.addMethodToFigureType(FigureType.Knight, "knightMove");
 		}
@@ -116,6 +115,28 @@ public class GameInfo
 		{
 			throw new IllegalArgumentException("There are no movements for such FigureType!");
 		}
+	}
+	
+	public MovementInDirection[] invokeMoveTypesMethod(Method method, Figure arg0)
+	{
+		try
+		{
+			return (MovementInDirection[]) method.invoke(method.getName(), arg0);
+		}
+		catch (IllegalAccessException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+		}
+		catch (InvocationTargetException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	public void changeTurn()

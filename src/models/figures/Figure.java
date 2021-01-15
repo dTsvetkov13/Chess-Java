@@ -4,9 +4,10 @@ import common.Validator;
 import enums.FigureType;
 import enums.Team;
 import models.Coordinates;
+import models.GameInfo;
 import models.MovementInDirection;
 
-public abstract class Figure 
+public class Figure 
 {
 	protected Coordinates coordinates;
 	protected Team team;
@@ -87,7 +88,19 @@ public abstract class Figure
 		return isSelected;
 	}
 	
-	public abstract int CalculateReachableCells();
+	public int CalculateReachableCells()
+	{
+		this.reachableCellsCount = 0;
+		
+		var figureMovements = GameInfo.getInstance().getCertainFigureMovements(this.getType());
+		
+		for(var movement : figureMovements)
+		{
+			this.addCoordinatesFromMovementInDirectionArray(GameInfo.getInstance().invokeMoveTypesMethod(movement, this));
+		}
+		
+		return this.getReachableCellsCount();
+	}
 	
 	public void addCoordinatesFromMovementInDirectionArray(MovementInDirection[] array)
 	{
