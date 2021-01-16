@@ -11,15 +11,14 @@ public class TestTimer {
 		int secs = sc.nextInt();
 		sc.close();
 		Timer timer = new Timer(min, secs);
-		timer.run();
+		//timer.run();
 		System.out.println(timer.toString());
-		/*for(int i = 0; i < 3; i++)
+		for(int i = 0; i < 3; i++)
 		{
 			Thread.sleep(1000);
 			System.out.println(timer.toString());
 		}
 		timer.stop();
-		*/
 	}
 
 }

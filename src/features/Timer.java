@@ -4,11 +4,32 @@ public class Timer
 {
 	private int seconds;
 	private int minutes;
+	private Thread thread;
 	
 	public Timer(int minutes, int seconds)
 	{
 		this.minutes = minutes;
 		this.seconds = seconds;
+		this.thread = new Thread(){
+			public void run()
+			{
+				int totalSeconds = minutes * 60 + seconds;
+				for(int i = 0; i < totalSeconds; i++)
+				{
+					try 
+					{
+						this.sleep(1000);
+					}
+					catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+					countdownSecond();
+					
+				}
+			}
+		};
+		this.thread.start();
 	}
 	
 	public int getSeconds()
@@ -21,15 +42,15 @@ public class Timer
 		return this.minutes;
 	}
 	
-	public void run() throws InterruptedException
+	/*public void run() throws InterruptedException
 	{
 		int totalSeconds = this.minutes * 60 + this.seconds;
 		for(int i = 0; i < totalSeconds; i++)
 		{
-			Thread.sleep(1000);
+			thread.sleep(1000);
 			countdownSecond();
 		}
-	}
+	}*/
 	
 	public void countdownSecond()
 	{
@@ -44,7 +65,7 @@ public class Timer
 	
 	public void stop()
 	{
-		return;
+		thread.stop();
 	}
 	
 	public String toString()

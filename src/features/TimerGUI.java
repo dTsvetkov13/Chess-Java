@@ -1,5 +1,8 @@
 package features;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -59,15 +62,34 @@ public class TimerGUI
 		JLabel lblTimer = new JLabel();
 		lblTimer.setBounds(LABEL_X + LABEL_WIDTH, LABEL_Y*3 + LABEL_HEIGHT*2, LABEL_TIMER_WIDTH, LABEL_TIMER_HEIGHT);
 		lblTimer.setVisible(true);
-		String minutes = txtMinutes.getText();
-		String seconds = txtSeconds.getText();
-		lblTimer.setText(minutes + ":" + seconds); 
 		panel.add(lblTimer);
 		
 		JButton btnTimer = new JButton();
 		btnTimer.setBounds(LABEL_X + LABEL_WIDTH - 10, LABEL_Y*4 + LABEL_HEIGHT*3 + 30, BUTTON_WIDTH, BUTTON_HEIGHT);
 		btnTimer.setVisible(true);
 		btnTimer.setText("Start");
+		btnTimer.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				int minutes = Integer.parseInt(txtMinutes.getText());
+				int seconds = Integer.parseInt(txtSeconds.getText());
+				Timer timer = new Timer(minutes, seconds);
+				try 
+				{
+					timer.run();
+					System.out.println("Text");
+				} 
+				catch (InterruptedException e) 
+				{
+					e.printStackTrace();
+				} 
+				lblTimer.setText(timer.toString());
+			}
+			
+		});
+		
 		panel.add(btnTimer);
 		
 	}
