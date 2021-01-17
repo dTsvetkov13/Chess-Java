@@ -60,7 +60,7 @@ public class GameScreen extends Screen
 	public void drawGameScreen()
 	{
 		this.drawPnlLeftSide();
-		this.drawBoard();
+		this.drawPnlMiddle();
 		this.drawPnlRightSide();
 	}
 	
@@ -85,48 +85,52 @@ public class GameScreen extends Screen
 		this.add(left);
 	}
 
-	private void drawBoard()
+	private void drawPnlMiddle()
 	{
 		JPanel middle = new JPanel();
 		
 		middle.setBackground(BACKGROUND);
 		middle.setLayout(new BoxLayout(middle, BoxLayout.Y_AXIS));
 		
+		JPanel pnlTopLetters = pnlLetters();
+		JPanel pnlBottomLetters = pnlLetters();
+		
+		if(GameInfo.getInstance().getPlayerOnTurn().getTeam().equals(Team.Black))
+		{
+			pnlTopLetters = pnlRotateLetters();
+			pnlBottomLetters = pnlRotateLetters();
+		}
+
+		JPanel boardWithNumbers = pnlBoardWithNumbers();
+		
+		middle.add(pnlTopLetters);
+		middle.add(boardWithNumbers);
+		middle.add(pnlBottomLetters);
+		
+		this.add(middle);
+	}
+	
+	private JPanel pnlBoardWithNumbers() // add better name
+	{
 		JPanel board = new JPanel();
 		
 		board.setBackground(BACKGROUND);
 		board.setLayout(new BoxLayout(board, BoxLayout.X_AXIS));
 		
-		JPanel leftPnlNumbers = new JPanel();
-		JPanel rightPnlNumbers = new JPanel();
+		JPanel leftPnlNumbers = pnlNumbers();
+		JPanel rightPnlNumbers = pnlNumbers();
 		
-		JPanel pnlTopLetters = new JPanel();
-		JPanel pnlBottomLetters = new JPanel();
-		
-		if(GameInfo.getInstance().getPlayerOnTurn().getTeam().equals(Team.Black))
-		{
-			leftPnlNumbers = pnlNumbers();
-			rightPnlNumbers = pnlNumbers();
-			pnlTopLetters = pnlRotateLetters();
-			pnlBottomLetters = pnlRotateLetters();
-		}
-		else 
+		if(GameInfo.getInstance().getPlayerOnTurn().getTeam().equals(Team.White))
 		{
 			leftPnlNumbers = pnlRotateNumbers();
 			rightPnlNumbers = pnlRotateNumbers();
-			pnlTopLetters = pnlLetters();
-			pnlBottomLetters = pnlLetters();
 		}
 		
 		board.add(leftPnlNumbers);
 		board.add(chessBoard);
 		board.add(rightPnlNumbers);
-
-		middle.add(pnlTopLetters);
-		middle.add(board);
-		middle.add(pnlBottomLetters);
 		
-		this.add(middle);
+		return board;
 	}
 	
 	private void drawPnlRightSide()
@@ -195,15 +199,11 @@ public class GameScreen extends Screen
 		pnlLetters.setPreferredSize(PNL_LETTERS_PREFERED_SIZE);
 		pnlLetters.setBackground(BACKGROUND);
 		
-		String[] arrLetters = {"A", "B", "C", "D", "E", "F", "G", "H"};
-		for(String letter : arrLetters)
-		{
-			JLabel lbl = new JLabel(letter);
-			
-			lbl.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
-			lbl.setBorder(new EmptyBorder(LETTERS_LBL_INSETS));
-			
-			pnlLetters.add(lbl);
+		JLabel[] letters = lettersArray();
+		
+		for(JLabel letter : letters)
+		{	
+			pnlLetters.add(letter);
 		}
 		
 		return pnlLetters;
@@ -217,18 +217,33 @@ public class GameScreen extends Screen
 		pnlLetters.setPreferredSize(PNL_LETTERS_PREFERED_SIZE);
 		pnlLetters.setBackground(BACKGROUND);
 		
-		String[] arrLetters = {"A", "B", "C", "D", "E", "F", "G", "H"};
-		for(int i = arrLetters.length - 1; i >= 0; i--)
+		JLabel[] letters = lettersArray();
+		
+		for(int i = letters.length - 1; i >= 0; i--)
 		{
-			JLabel lbl = new JLabel(arrLetters[i]);
+			
+			pnlLetters.add(letters[i]);
+		}
+		
+		return pnlLetters;
+	}
+	
+	private JLabel[] lettersArray()
+	{
+		String[] stringArrayLetters = {"A", "B", "C", "D", "E", "F", "G", "H"};
+		JLabel[] letters = new JLabel[stringArrayLetters.length];
+		
+		for(int i = 0; i < stringArrayLetters.length; i++)
+		{
+			JLabel lbl = new JLabel(stringArrayLetters[i]);
 			
 			lbl.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
 			lbl.setBorder(new EmptyBorder(LETTERS_LBL_INSETS));
 			
-			pnlLetters.add(lbl);
+			letters[i] = lbl;
 		}
-		
-		return pnlLetters;
+	
+		return letters;
 	}
 	
 	private JPanel pnlNumbers()
@@ -238,14 +253,11 @@ public class GameScreen extends Screen
 		pnlNumbers.setLayout(new BoxLayout(pnlNumbers, BoxLayout.Y_AXIS));
 		pnlNumbers.setBackground(BACKGROUND);
 		
-		for(int i = FIRST_NUMBER; i <= LAST_NUMBER ; i++)
+		JLabel[] numbers = numbersArray();
+		
+		for(JLabel number : numbers)
 		{
-			JLabel lbl = new JLabel(String.format("%d", i));
-			
-			lbl.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
-			lbl.setBorder(new EmptyBorder(NUMBERS_LBL_INSETS));
-			
-			pnlNumbers.add(lbl);
+			pnlNumbers.add(number);
 		}
 		
 		return pnlNumbers;
@@ -258,17 +270,29 @@ public class GameScreen extends Screen
 		pnlNumbers.setLayout(new BoxLayout(pnlNumbers, BoxLayout.Y_AXIS));
 		pnlNumbers.setBackground(BACKGROUND);
 		
+		JLabel[] numbers = numbersArray();
+		
 		for(int i = LAST_NUMBER; i >= FIRST_NUMBER ; i--)
 		{
-			JLabel lbl = new JLabel(String.format("%d", i));
-			
-			lbl.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
-			lbl.setBorder(new EmptyBorder(NUMBERS_LBL_INSETS));
-			
-			pnlNumbers.add(lbl);
+			pnlNumbers.add(numbers[i - 1]);
 		}
 		
 		return pnlNumbers;
+	}
+	
+	private JLabel[] numbersArray()
+	{
+		JLabel[] numbers = new JLabel[LAST_NUMBER];
+		
+		for(int i = FIRST_NUMBER; i <= LAST_NUMBER; i++)
+		{
+			numbers[i - 1] = new JLabel(String.format("%d", i));
+			
+			numbers[i - 1].setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
+			numbers[i - 1].setBorder(new EmptyBorder(NUMBERS_LBL_INSETS));
+		}
+		
+		return numbers;
 	}
 	
 }
